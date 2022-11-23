@@ -1,0 +1,20 @@
+:root {
+    --black:black;
+    --lightgrey:rgb(156, 156, 156);
+    --morelightgrey:hsl(0, 0%, 85%);
+    --darkgrey:rgb(25, 25, 25);
+    --darkgreyless:rgb(39, 39, 39);
+    --white: white;
+}
+
+body{
+    background-color: var(--darkgreyless);
+}
+
+.account_bg{
+    background-color: var(--white);
+    border-radius: 5%;
+}
+.account_bg_width{
+    max-width: 500px;
+}

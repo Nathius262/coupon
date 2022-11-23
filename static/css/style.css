@@ -1,0 +1,50 @@
+:root {
+    --black:black;
+    --lightgrey:rgb(156, 156, 156);
+    --morelightgrey:rgb(216, 216, 216);
+    --darkgrey:rgb(25, 25, 25);
+    --darkgreyless:rgb(39, 39, 39);
+    --white: #ffff
+}
+
+.navbar {
+    background-color: var(--darkgrey);
+}
+.nav_toggle_btn{
+    margin-left: auto;
+    position: absolute;
+    top:0;
+    right: 13px;
+}
+
+.nav_head{
+    display: flex;
+    flex-basis: auto;
+    color: var(--lightgrey);
+    padding-top: 2%;
+    padding-bottom: 2%;
+}
+.nav_head a:hover{
+    color: var(--morelightgrey);
+}
+
+.sidebar {
+    background-color: var(--black);
+    height: 400px;
+}
+
+.sidebar a{
+    color:var(--lightgrey);
+}
+
+.sidebar a:hover{
+    color:var(--morelightgrey);
+}
+
+/** 
+referral page 
+**/
+.copyToClipboard{
+    outline: 3px;
+    color: var(--darkgrey);
+}
