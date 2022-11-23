@@ -1,0 +1,25 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
+    <link rel="stylesheet" href="{% static 'css/font-awesome.min.css' %}">
+    <link type="text/css" href="{% static 'css/style.css' %}" rel="stylesheet" media="all">
+    <script src="{% static 'js/jquery-2.1.1.min.js' %}"></script>
+    <link rel="icon" href="{% static '/img/favio_icon.png' %}" type="image/png"  sizes="16x16" />
+    <title>{% block title %} {% endblock %}</title>
+</head>
+<body>
+    {% include 'snippets/header.html' %}
+    {% include 'snippets/message.html' %}
+    {% block content %} 
+    {% endblock %}
+    {% include 'snippets/footer.html' %}
+    <script src="{% static 'js/coupon.js' %}"></script>
+    <script src="{% static 'js/bootstrap.js' %}"></script>
+    
+</body>
+</html>

@@ -1,0 +1,46 @@
+{% extends 'index.html' %}
+
+{% block title %}Pipay{% endblock %}
+{% load static %}
+
+{% block content %}   
+    
+<div class="container-fluid">
+    <div class="row">
+
+        <main class="ms-sm-auto px-md-4">
+            <div class="container d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                <div class="row featurette mt-5">
+                    <div class="col-md-5 order-sm-last">
+                        
+                        <img class="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto" width="500" src="{% static 'img/smap1.jpg' %}" alt="bg">
+                
+                    </div>
+                    <div class="col-md-7">
+                      <h2 class="featurette-heading fw-normal lh-1">Be a Part of Pipay Today. <span class="text-muted">The matter of trust we are just great!.</span></h2>
+                      <p class="lead fs-6">PiPay is designed for a simple, effortless and convenient customer experience. With its vast national network of banks, merchants, and service providers, Pipay will change how people engage with their favorite brands and how businesses reach out to their customers.</p>
+                        <p class="lead fs-6">We invite businesses to see how Pipay can take their business into the future. Embracing state-of-the-art technology, strict cash handling policies, internationally acclaimed partners and a solid infrastructure, Pi Pay is set to change the face of commerce in Cambodia.</p>                        
+                    </div>
+                    
+                </div>
+            </div>
+           
+            <div style="color: #7913e5;" class="py-5 text-center container">
+                <div class="row py-lg-5">
+                    <div class="col-lg-6 col-md-8 mx-auto">
+                    <h1 class="fw-light">About Pipay</h1>
+                    <p class="lead text-muted">Something short and leading about the collection below—its contents, the creator, etc. Make it short and sweet, but not too short so folks don’t simply skip over it entirely.</p>
+                    {% if not request.user.is_authenticated %}
+                    <p>
+                        <a href="{% url 'account_signup' %}" class="btn btn-primary my-2">Signup now</a>
+                        <a href="{% url 'account_login' %}" class="btn btn-secondary my-2">Login </a>
+                    </p>
+                    {% endif %}
+                    </div>
+                </div>
+                </div>
+
+        </main>
+    </div>
+</div>
+{% endblock %}

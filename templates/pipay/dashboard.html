@@ -1,0 +1,67 @@
+{% extends 'index.html' %}
+
+{% block title %}Dashboard{% endblock %}
+{% load static %}
+
+{% block content %}   
+    
+<div class="container-fluid">
+    <div class="row">
+
+        {% if request.user.is_authenticated %}
+        {% include 'snippets/sidebar.html' %}
+        {% endif %}
+
+        <main class="ms-sm-auto {% if request.user.is_authenticated %}col-md-9 col-lg-10{% endif %} px-md-4">
+
+            <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                <h1 class="h4">Dashboard</h1>
+                <div class="btn-toolbar mb-2 mb-md-0">
+                    <div class="btn-group me-2 ">
+                        <!---<span class="me-2 text-muted">copy referral link- </span>--->
+                        <div class="copyToClipboard">
+                            <input type="text" value="{{request.scheme}}://{{ request.get_host }}{{user.get_referral_link}}" id="myInput" readonly>
+                            <button class="btn btn-outline-secondary" onclick="copyText()">Copy</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="container mt-5">
+                <div class="">
+                    <div class="row m-sm-auto">
+                        <div class="col-md-6 mb-2">
+                            <div class="ps-3 pt-2 pb-2 text-white bg-danger rounded-3">
+                              <div class="fs-6">Referrals: </div>
+                              <div class="fw-bold fs-4">30</div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6 mb-2">
+                            <div class="ps-3 pt-2 pb-2 text-white bg-info rounded-3">
+                              <div class="fs-6">Members: </div>
+                              <div class="fw-bold fs-4">231,000</div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6 mb-2">
+                            <div class="ps-3 pt-2 pb-2 text-white bg-success rounded-3">
+                              <div class="fs-6">Total Earnings: </div>
+                              <div class="fw-bold fs-4">$ 1,000</div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6 mb-2">
+                            <div class="ps-3 pt-2 pb-2 text-white bg-dark rounded-3">
+                              <div class="fs-6">Total Balance: </div>
+                              <div class="fw-bold fs-4">$ 1,523</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </main>
+    </div>
+</div>
+{% endblock %}

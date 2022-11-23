@@ -1,0 +1,28 @@
+{% load static %}
+
+<header class="navbar navbar-dark sticky-top flex-md-nowrap p-0 shadow">
+    <a class="navbar-brand col-md-3 col-lg-2 me-0 px-2 fs-4" href="{% url 'index' %}"><img src="{% static '/img/logo.png' %}" alt="logo" width="150"></a>
+
+    {% if request.user.is_authenticated %}
+    {% if loc %}
+        <div class="col ms-auto">
+            <a class="navbar-brand fs-6 ms-3" href="{% url 'dashboard' %}"><i class="fa fa-dashboard"></i> Dashboard</a>
+        </div>     
+    {% endif %}
+    <button class="navbar-toggler nav_toggle_btn d-md-none collapsed mt-1 mb-1" type="button" data-bs-toggle="collapse" data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    {% endif %}
+    
+    {% if not request.user.is_authenticated %}
+    <div class="nav_head">        
+        <div class="nav-item text-nowrap">
+            <a class="nav-link px-3" href="{% url 'account_login' %}">Sign in</a>
+        </div>
+
+        <div class="nav-item text-nowrap">
+            <a class="nav-link px-3" href="{% url 'account_signup' %}">Sign up</a>
+        </div>        
+    </div>    
+    {% endif %}
+</header>
