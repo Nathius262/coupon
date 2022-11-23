@@ -15,4 +15,11 @@ class AccountAdmin(UserAdmin):
     list_filter = ()
     fieldsets = ()
 
+
+class UserReferralAdmin(admin.ModelAdmin):
+    list_display = ['user', 'refered_user']
+    list_filter = ['user', 'refered_user']
+    search_fields = ['user', 'refered_user']
+
 admin.site.register(User, AccountAdmin)
+admin.site.register(UserReferralLink, UserReferralAdmin)

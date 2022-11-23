@@ -7,7 +7,7 @@ from django.urls import reverse
 from django.conf import settings
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, User
-
+from .utils import generate_ref_code
 
 
 def image_location(instance, filename):
@@ -59,6 +59,8 @@ class User(AbstractBaseUser):
     username = models.CharField(max_length=30, unique=True)
     first_name = models.CharField(max_length=100)
     last_name = models.CharField(max_length=100)
+    code = models.CharField(max_length=12, blank=True)
+    referred_by = models.CharField(max_length=100, blank=True)
     picture = models.ImageField(upload_to=image_location, default="default.jpg", null=True, blank=True)
     date_joined = models.DateTimeField(verbose_name='date joined', auto_now_add=True)
     last_login = models.DateTimeField(verbose_name='last login', auto_now=True)
@@ -85,10 +87,11 @@ class User(AbstractBaseUser):
     def usersFullName(self):
         return f'{self.first_name} {self.last_name}'
         
-
-
     def get_absolute_url(self):
         return reverse('user:profile', args=[self.username])
+
+    def get_referral_link(self):
+        return reverse('user:custom_account_signup', args=[self.code])
 
     def __str__(self):
         return self.username
@@ -100,8 +103,21 @@ class User(AbstractBaseUser):
         return True
 
 
+class UserReferralLink(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True, related_name="user")
+    refered_user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True, related_name="refered_user")
+        
+    def __str__(self):
+        return f"{self.refered_user} refered by {self.user}"
+
+
+"""
+# signals
+"""
+
 @receiver(post_save, sender=User)
 def save_profile_img(sender, instance, *args, **kwargs):
+    
     SIZE = 600, 600
     if instance.picture:
         pic = Image.open(instance.picture.path)
@@ -113,3 +129,10 @@ def save_profile_img(sender, instance, *args, **kwargs):
                 profile_pic = pic.convert("RGB")
                 profile_pic.thumbnail(SIZE, Image.LANCZOS)
                 profile_pic.save(instance.picture.path)
+    if instance.code == "":
+        code = generate_ref_code()
+        instance.code = code
+
+    if instance.referred_by:
+        user= User.objects.get(username=instance.referred_by)
+        UserReferralLink.objects.get_or_create(user=user, refered_user=instance)
