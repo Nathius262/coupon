@@ -9,3 +9,9 @@ def dashboard_view(request):
 
 def task_view(request):
     return render(request, 'pipay/task.html')
+
+def couponVendor_view(request):
+    return render(request, 'pipay/couponVendor.html')
+
+def couponVerify_view(request):
+    return render(request, 'pipay/couponVerify.html')

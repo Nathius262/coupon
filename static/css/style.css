@@ -24,6 +24,10 @@
     padding-top: 2%;
     padding-bottom: 2%;
 }
+.nav_head li .nav-link{
+    color: var(--white);
+}
+
 .nav_head a:hover{
     color: var(--morelightgrey);
 }

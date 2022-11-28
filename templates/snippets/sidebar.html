@@ -1,6 +1,6 @@
 <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block sidebar collapse">
     <div class="position-sticky pt-3">
-    <ul class="nav flex-column">
+    <ul class="nav flex-column nav_head">
 
         <li class="nav-item border-bottom">
             <a class="nav-link active d-flex align-items-center" aria-current="page" href="{% url 'index' %}">
@@ -9,15 +9,17 @@
         </li>
 
         <li class="nav-item border-bottom">
-        <a class="nav-link d-flex align-items-center" aria-current="page" href="{% url 'dashboard' %}">
-            <i class="fa fa-dashboard "></i><span class="fs-6 ms-1">Dashboard</span> 
-        </a>
+            <a class="nav-link d-flex align-items-center" aria-current="page" href="{% url 'dashboard' %}">
+                <i class="fa fa-dashboard "></i><span class="fs-6 ms-1">Dashboard</span> 
+            </a>
         </li>
+
         <li class="nav-item  border-bottom">
-        <a class="nav-link d-flex align-items-center" href="{% url 'task' %}">
-            <i class="fa fa-tasks"></i><span class="fs-6 ms-1">Task</span>
-        </a>
-        </li>                
+            <a class="nav-link d-flex align-items-center" href="{% url 'task' %}">
+                <i class="fa fa-tasks"></i><span class="fs-6 ms-1">Task</span>
+            </a>
+        </li> 
+
         <li class="nav-item border-bottom">
             <a class="nav-link d-flex align-items-center" href="{% url 'user:referred_user' request.user %}">
                <i class="fa fa-user"></i> <span class="fs-6 ms-1">Referrals</span>
@@ -26,9 +28,9 @@
 
         {% if request.user.is_authenticated %}
         <li class="nav-item  border-bottom">
-        <a class="nav-link d-flex align-items-center" href="{% url 'account_logout' %}">
-            <i class="fa fa-sign-out"></i><span class="fs-6 ms-1">Logout</span>
-        </a>
+            <a class="nav-link d-flex align-items-center" href="{% url 'account_logout' %}">
+                <i class="fa fa-sign-out"></i><span class="fs-6 ms-1">Logout</span>
+            </a>
         </li>
         {% endif %}
     </ul>
