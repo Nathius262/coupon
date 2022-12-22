@@ -4,7 +4,8 @@
     --morelightgrey:rgb(216, 216, 216);
     --darkgrey:rgb(25, 25, 25);
     --darkgreyless:rgb(39, 39, 39);
-    --white: #ffff
+    --white: #ffff;
+    --purple: rgb(139 110 187);
 }
 
 .navbar {
@@ -51,4 +52,24 @@ referral page
 .copyToClipboard{
     outline: 3px;
     color: var(--darkgrey);
+}
+
+/*
+****
+*cupon vendor
+*
+****
+*/
+.bg-custom{
+    background-color: var(--purple);
+    color: var(--white);
+    padding: 3px;
+    min-width: 30%;
+}
+.bg-custom a {
+    color: var(--white);
+    text-decoration: none;
+}
+.bg-custom a:hover{
+    color: var(--morelightgrey);
 }

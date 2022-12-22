@@ -12,9 +12,21 @@
       </div>
   
       <div class="">
-        <ul class="unstyled-listed">
+        <ul class="list-unstyled row">
           {% for user in user  %}
-          <li>{{user}}</li>
+          <li class="col-sm-6 mb-4">
+            <div class="">
+              <span>
+                <span class="bg-dark rounded-5"><img src="{% static 'img/default.jpg' %}" alt="" width="30" class="rounded-5 pt-0"></span>
+              </span>
+              <div class="bg-custom rounded-5 d-flex justify-content-between align-items-center">              
+                <span class="mx-3 fs-3">{{user | title}}</span>
+                <span class=" mx-2">
+                  <i class="fa fa-whatsapp text-success bg-light rounded-5 p-1"></i>
+                  <a href="#" class="">link</a></span>
+              </div>
+            </div>
+          </li>
           {% endfor %}
         </ul>
       </div>

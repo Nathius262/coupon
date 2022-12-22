@@ -10,12 +10,12 @@
 
         <div class="col-md-7 col-lg-8">
           <h4 class="mb-3">Verify Your Coupon Code</h4>
-          <form class="needs-validation" novalidate="">
+          <form class="needs-validation" novalidate="" method="post">{% csrf_token %}
 
             <div class="row g-3">
               <div class="col">
                 <label for="coupon" class="form-label"></label>
-                <input type="text" class="form-control" id="coupon" placeholder="Enter Code Here" value="" required="">
+                <input name="verifyCoupon" type="text" class="form-control" id="coupon" placeholder="Enter Code Here" value="" required="">
                 <div class="invalid-feedback">
                   Valid coupon is required.
                 </div>
@@ -23,6 +23,21 @@
 
             <button class="w-100 btn btn-primary btn-lg" type="submit">Continue</button>
           </form>
+
+          {% for obj in users %}
+          
+          <div class="mt-5">
+            {% if obj %}
+            <span class=" mt-5 mb-5 fs-5 text-info text-muted text-small!">This coupon has been used by the user below!</span>
+            {% endif %}
+            <div class="bg-custom d-grid rounded-5 align-items-center fs-3">
+              <img src="{% static 'img/default.jpg' %}" alt="" width="55" class="rounded-5">
+              <span class="mx-5"><span class="text-muted fw-bold">Name:</span> {{obj.usersFullName | title}}</span>
+              <span class="mx-5"><span class="text-muted fw-bold">Email:</span>: {{obj.email }}</span>
+            </div>
+            
+          </div>
+          {% endfor %}
         </div>
       </div>
     </main>

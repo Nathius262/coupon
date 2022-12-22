@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from django.contrib import messages
 from user.models import User
 
 # Create your views here.
@@ -19,4 +20,18 @@ def couponVendor_view(request):
     return render(request, 'pipay/couponVendor.html', context)
 
 def couponVerify_view(request):
-    return render(request, 'pipay/couponVerify.html')
+
+    context = {}
+    if request.POST:
+        
+        coupon_verify = request.POST['verifyCoupon']
+        user = User.objects.all().filter(code=str(coupon_verify))
+
+        try:
+            if str(coupon_verify) == str(user.first().code):
+                context['users'] = user
+            else:
+                messages.error(request, "User with this coupon does not exit!")
+        except AttributeError:
+            messages.error(request, "User with this coupon does not exit!")
+    return render(request, 'pipay/couponVerify.html', context)
