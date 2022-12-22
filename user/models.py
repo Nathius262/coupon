@@ -6,7 +6,7 @@ from django.dispatch import receiver
 from django.urls import reverse
 from django.conf import settings
 from django.db import models
-from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, User
+from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
 from .utils import generate_ref_code
 
 
