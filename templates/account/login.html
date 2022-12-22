@@ -13,15 +13,14 @@
 <div class="d-flex justify-content-center align-items-center p-1 pt-0">
 
   
-  <form method="post" enctype="multipart/form-data" class="account_bg account_bg_width mt-5 p-4 shadow">{% csrf_token %}
+  <form method="post" enctype="multipart/form-data"  novalidate="" class="needs-validation account_bg account_bg_width mt-5 p-4 shadow">{% csrf_token %}
     {% if redirect_field_value %}
     <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
     {% endif %}
 
     <p class="form-text error-text text-danger">
       {{ form.non_field_errors.as_text }}
-    </p>
-    
+    </p>  
     <div class="row g-3">
 
       <div class="mb-3 text-center border-bottom">
@@ -36,7 +35,10 @@
 
       <div class="col-12">
         <label for="email" class="form-label">Email<!-- <span class="text-muted">(Optional)</span>----></label>
-        <input name="login" type="email" class="form-control" id="email" placeholder="you@example.com">
+        <input name="login" type="email" class="form-control" id="email" placeholder="you@example.com" required="">
+        <div class="invalid-feedback">
+          Valid Email is required
+        </div>
         <p class="text-danger">
           {{ form.login.errors.as_text }}
         </p>
@@ -45,6 +47,9 @@
       <div class="col-12">
         <label for="password" class="form-label">Password</label>
         <input type="password"  name="password" class="form-control rounded-3" id="password" placeholder="password" autocomplete="password" required>
+        <div class="invalid-feedback">
+          Password is required
+        </div>
         <p class="text-danger">
           {{ form.password.errors.as_text }}
         </p>
@@ -61,4 +66,5 @@
     <small class="d-flex flex-column mt-3"><a class="m-auto" href="{% url 'account_reset_password'%}">Forget password?</a></small>
   </form>
 </div>
+<script src="{% static 'js/form-validation.js' %}"></script>
 {% endblock %}

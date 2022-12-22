@@ -1,21 +1,21 @@
 {% extends 'index.html' %}
 {% load static %}
-{% block title %}Get coupon{% endblock %}
+{% block title %}Verify coupon{% endblock %}
 
 {% block content %}
 <link type="text/css" rel="stylesheet" href="{% static 'css/form-validation.css' %}">
-<div class="container">
+<div class="container mt-5">
     <main>
-      <div class="row g-5">
+      <div class="row g-5 mt-5">
 
         <div class="col-md-7 col-lg-8">
-          <h4 class="mb-3">Billing address</h4>
+          <h4 class="mb-3">Verify Your Coupon Code</h4>
           <form class="needs-validation" novalidate="">
 
             <div class="row g-3">
               <div class="col">
-                <label for="coupon" class="form-label">Verify Coupon</label>
-                <input type="text" class="form-control" id="coupon" placeholder="" value="" required="">
+                <label for="coupon" class="form-label"></label>
+                <input type="text" class="form-control" id="coupon" placeholder="Enter Code Here" value="" required="">
                 <div class="invalid-feedback">
                   Valid coupon is required.
                 </div>

@@ -29,7 +29,7 @@
             
       <div class="col-sm-6">
         <label for="firstName" class="form-label">First name</label>
-        <input name="first_name" type="text" class="form-control" id="firstName" placeholder="" value="" required="">
+        <input name="first_name" type="text" class="form-control" id="firstName" placeholder="First Name" value="" required="">
         <p class="text-danger">
           {{ form.first_name.errors.as_text }}
         </p>
@@ -37,9 +37,17 @@
 
       <div class="col-sm-6">
         <label for="lastName" class="form-label">Last name</label>
-        <input name="last_name" type="text" class="form-control" id="lastName" placeholder="" value="" required="">
+        <input name="last_name" type="text" class="form-control" id="lastName" placeholder="Last Name" value="" required="">
         <p class="text-danger">
           {{ form.last_name.errors.as_text }}
+        </p>
+      </div>
+
+      <div class="col-sm-6">
+        <label for="coupon" class="form-label text-success fw-bold fs-6">Coupon<!-- <span class="text-muted">(Optional)</span>----></label>
+        <input name="coupon" type="text" class="form-control" id="coupon" placeholder="Enter coupon code">
+        <p class="text-danger">
+          {{ form.email.errors.as_text }}
         </p>
       </div>
 
