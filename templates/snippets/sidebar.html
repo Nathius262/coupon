@@ -14,6 +14,14 @@
             </a>
         </li>
 
+        {% if request.user.is_staff %}
+        <li class="nav-item border-bottom">
+            <a class="nav-link d-flex align-items-center" aria-current="page" href="{% url 'generate_code' %}">
+                <i class="fa fa-cogs"></i><span class="fs-6 ms-1">Generate Code</span> 
+            </a>
+        </li>
+        {% endif %}
+
         <li class="nav-item  border-bottom">
             <a class="nav-link d-flex align-items-center" href="{% url 'task' %}">
                 <i class="fa fa-tasks"></i><span class="fs-6 ms-1">Task</span>

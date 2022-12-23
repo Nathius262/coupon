@@ -10,6 +10,11 @@
     <div id="sidebarMenu" class="collapse navbar-collapse">
         <div class="nav_head ms-auto">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                {% if request.user.is_staff %}
+                <li class="nav-item mb-1">
+                    <a class="navbar-brand fs-6 ms-3 underline" href="{% url 'generate_code' %}"><i class="fa fa-cogs"></i> Generate Code</a>
+                </li>
+                {% endif %}
                 {% if request.user.is_authenticated %}
                 <li class="nav-item mb-1">
                     <a class="navbar-brand fs-6 ms-3" href="{% url 'dashboard' %}"><i class="fa fa-dashboard"></i> Dashboard</a>

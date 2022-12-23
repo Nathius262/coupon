@@ -129,9 +129,6 @@ def save_profile_img(sender, instance, *args, **kwargs):
                 profile_pic = pic.convert("RGB")
                 profile_pic.thumbnail(SIZE, Image.LANCZOS)
                 profile_pic.save(instance.picture.path)
-    if instance.code == "":
-        code = generate_ref_code()
-        instance.code = code
 
     if instance.referred_by:
         user= User.objects.get(username=instance.referred_by)

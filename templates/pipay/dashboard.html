@@ -19,9 +19,9 @@
                 <div class="btn-toolbar mb-2 mb-md-0">
                     <div class="btn-group me-2 ">
                         <!---<span class="me-2 text-muted">copy referral link- </span>--->
-                        <div class="copyToClipboard">
-                            <input type="text" value="{{request.scheme}}://{{ request.get_host }}{{user.get_referral_link}}" id="myInput" readonly>
-                            <button class="btn btn-outline-secondary" onclick="copyText()">Copy</button>
+                        <div class="copyToClipboard form-group d-flex">
+                            <input type="text" value="{{request.scheme}}://{{ request.get_host }}{{user.get_referral_link}}" id="myInput" class="form-control" readonly>
+                            <button class="btn btn-outline-secondary" onclick="copyText()"><i class="fa fa-clone"></i></button>
                         </div>
                     </div>
                 </div>
@@ -33,14 +33,14 @@
                         <div class="col-md-6 mb-2">
                             <div class="ps-3 pt-2 pb-2 text-white bg-danger rounded-3">
                               <div class="fs-6">Referrals: </div>
-                              <div class="fw-bold fs-4">30</div>
+                              <div class="fw-bold fs-4">{{referrals}}</div>
                             </div>
                         </div>
 
                         <div class="col-md-6 mb-2">
                             <div class="ps-3 pt-2 pb-2 text-white bg-info rounded-3">
                               <div class="fs-6">Members: </div>
-                              <div class="fw-bold fs-4">231,000</div>
+                              <div class="fw-bold fs-4">{{members}}</div>
                             </div>
                         </div>
 

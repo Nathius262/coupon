@@ -17,9 +17,9 @@
                 <div class="btn-toolbar mb-2 mb-md-0">
                     <div class="btn-group me-2 ">
                         <!---<span class="me-2 text-muted">copy referral link- </span>--->
-                        <div class="copyToClipboard">
-                            <input type="text" value="{{request.scheme}}://{{ request.get_host }}{{user.get_referral_link}}" id="myInput" readonly>
-                            <button class="btn btn-outline-secondary" onclick="copyText()">Copy</button>
+                        <div class="copyToClipboard form-group d-flex">
+                            <input type="text" value="{{request.scheme}}://{{ request.get_host }}{{user.get_referral_link}}" id="myInput" class="form-control" readonly>
+                            <button class="btn btn-outline-secondary" onclick="copyText()"><i class="fa fa-clone"></i></button>
                         </div>
                     </div>
                 </div>
