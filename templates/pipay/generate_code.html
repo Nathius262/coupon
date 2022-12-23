@@ -1,0 +1,33 @@
+{% extends 'index.html' %}
+{% load static %}
+{% block title %}Verify coupon{% endblock %}
+
+{% block content %}
+<link type="text/css" rel="stylesheet" href="{% static 'css/form-validation.css' %}">
+<div class="container mt-5">
+    <main>
+      <div class="row g-5 mt-5">
+
+        <div class="col-md-7 col-lg-8">
+          <h4 class="mb-3">Generate Coupon Code</h4>
+          <form class="needs-validation" novalidate="" method="post">{% csrf_token %}
+
+            <button class="w-100 btn btn-primary btn-lg" type="submit">Generate</button>
+          </form>
+          {% if show_code %}
+            <div class="mt-5">
+                <p class="text-muted text-small mb-0 fs-5">copy code:</p>
+                <div class="copyToClipboard d-flex">
+                    <input type="text" value="{{code}}" id="myInput" class="form-control mx-1" readonly>
+                    <button class="btn btn-outline-secondary" onclick="copyText()"><i class="fa fa-clone"></i></button>
+                </div>
+            </div>
+            {% endif %}
+
+        </div>
+      </div>
+    </main>
+  
+</div>
+<script src="{% static 'js/form-validation.js' %}"></script>
+{% endblock %}
