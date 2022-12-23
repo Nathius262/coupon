@@ -22,6 +22,7 @@ def task_view(request):
 def couponVendor_view(request):
     context = {
         'user': User.objects.all().filter(is_staff=True),
+        'loc':True,
     }
     return render(request, 'pipay/couponVendor.html', context)
 
