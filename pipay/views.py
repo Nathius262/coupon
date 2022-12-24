@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
-from user.models import User, UserReferralLink
+from user.models import CustomUser, UserReferralLink
 from user.utils import generate_ref_code
 
 # Create your views here.
@@ -9,7 +9,7 @@ def index_view(request):
     return render(request, 'pipay/home.html', {'loc': True,})
 
 def dashboard_view(request):
-    user = User.objects.all()
+    user = CustomUser.objects.all()
     context = {
         'members': user.count(),
         'referrals': UserReferralLink.objects.all().filter(user=request.user).count(),
@@ -21,7 +21,7 @@ def task_view(request):
 
 def couponVendor_view(request):
     context = {
-        'user': User.objects.all().filter(is_staff=True),
+        'user': CustomUser.objects.all().filter(is_staff=True),
         'loc':True,
     }
     return render(request, 'pipay/couponVendor.html', context)
@@ -44,7 +44,7 @@ def couponVerify_view(request):
     if request.POST:
         
         coupon_verify = request.POST['verifyCoupon']
-        user = User.objects.all().filter(code=str(coupon_verify))
+        user = CustomUser.objects.all().filter(code=str(coupon_verify))
 
         try:
             if str(coupon_verify) == str(user.first().code):

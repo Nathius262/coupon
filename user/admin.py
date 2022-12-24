@@ -6,7 +6,7 @@ from .models import *
 
 # Register your models here.
 class AccountAdmin(UserAdmin):
-    list_display = ('is_active', 'is_staff', 'email', 'username', 'first_name', 'last_name', 'date_joined', 'last_login')
+    list_display = ('first_name', 'last_name', 'is_staff', 'is_active', 'email', 'username', 'date_joined', 'last_login')
     search_fields = ('email', 'username', 'first_name', 'last_name')
     readonly_fields = ('date_joined', 'last_login')
     list_editable = ('is_staff',)
@@ -21,5 +21,5 @@ class UserReferralAdmin(admin.ModelAdmin):
     list_filter = ['user', 'refered_user']
     search_fields = ['user', 'refered_user']
 
-admin.site.register(User, AccountAdmin)
+admin.site.register(CustomUser, AccountAdmin)
 admin.site.register(UserReferralLink, UserReferralAdmin)

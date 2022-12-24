@@ -1,24 +1,40 @@
 from django import forms
 from allauth.account.forms import SignupForm
-from .models import User
+from .models import CustomUser
 
 
 class CustomSignupForm(SignupForm):
     first_name = forms.CharField(max_length=60, label="First Name", widget=forms.TextInput(attrs={'placeholder':'First_Name'}))
     last_name = forms.CharField(max_length=60, label="Last Name", widget=forms.TextInput(attrs={'placeholder':'Last_Name'}))
+    code = forms.CharField(max_length=12, label="code", widget=forms.TextInput(attrs={'placeholder':'coupon code'}))
 
     class Meta:
-        model = User
+        model = CustomUser
         fields = ("email", "username", "first_name", "last_name", "code", "password1", "password2")
 
+    
+    def clean_code(self):
+        code = self.cleaned_data['code']
+        user = CustomUser.objects.all().filter(code=code)
+        if user.exists():
+            raise forms.ValidationError('code "%s" is already in use.' % code)
+        return code
+
+    def clean_username(self):
+        username = self.cleaned_data['username']
+        user = CustomUser.objects.all().filter(username=username)
+        if user.exists():
+            raise forms.ValidationError('username "%s" is already in use.' % username)
+        return username
 
     def save(self, request):
         refered_by = request.session.get('ref_user')
         user = super(CustomSignupForm, self).save(request)
         user.first_name = self.cleaned_data['first_name']
         user.last_name = self.cleaned_data['last_name']
+        user.code = self.cleaned_data['code']
         try:
-            user.referred_by = str(User.objects.get(id=refered_by))
+            user.referred_by = str(CustomUser.objects.get(id=refered_by))
         except:
             user.referred_by = ''
         user.save()
@@ -29,7 +45,7 @@ class CustomSignupForm(SignupForm):
 class AccountUpdateForm(forms.ModelForm):
 
     class Meta:
-        model = User
+        model = CustomUser
         fields = ('email', 'username', 'first_name', 'last_name', 'picture')
         widgets = {
             'picture': forms.FileInput(attrs={'class': 'form-control', 'onchange': 'readURL(this)', 'id':'id_image_file', 'hidden':'True'}),
@@ -43,8 +59,8 @@ class AccountUpdateForm(forms.ModelForm):
         if self.is_valid():
             email = self.cleaned_data['email']
             try:
-                account = User.objects.exclude(pk=self.instance.pk).get(email=email)
-            except User.DoesNotExist:
+                account = CustomUser.objects.exclude(pk=self.instance.pk).get(email=email)
+            except CustomUser.DoesNotExist:
                 return email
             raise forms.ValidationError('Email "%s" is already in use.' % account.email)
 
@@ -52,7 +68,7 @@ class AccountUpdateForm(forms.ModelForm):
         if self.is_valid():
             username = self.cleaned_data['username']
             try:
-                account = User.objects.exclude(pk=self.instance.pk).get(username=username)
-            except User.DoesNotExist:
+                account = CustomUser.objects.exclude(pk=self.instance.pk).get(username=username)
+            except CustomUser.DoesNotExist:
                 return username
             raise forms.ValidationError('username "%s" is already in use.' % account.username)

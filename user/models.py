@@ -7,7 +7,6 @@ from django.urls import reverse
 from django.conf import settings
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
-from .utils import generate_ref_code
 
 
 def image_location(instance, filename):
@@ -22,7 +21,7 @@ def image_location(instance, filename):
 
 # Create your models here.
 class MyAccountManager(BaseUserManager):
-    def create_user(self, email, username, first_name, password):
+    def create_user(self, email, username, first_name, code, password):
         if not email:
             raise ValueError("Users must have an email address")
         if not username:
@@ -31,21 +30,25 @@ class MyAccountManager(BaseUserManager):
             raise ValueError("Users must have their first_name")
         if not password:
             raise ValueError("Must secure account with password")
+        if not code:
+            raise ValueError("user must have a coupon code")
         user = self.model(
             email=self.normalize_email(email),
             username=username,
+            code=code,
             first_name=first_name,
         )
         user.set_password(password)
         user.save(using=self._db)
         return user
 
-    def create_superuser(self, email, username, first_name, password):
+    def create_superuser(self, email, username, first_name, code, password):
         user = self.create_user(
             email=self.normalize_email(email),
             password=password,
             username=username,
             first_name=first_name,
+            code=code,
         )
         user.is_admin = True
         user.is_staff = True
@@ -54,12 +57,12 @@ class MyAccountManager(BaseUserManager):
         return user
 
 
-class User(AbstractBaseUser):
+class CustomUser(AbstractBaseUser):
     email = models.EmailField(verbose_name="email", max_length=60, unique=True)
     username = models.CharField(max_length=30, unique=True)
     first_name = models.CharField(max_length=100)
     last_name = models.CharField(max_length=100)
-    code = models.CharField(max_length=12, blank=True)
+    code = models.CharField(max_length=12, unique=True, blank=False)
     referred_by = models.CharField(max_length=100, blank=True)
     picture = models.ImageField(upload_to=image_location, default="default.jpg", null=True, blank=True)
     date_joined = models.DateTimeField(verbose_name='date joined', auto_now_add=True)
@@ -71,7 +74,7 @@ class User(AbstractBaseUser):
     login_status = models.BooleanField(default=False)
 
     USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = ['username', 'first_name']
+    REQUIRED_FIELDS = ['username', 'first_name', 'code']
 
     objects = MyAccountManager()
 
@@ -104,8 +107,8 @@ class User(AbstractBaseUser):
 
 
 class UserReferralLink(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True, related_name="user")
-    refered_user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True, related_name="refered_user")
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, null=True, blank=True, related_name="user")
+    refered_user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, null=True, blank=True, related_name="refered_user")
         
     def __str__(self):
         return f"{self.refered_user} refered by {self.user}"
@@ -115,7 +118,7 @@ class UserReferralLink(models.Model):
 # signals
 """
 
-@receiver(post_save, sender=User)
+@receiver(post_save, sender=CustomUser)
 def save_profile_img(sender, instance, *args, **kwargs):
     
     SIZE = 600, 600
@@ -131,5 +134,5 @@ def save_profile_img(sender, instance, *args, **kwargs):
                 profile_pic.save(instance.picture.path)
 
     if instance.referred_by:
-        user= User.objects.get(username=instance.referred_by)
+        user= CustomUser.objects.get(username=instance.referred_by)
         UserReferralLink.objects.get_or_create(user=user, refered_user=instance)

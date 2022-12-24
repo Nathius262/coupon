@@ -7,7 +7,7 @@ def profile_view(request):
     return render(request, 'user/profile.html')
 
 def referrals_view(request, username):
-    user = get_object_or_404(User, username=username)
+    user = get_object_or_404(CustomUser, username=username)
     ref_user = UserReferralLink.objects.all().filter(user=user)
     context = {
         'user':user,
@@ -18,7 +18,7 @@ def referrals_view(request, username):
 def refer_link_view(request, *args, **kwargs):
     code = str(kwargs.get('ref_code'))
     try:
-        user = User.objects.get(code=code)
+        user = CustomUser.objects.get(code=code)
         request.session['ref_user'] = user.id
         messages.info(request, f'you are about to sign up with "{user}" as a referral')
     except:
