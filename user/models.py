@@ -1,5 +1,4 @@
 import os
-
 from PIL import Image
 from django.db.models.signals import post_save
 from django.dispatch import receiver
@@ -7,7 +6,7 @@ from django.urls import reverse
 from django.conf import settings
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
-
+from phonenumber_field.modelfields import PhoneNumberField
 
 def image_location(instance, filename):
     file_path = 'profile/user_{username}/profile.jpeg'.format(
@@ -62,6 +61,7 @@ class CustomUser(AbstractBaseUser):
     username = models.CharField(max_length=30, unique=True)
     first_name = models.CharField(max_length=100)
     last_name = models.CharField(max_length=100)
+    phone_number = PhoneNumberField(null=True, blank=True)
     code = models.CharField(max_length=12, unique=True, blank=False)
     referred_by = models.CharField(max_length=100, blank=True)
     picture = models.ImageField(upload_to=image_location, default="default.jpg", null=True, blank=True)

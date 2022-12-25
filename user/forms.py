@@ -1,16 +1,21 @@
 from django import forms
 from allauth.account.forms import SignupForm
 from .models import CustomUser
+from phonenumber_field.formfields import PhoneNumberField
+from phonenumber_field.widgets import PhoneNumberPrefixWidget
 
 
 class CustomSignupForm(SignupForm):
     first_name = forms.CharField(max_length=60, label="First Name", widget=forms.TextInput(attrs={'placeholder':'First_Name'}))
     last_name = forms.CharField(max_length=60, label="Last Name", widget=forms.TextInput(attrs={'placeholder':'Last_Name'}))
+    phone_number = PhoneNumberField(
+        widget= PhoneNumberPrefixWidget(attrs={'class': 'form-control rounded-3', 'id':'floatingPhoneNumber', 'placeholder':"Phone Number"})
+    )
     code = forms.CharField(max_length=12, label="code", widget=forms.TextInput(attrs={'placeholder':'coupon code'}))
 
     class Meta:
         model = CustomUser
-        fields = ("email", "username", "first_name", "last_name", "code", "password1", "password2")
+        fields = ("email", "username", "first_name", "last_name", 'phone_number', "code", "password1", "password2")
 
     
     def clean_code(self):
