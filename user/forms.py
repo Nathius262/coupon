@@ -3,6 +3,7 @@ from allauth.account.forms import SignupForm
 from .models import CustomUser
 from phonenumber_field.formfields import PhoneNumberField
 from phonenumber_field.widgets import PhoneNumberPrefixWidget
+from pipay.models import GenerateCode
 
 
 class CustomSignupForm(SignupForm):
@@ -21,8 +22,12 @@ class CustomSignupForm(SignupForm):
     def clean_code(self):
         code = self.cleaned_data['code']
         user = CustomUser.objects.all().filter(code=code)
+        coupon_code = GenerateCode.objects.all().filter(coupon_code=code)
+        if not coupon_code.exists():
+            raise forms.ValidationError('code "%s" is invalid' % code)
         if user.exists():
             raise forms.ValidationError('code "%s" is already in use.' % code)
+        
         return code
 
     def clean_username(self):
@@ -38,6 +43,7 @@ class CustomSignupForm(SignupForm):
         user.first_name = self.cleaned_data['first_name']
         user.last_name = self.cleaned_data['last_name']
         user.code = self.cleaned_data['code']
+        user.phone_number = self.cleaned_data['phone_number']
         try:
             user.referred_by = str(CustomUser.objects.get(id=refered_by))
         except:

@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     #installed apps
     'user',
+    'pipay',
 
     #django alllauth
     'allauth',

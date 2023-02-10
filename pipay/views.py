@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib import messages
 from user.models import CustomUser, UserReferralLink
 from user.utils import generate_ref_code
+from .models import GenerateCode
 
 # Create your views here.
 def index_view(request):
@@ -31,8 +32,11 @@ def generateCoupon_view(request):
     if request.user.is_staff:
         if request.POST:
             code = generate_ref_code()
-            context['code'] = code
-            context['show_code'] = True
+            # generating code and saving in the database "GenerateCode"
+            coupon_code, created = GenerateCode.objects.get_or_create(coupon_code=code)
+            if created:
+                context['code'] = code
+                context['show_code'] = True
     else:
         redirect('home')
     context['loc'] = True
