@@ -7,14 +7,18 @@
     --white: white;
 }
 
-body{
-    background-color: var(--morelightgrey);
-}
-
 .account_bg{
     background-color: var(--white);
     border-radius: 5%;
+    margin-bottom: 100px;
 }
-.account_bg_width{
-    max-width: 500px;
+.navy-blue{
+    color: var(--navy-blue);
+}
+.navy-blue a{
+    color: var(--navy-blue);
+    
+}
+.navy-blue a:hover{
+    color: var(--nav-blue-dark);
 }

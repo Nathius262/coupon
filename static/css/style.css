@@ -1,49 +1,62 @@
 :root {
     --black:black;
+    --grey: rgb(214, 214, 214);
     --lightgrey:rgb(156, 156, 156);
     --morelightgrey:rgb(216, 216, 216);
     --darkgrey:rgb(25, 25, 25);
     --darkgreyless:rgb(39, 39, 39);
     --white: #ffff;
     --purple: rgb(139 110 187);
+    --blue:rgb(0, 128, 255);
+    --navy-blue: rgb(23, 34, 77);
+    --navy-blue-dark: rgb(13, 19, 44);
+    --green:rgb(67, 255, 203);
 }
 
-.navbar {
-    background-color: var(--darkgrey);
-}
-.nav_toggle_btn{
-    margin-left: auto;
-    position: absolute;
-    top:0;
-    right: 13px;
+body{
+    font-family: Helvetica, Arial, sans-serif;
 }
 
-.nav_head{
-    display: flex;
-    flex-basis: auto;
-    color: var(--lightgrey);
-    padding-top: 2%;
-    padding-bottom: 2%;
+.blue-color{
+    color: var(--blue);
 }
-.nav_head li .nav-link{
+.navy-blue-dark{
+    color: var(--navy-blue-dark);
+}
+.navy-blue{
+    color: var(--navy-blue);
+}
+
+.blue-bg{
+    background-color: var(--blue);
     color: var(--white);
 }
-
-.nav_head a:hover{
-    color: var(--morelightgrey);
+.bg-secondary{
+    background-color: var(--lightgrey) !important;
+}
+.connet-bg{
+    color: var(--white);
+    background-color: var(--lightgrey);
+    width: 50px;
+    height: 50px;
+    text-align: center; 
+    padding: 10px;  
 }
 
-.sidebar {
-    background-color: var(--black);
-    height: 400px;
+/** 
+dashboard page 
+**/
+.w-user{
+    color: var(--green);
+}
+.form-check-input:checked{
+    background-color: var(--green);
+    border-color: var(--green);
 }
 
-.sidebar a{
-    color:var(--lightgrey);
-}
-
-.sidebar a:hover{
-    color:var(--morelightgrey);
+.form-check-input{
+    background-color: var(--green);
+    border-color: var(--green);
 }
 
 /** 
@@ -72,4 +85,33 @@ referral page
 }
 .bg-custom a:hover{
     color: var(--morelightgrey);
+}
+
+/*
+withdraw page
+*/
+.withdraw-shadow{
+    box-shadow: 0 0.5rem 1rem rgba(109, 109, 109, 0.15) !important;
+}
+
+/*
+footer
+*/
+
+.footer-list a{
+    color: var(--white);
+    text-decoration: none;
+
+}
+
+.footer-list a:hover{
+    color: var(--lightgrey);
+}
+
+.list-inline-item a{
+    color: var(--white);
+}
+
+.list-inline-item a:hover:{
+    color: var(--lightgrey);
 }

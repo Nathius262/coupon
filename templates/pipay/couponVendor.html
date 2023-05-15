@@ -1,45 +1,63 @@
 {% extends 'index.html' %}
+{% block title %}Smart Vendors{% endblock title %}
 {% load static %}
-{% block title %}Get coupon{% endblock %}
 
 {% block content %}
-<link type="text/css" rel="stylesheet" href="{% static 'css/form-validation.css' %}">
-<div class="container">
-    <main>
-      <div class="py-5 text-center mt-5 ">
-        
-        <p class="lead border-bottom fs-3">Get your coupon by clicking in any of the links below.</p>
+<link rel="stylesheet" href="{% static 'css/vendors.css' %}">
+
+<div class="mt-5 mb-5">
+  <div class="row row-cols-1 mb-5">
+
+    <div class="col mx-auto h2 fw-bold navy-blue text-center mb-5">
+      <div class="container">Coupon Merchant</div>
+    </div> 
+
+    <div class="col blue-bg">
+      <div class="container py-3">
+        <div class="row row-cols-1 mx-auto">
+          <div class="col h2">Get Activation Code</div>
+          <div class="col">
+            <p>Click Whatsapp to message Pipay Verified Merchant</p>
+          </div>
+          <div class="col">
+            <p>NB. DON'T PAY TO ANYONE THAT IS NOT LISTED BELOW</p>
+          </div>
+        </div>
       </div>
-  
-      <div class="">
-        <ul class="list-unstyled row">
-          {% for user in user  %}
-          <li class="col-sm-6 mb-4">
-            <div class="">
-              <span>
-                <span class="bg-dark rounded-5"><img src="{{user.picture_url}}" alt="" width="30" class="rounded-5 pt-0"></span>
-              </span>
-              <div class="bg-custom rounded-5 d-flex justify-content-between align-items-center">              
-                <span class="mx-3 fs-3">{{user | title}}</span>
-                <span class=" mx-2">
-                  <i class="fa fa-whatsapp text-success bg-light rounded-5 p-1"></i>
-                  <a href="#" class="">link</a></span>
+    </div>
+
+    <div class="container">
+      <div class="row row-cols-1 row-cols-md-2 container mx-auto">
+
+        <div class="col mx-auto mt-5">
+          <div class="">
+            <div class="d-flex justify-content-between align-items-center">
+              <div class="load_img container"></div>
+              <div class="container mx-3">
+                <p class="fs-5 navy-blue">Courage Ogbaji</p>
+                <p class="text-muted">Kuda <span class="text-danger mx-4"><i class="fa fa-flag"> Report</i></span></p>
               </div>
+              <div class="circle_bg container d-flex justify-content-center align-items-center"><i class="fa fa-whatsapp fa-2x"></i></div>
             </div>
-          </li>
-          {% endfor %}
-        </ul>
+          </div>
+        </div>
+
+        <div class="col mx-auto mt-5">
+          <div class="">
+            <div class="d-flex justify-content-between align-items-center">
+              <div class="load_img container"></div>
+              <div class="container mx-3">
+                <p class="fs-5 navy-blue">Courage Ogbaji</p>
+                <p class="text-muted">Kuda <span class="text-danger mx-4"><i class="fa fa-flag"> Report</i></span></p>
+              </div>
+              <div class="circle_bg container d-flex justify-content-center align-items-center"><i class="fa fa-whatsapp fa-2x"></i></div>
+            </div>
+          </div>
+        </div>
+
       </div>
-    </main>
-  
-    <footer class="my-5 pt-5 text-muted text-center text-small">
-      <p class="mb-1">© 2017–2022 Company Name</p>
-      <ul class="list-inline">
-        <li class="list-inline-item"><a href="#">Privacy</a></li>
-        <li class="list-inline-item"><a href="#">Terms</a></li>
-        <li class="list-inline-item"><a href="#">Support</a></li>
-      </ul>
-    </footer>
+    </div>
+
+  </div>
 </div>
-<script src="{% static 'js/form-validation.js' %}"></script>
-{% endblock %}
+{% endblock content %}

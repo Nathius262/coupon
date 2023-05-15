@@ -3,9 +3,8 @@ from .views import *
 
 urlpatterns = [
     path('', index_view, name='index'),
-    path('dashboard', dashboard_view, name='dashboard'),
-    path('task', task_view, name='task'),
-    path('coupon', couponVendor_view, name='coupon'),
+    path('coupon/vendors', couponVendor_view, name='coupon_vendor'),
     path('coupon/generate', generateCoupon_view, name='generate_code'),
     path('coupon/verify', couponVerify_view, name='coupon_verify'),
+    path('withdraw/', withdraw_view, name='withdraw'),
 ]

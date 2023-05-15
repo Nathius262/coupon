@@ -7,23 +7,22 @@ from .models import GenerateCode
 # Create your views here.
 def index_view(request):
     # the keyword "loc" of the dictionary below is to check if we are rendering the index page
-    return render(request, 'pipay/home.html', {'loc': True,})
-
-def dashboard_view(request):
-    user = CustomUser.objects.all()
-    context = {
-        'members': user.count(),
-        'referrals': UserReferralLink.objects.all().filter(user=request.user).count(),
-    }
-    return render(request, 'pipay/dashboard.html', context)
-
-def task_view(request):
-    return render(request, 'pipay/task.html')
+    if request.user.is_authenticated:
+        user = CustomUser.objects.all()
+        context = {
+            'loc': False,
+            'members': user.count(),
+            'referrals': UserReferralLink.objects.all().filter(user=request.user).count(),
+        }
+        render_template = render(request, 'pipay/dashboard.html', context)
+    else:
+        render_template = render(request, 'pipay/landing_page.html', {'loc': True,})
+    return render_template
 
 def couponVendor_view(request):
     context = {
         'user': CustomUser.objects.all().filter(is_staff=True),
-        'loc':True,
+        'loc':False,
     }
     return render(request, 'pipay/couponVendor.html', context)
 
@@ -58,3 +57,6 @@ def couponVerify_view(request):
         except AttributeError:
             messages.error(request, "User with this coupon does not exit!")
     return render(request, 'pipay/couponVerify.html', context)
+
+def withdraw_view(request): 
+    return render(request, "pipay/withdraw.html")

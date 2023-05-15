@@ -1,0 +1,49 @@
+{% load static %}
+
+
+<section class="navbar-expand-md flex-md-nowrap p-0">
+<nav class="navbar navbar-light">
+    <a class="navbar-brand col-md-3 col-lg-2 me-0 px-2 fs-4" href="{% url 'index' %}"><img src="{% static '/img/logo3.png' %}" alt="logo" width="150"></a>
+
+    <button class="navbar-toggler nav_toggle_btn d-md-none collapsed mt-1 mb-1" type="button" data-bs-toggle="collapse" data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div id="sidebarMenu" class="collapse navbar-collapse">
+        <div class="nav_head ms-auto">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+
+                <li class="nav-item mb-1">
+                    <a class="navbar-brand fs-6 ms-3 underline" href="{% url 'index' %}">Home</a>
+                </li>
+                <li class="nav-item mb-1">
+                    <a class="navbar-brand fs-6 ms-3" href="{% url 'coupon_verify' %}">Coupon Checker</a>
+                </li>
+                <li class="nav-item mb-1">
+                    <a class="navbar-brand fs-6 ms-3" href="{% url 'coupon_vendor' %}">Smart Vendors</a>
+                </li>
+                <li class="nav-item mb-1">
+                    <a class="navbar-brand fs-6 ms-3" href="#">Top Earners</a>
+                </li>
+                <li class="nav-item mb-1">
+                    <a class="navbar-brand fs-6 ms-3" href="#">Advert post</a>
+                </li>
+                {% if request.user.is_authenticated %}
+                <li class="nav-item mb-1">
+                    <a class="navbar-brand fs-6 ms-3" href="#">Account Settings</a>
+                </li>
+                <li class="nav-item mb-1">
+                    <a class="navbar-brand fs-6 ms-3" href="{% url 'account_logout' %}">Logout</a>
+                </li>
+                {% else %}
+                <li class="nav-item mb-1">
+                    <a class="navbar-brand fs-6 ms-3" href="{% url 'account_login' %}">Login</a>
+                </li>
+                <li class="nav-item mb-1">
+                    <a class="navbar-brand fs-6 ms-3" href="{% url 'account_signup' %}">Sign up</a>
+                </li>
+                {% endif %}
+            </ul>
+        </div>
+    </div>    
+</nav>
+<section>

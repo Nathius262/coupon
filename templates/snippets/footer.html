@@ -1,17 +1,54 @@
 {% load static %}
-<div class="container">
-    <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
-        <div class="col-md-4 d-flex align-items-center">
-        <a href="/" class="mb-3 me-2 mb-md-0 text-muted text-decoration-none lh-1">
-            <img width="50" src="{% static 'img/favio_icon.png' %}" alt="pipay_logo">
-        </a>
-        <span class="mb-3 mb-md-0 text-muted">© 2022 Pipay</span>
+<footer class="blue-bg text-light p-5">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-sm-6 fs-6">
+                <p class="fw-bold py-0">Pipay</p>
+                <p class="py-0 mt-0">Info@pipay.ng</p>
+                <p class="py-0 mt-0">Lagos, Nigeria.</p>
+            </div>
+            <div class="col-sm-6">
+                <form action="">
+                    <div class="form-group">
+                        <label for="#subscribe" class="fw-bold fs-6 py-3">Subscribe to our newsletter</label>
+                        <div class="input-group mb-3">
+                            <input id="subscribe" type="email" class="form-control" placeholder="Enter your email address">
+                            <button class="btn btn-primary" type="button">Subscribe</span>
+                        </div>
+                    </div>
+                    
+                </form>
+            </div>
         </div>
+    </div>
 
-        <ul class="nav col-md-4 justify-content-end list-unstyled d-flex">
-        <li class="ms-3"><a class="text-muted" href="#"><i class="fa fa-twitter"></i></a></li>
-        <li class="ms-3"><a class="text-muted" href="#"><i class="fa fa-instagram"></i></a></li>
-        <li class="ms-3"><a class="text-muted" href="#"><i class="fa fa-facebook"></i></a></li>
+    <div class="container">
+        <div class="row">
+            <div class="col fs-6">
+                <ul class="list-unstyled fw-bold">
+                    <li class="footer-list"><a href="" >About us</a></li>
+                    <li class="footer-list"><a href="" >Top Earners</a></li>
+                    <li class="footer-list"><a href="" >Terms & Conditions</a></li>
+                    <li class="footer-list"><a href="" >Contact Us</a></li>
+                </ul>
+            </div>
+
+            <div class="col fs-6">
+                <ul class="list-unstyled fw-bold">
+                    <li class="footer-list"><a href="" >FAQs</a></li>
+                    <li class="footer-list"><a href="" >How to Refer</a></li>
+                    <li class="footer-list"><a href="" >Privacy Policy</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="my-0 pt-2 text-light text-center text-small">
+        <p class="mb-1">© 2023 Pipay</p>
+        <ul class="list-inline">
+          <li class="list-inline-item"><a href="#">Privacy</a></li>
+          <li class="list-inline-item"><a href="#">Terms</a></li>
+          <li class="list-inline-item"><a href="#">Support</a></li>
         </ul>
-    </footer>
-</div>
+      </div>
+</footer>

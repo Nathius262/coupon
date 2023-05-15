@@ -16,18 +16,22 @@
     {% load static %}
     <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
 
-    <!-- custom css--->
+    <!-- custom css -->
     <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'css/account.css' %}">
 
   </head>
   <body>
     {% block body %}
-    {% include 'snippets/header.html' %}
+    {% include 'snippets/main_header.html' %}
     {% include 'snippets/message.html' %}
 
     {% block content %}
     {% endblock %}
+
+    {% include 'snippets/footer.html' %}
+    <script src="{% static 'js/coupon.js' %}"></script>
+    <script src="{% static 'js/bootstrap.js' %}"></script>
     {% endblock %}
     {% block extra_body %}
     {% endblock %}

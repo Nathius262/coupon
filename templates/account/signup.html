@@ -6,9 +6,9 @@
 {% block head_title %}{% trans "Signup" %}{% endblock %}
 
 {% block content %}
-<div class="d-flex justify-content-center align-items-center p-1 pt-0">
+<div class="d-flex justify-content-center align-items-center p-1 account_bg pt-0">
 
-  <form method="post" enctype="multipart/form-data" class="account_bg mt-5 p-5 shadow col-sm-6 needs-validation" novalidate="">{% csrf_token %}
+  <form method="post" enctype="multipart/form-data" class="mt-5 p-5 col-md-6 needs-validation" novalidate="">{% csrf_token %}
     {% if redirect_field_value %}
     <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
     {% endif %}
@@ -18,12 +18,9 @@
     </p>
     
     <div class="row g-3">
-      <div class="mb-3 text-center border-bottom">
-        <div class="">
-          <img src="{% static 'img/pipay_logo.jpeg' %}" alt="pipay_logo" width="60"><span class="fs-3 fw-bold">Pipay</span>
-        </div>
+      <div class="mb-3 text-center">
         <div class="mt-4">
-          <h3 class="fw-bold fs-h3">Sign up</h3>
+          <h3 class="fw-bold fs-h3 navy-blue">Sign up</h3>
         </div>
       </div>
             
@@ -52,17 +49,6 @@
         </div>
         <p class="text-danger">
           {{ form.phone_number.errors.as_text }}
-        </p>
-      </div>
-
-      <div class="col-sm-6">
-        <label for="coupon" class="form-label text-success fw-bold fs-6">Coupon<!-- <span class="text-muted">(Optional)</span>----></label>
-        <input name="code" type="text" class="form-control" id="coupon" placeholder="Enter coupon code" required="">
-        <div class="invalid-feedback">
-          Valid code is required
-        </div>
-        <p class="text-danger">
-          {{ form.code.errors.as_text }}
         </p>
       </div>
 
@@ -110,13 +96,25 @@
         </p>
       </div>
 
+      <div class="col-sm-6">
+        <label for="coupon" class="form-label fs-6">Coupon<!-- <span class="text-muted">(Optional)</span>----></label>
+        <input name="code" type="text" class="form-control" id="coupon" placeholder="Enter coupon code" required="">
+        <div class="invalid-feedback">
+          Valid code is required
+        </div>
+        <p class="text-danger">
+          {{ form.code.errors.as_text }}
+        </p>
+        <p>Don't have code? <a href="{% url 'coupon_vendor' %}" class="navy-blue fw-bold">Get Code</a></p>
+      </div>
+
      
     </div>
 
     <hr class="my-4">
 
     <button class="w-100 btn btn-primary btn-lg" type="submit">{% trans "Sign Up" %} &raquo;</button>
-    <p>{% blocktrans %}Already have an account? Then please <a href="{{ login_url }}">sign in</a>.{% endblocktrans %}</p>
+    <p class="">Already have an account? Then please{% blocktrans %} <a class="navy-blue fw-bold" href="{{ login_url }}">sign in</a>.{% endblocktrans %}</p>
   </form>
 
 </div>

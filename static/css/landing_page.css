@@ -1,0 +1,30 @@
+.navbar {
+    background-color: var(--blue);
+}
+#sectionHeader{
+    color: var(--white);
+}
+.nav_toggle_btn{
+    margin-left: auto;
+    position: absolute;
+    top:0;
+    right: 13px;
+}
+.navbar-toggler-icon{
+    color: var(--white);
+}
+
+.nav_head{
+    display: flex;
+    flex-basis: auto;
+    color: var(--lightgrey);
+    padding-top: 2%;
+    padding-bottom: 2%;
+}
+.nav_head li .nav-link{
+    color: var(--white);
+}
+
+.nav_head a:hover{
+    color: var(--morelightgrey);
+}

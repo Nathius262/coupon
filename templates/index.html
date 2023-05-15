@@ -8,12 +8,25 @@
     <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
     <link rel="stylesheet" href="{% static 'css/font-awesome.min.css' %}">
     <link type="text/css" href="{% static 'css/style.css' %}" rel="stylesheet" media="all">
+    {% if loc %}
+    <link type="text/css" href="{% static 'css/landing_page.css' %}" rel="stylesheet" media="all">
+    {% else %}
+    <link type="text/css" href="{% static 'css/main.css' %}" rel="stylesheet" media="all">
+    {% endif %}
+
+    
     <script src="{% static 'js/jquery-2.1.1.min.js' %}"></script>
     <link rel="icon" href="{% static '/img/favio_icon.png' %}" type="image/png"  sizes="16x16" />
-    <title>Pipay | {% block title %} {% endblock %}</title>
+    <title>Pipay {% block title %} {% endblock %}</title>
 </head>
 <body>
-    {% include 'snippets/header.html' %}
+    
+    {% if loc %}
+    {% include 'snippets/landing_page_header.html' %}
+    {% else %}
+    {% include 'snippets/main_header.html' %}
+    {% endif %}   
+    
     {% include 'snippets/message.html' %}
     {% block content %} 
     {% endblock %}

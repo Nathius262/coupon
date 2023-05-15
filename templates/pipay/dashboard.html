@@ -5,62 +5,84 @@
 
 {% block content %}   
     
-<div class="container-fluid">
+<div class="container mt-5 mb-5">
     <div class="row">
+        <main class="ms-sm-auto px-md-4">
 
-        {% if request.user.is_authenticated %}
-        {% include 'snippets/sidebar.html' %}
-        {% endif %}
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="p-3 bg-gradient blue-bg rounded-5">
+                            <div>Welcome, <span class="w-user">{{request.user}}</span></div>
+                            <div class="mt-3">
+                                <div>Total Balance</div>
+                                <div class="h2">$220.5</div>
+                            </div>
 
-        <main class="ms-sm-auto {% if request.user.is_authenticated %}col-md-9 col-lg-10{% endif %} px-md-4">
+                            <div class="mb-3 form-check form-switch d-grid justify-content-end form-group">
+                                <div class="">
+                                    <label class="form-check-label" for="flexSwitchCheckChecked">Show balance</label>
+                                    <input class="form-check-input" type="checkbox" id="flexSwitchCheckChecked" checked="">
+                                </div>
+                                
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-sm-6 mt-5">
 
-            <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-                <h1 class="h4">Dashboard</h1>
-                <div class="btn-toolbar mb-2 mb-md-0">
-                    <div class="btn-group me-2 ">
-                        <!---<span class="me-2 text-muted">copy referral link- </span>--->
-                        <div class="copyToClipboard form-group d-flex">
-                            <input type="text" value="{{request.scheme}}://{{ request.get_host }}{{user.get_referral_link}}" id="myInput" class="form-control" readonly>
-                            <button class="btn btn-outline-secondary" onclick="copyText()"><i class="fa fa-clone"></i></button>
+                        <div class="row">
+                            <div class="col mx-2">
+                                <img src="{% static 'img/icon/g1.png' %}" alt="g1.png">
+                                <p class="mt-0">Withdraw</p>
+                            </div>
+                            <div class="col mx-2">
+                                <img src="{% static 'img/icon/g2.png' %}" alt="g2.png">
+                                <p class="mt-0">Tasks</p>
+                            </div>
+                            <div class="col mx-2">
+                                <img src="{% static 'img/icon/g3.png' %}" alt="g3.png">
+                                <p class="mt-0">Earnings</p>
+                            </div>
+                            <div class="col mx-2">
+                                <img src="{% static 'img/icon/g4.png' %}" alt="g4.png">
+                                <p class="mt-0">Referals</p>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <div class="container mt-5">
-                <div class="">
-                    <div class="row m-sm-auto">
-                        <div class="col-md-6 mb-2">
-                            <div class="ps-3 pt-2 pb-2 text-white bg-danger rounded-3">
-                              <div class="fs-6">Referrals: </div>
-                              <div class="fw-bold fs-4">{{referrals}}</div>
-                            </div>
-                        </div>
-
-                        <div class="col-md-6 mb-2">
-                            <div class="ps-3 pt-2 pb-2 text-white bg-info rounded-3">
-                              <div class="fs-6">Members: </div>
-                              <div class="fw-bold fs-4">{{members}}</div>
-                            </div>
-                        </div>
-
-                        <div class="col-md-6 mb-2">
-                            <div class="ps-3 pt-2 pb-2 text-white bg-success rounded-3">
-                              <div class="fs-6">Total Earnings: </div>
-                              <div class="fw-bold fs-4">$ 1,000</div>
-                            </div>
-                        </div>
-
-                        <div class="col-md-6 mb-2">
-                            <div class="ps-3 pt-2 pb-2 text-white bg-dark rounded-3">
-                              <div class="fs-6">Total Balance: </div>
-                              <div class="fw-bold fs-4">$ 1,523</div>
-                            </div>
+            <div class="container">
+               <div class="row row-cols-2 row-cols-md-5 mt-5 mx-auto">
+                    <div class="col mx-auto container mt-3">
+                        <div class="p-3 border rounded-5">
+                            <p class="text-muted">Task <br> Earnings</p>
+                            <p class="h2 fw-bold">$100</p>
                         </div>
                     </div>
-                </div>
-
+                    <div class="col mx-auto container mt-3">
+                        <div class="p-3 border rounded-5">
+                            <p class="text-muted">Affiliate <br> Earnings</p>
+                            <p class="h2 fw-bold">$120</p>
+                        </div>
+                    </div>
+                    <div class="col mx-auto container mt-3">
+                        <div class="p-3 border rounded-5">
+                            <p class="text-muted">Total <br> Withdrawals</p>
+                            <p class="h2 fw-bold">$30</p>
+                        </div>
+                    </div>
+                    <div class="col mx-auto container mt-3">
+                        <div class="p-3 border rounded-5">
+                            <p class="text-muted">Total <br> Earnings</p>
+                            <p class="h2 fw-bold">$250</p>
+                        </div>
+                    </div>
+                </div> 
             </div>
+            
+            
         </main>
     </div>
 </div>
