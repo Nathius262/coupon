@@ -4,6 +4,24 @@
 
 {% block content %}
 <link type="text/css" rel="stylesheet" href="{% static 'css/form-validation.css' %}">
+<style>
+  .load_img{
+    width: 70px;
+    height: 70px;
+    background-color:var(--grey);
+    background-image: url("{% static 'img/default.jpg' %}");
+    background-size: cover;
+    border-radius: 50%;
+  }
+
+  .circle_bg{
+    width: 50px;
+    height: 50px;
+    background-color: #75e075;
+    color: var(--white);
+    border-radius: 50%;
+  }
+</style>
 <div class="container mt-5 mb-5">
     <main>
       <div class="row g-5 mt-5 mb-5">
@@ -28,14 +46,24 @@
           
           <div class="mt-5">
             {% if obj %}
-            <span class=" mt-5 mb-5 fs-5 text-info text-muted text-small!">This coupon has been used by the user below!</span>
+            <span class=" mt-5 mb-5 fs-5 text-info text-muted text-small!">This coupon has been used by another user! Get <a href="{% url 'coupon_verify' %}" class="navy-blue">Code?</a> </span>
             {% endif %}
-            <div class="bg-custom d-grid rounded-5 align-items-center fs-3">
-              <img src="{% static 'img/default.jpg' %}" alt="" width="55" class="rounded-5">
-              <span class="mx-5"><span class="text-muted fw-bold">Name:</span> {{obj.usersFullName | title}}</span>
-              <span class="mx-5"><span class="text-muted fw-bold">Email:</span>: {{obj.email }}</span>
-            </div>
-            
+            <div class="container">
+              <div class="row row-cols-1 container mx-auto">
+        
+                <div class="col mx-auto mt-5 shadow">
+                  <div class="">
+                    <div class="d-flex justify-content-between align-items-center">
+                      <div class="load_img container"></div>
+                      <div class="container mx-3">
+                        <p class="fs-5 navy-blue">{{obj.usersFullName | title}}</p>
+                        <p class="text-muted">Kuda <span class="text-danger mx-4"><i class="fa fa-flag"> Report</i></span></p>
+                      </div>
+                      <div class="circle_bg container d-flex justify-content-center align-items-center"><i class="fa fa-whatsapp fa-2x"></i></div>
+                    </div>
+                  </div>
+                </div>
+              </div>            
           </div>
           {% endfor %}
         </div>
