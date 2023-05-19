@@ -53,13 +53,17 @@ class CustomSignupForm(SignupForm):
         return user
 
 
-class AccountUpdateForm(forms.ModelForm):
+class AccountSettingsForm(forms.ModelForm):
+    
+    phone_number = PhoneNumberField(
+        widget= PhoneNumberPrefixWidget(attrs={'class': 'form-control rounded-3', 'id':'floatingPhoneNumber', 'placeholder':"Phone Number"})
+    )
 
     class Meta:
         model = CustomUser
-        fields = ('email', 'username', 'first_name', 'last_name', 'picture')
+        fields = ('email', 'username', 'first_name', 'last_name', 'picture', "phone_number")
         widgets = {
-            'picture': forms.FileInput(attrs={'class': 'form-control', 'onchange': 'readURL(this)', 'id':'id_image_file', 'hidden':'True'}),
+            #'picture': forms.FileInput(attrs={'class': 'form-control', 'onchange': 'readURL(this)', 'id':'id_image_file', 'hidden':'True'}),
             'email': forms.EmailInput(attrs={'class': 'form-control rounded-3', 'id':'floatingInput', 'placeholder':"name@example.com"}),
             'username': forms.TextInput(attrs={'class': 'form-control rounded-3', 'id':'floatingUsername', 'placeholder':"username"}),
             'first_name': forms.TextInput(attrs={'class': 'form-control rounded-3', 'id':'floatingName', 'placeholder':"First Name"}),

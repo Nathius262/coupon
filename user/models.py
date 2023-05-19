@@ -120,7 +120,6 @@ class UserReferralLink(models.Model):
 
 @receiver(post_save, sender=CustomUser)
 def save_profile_img(sender, instance, *args, **kwargs):
-    
     SIZE = 600, 600
     if instance.picture:
         pic = Image.open(instance.picture.path)
