@@ -1,59 +1,9 @@
-import os
-from PIL import Image
-from django.db.models.signals import post_save
-from django.dispatch import receiver
 from django.urls import reverse
-from django.conf import settings
 from django.db import models
-from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
+from django.contrib.auth.models import AbstractBaseUser
 from phonenumber_field.modelfields import PhoneNumberField
-
-def image_location(instance, filename):
-    file_path = 'profile/user_{username}/profile.jpeg'.format(
-        username=str(instance.id), filename=filename,
-    )
-    full_path = os.path.join(settings.MEDIA_ROOT, file_path)
-    if os.path.exists(full_path):
-        os.remove(full_path)
-    return file_path
-
-
-# Create your models here.
-class MyAccountManager(BaseUserManager):
-    def create_user(self, email, username, first_name, code, password):
-        if not email:
-            raise ValueError("Users must have an email address")
-        if not username:
-            raise ValueError("Users must have a username")
-        if not first_name:
-            raise ValueError("Users must have their first_name")
-        if not password:
-            raise ValueError("Must secure account with password")
-        if not code:
-            raise ValueError("user must have a coupon code")
-        user = self.model(
-            email=self.normalize_email(email),
-            username=username,
-            code=code,
-            first_name=first_name,
-        )
-        user.set_password(password)
-        user.save(using=self._db)
-        return user
-
-    def create_superuser(self, email, username, first_name, code, password):
-        user = self.create_user(
-            email=self.normalize_email(email),
-            password=password,
-            username=username,
-            first_name=first_name,
-            code=code,
-        )
-        user.is_admin = True
-        user.is_staff = True
-        user.is_superuser = True
-        user.save(using=self._db)
-        return user
+from .managers import MyAccountManager
+from .utils import image_location
 
 
 class CustomUser(AbstractBaseUser):
@@ -112,26 +62,3 @@ class UserReferralLink(models.Model):
         
     def __str__(self):
         return f"{self.refered_user} refered by {self.user}"
-
-
-"""
-# signals
-"""
-
-@receiver(post_save, sender=CustomUser)
-def save_profile_img(sender, instance, *args, **kwargs):
-    SIZE = 600, 600
-    if instance.picture:
-        pic = Image.open(instance.picture.path)
-        try:
-            pic.thumbnail(SIZE, Image.LANCZOS)
-            pic.save(instance.picture.path)
-        except:
-            if pic.mode in ("RGBA", 'P'):
-                profile_pic = pic.convert("RGB")
-                profile_pic.thumbnail(SIZE, Image.LANCZOS)
-                profile_pic.save(instance.picture.path)
-
-    if instance.referred_by:
-        user= CustomUser.objects.get(username=instance.referred_by)
-        UserReferralLink.objects.get_or_create(user=user, refered_user=instance)

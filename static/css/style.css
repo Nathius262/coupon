@@ -165,6 +165,6 @@ footer
     color: var(--white);
 }
 
-.list-inline-item a:hover:{
+.list-inline-item a:hover{
     color: var(--lightgrey);
 }

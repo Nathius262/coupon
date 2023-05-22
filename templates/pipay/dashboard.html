@@ -16,16 +16,24 @@
                             <div>Welcome, <span class="w-user">{{request.user}}</span></div>
                             <div class="mt-3">
                                 <div>Total Balance</div>
-                                <div class="h2">$220.5</div>
+                                <div id="total-balance" class="h2">$220.5</div>
                             </div>
 
                             <div class="mb-3 form-check form-switch d-grid justify-content-end form-group">
                                 <div class="">
-                                    <label class="form-check-label" for="flexSwitchCheckChecked">Show balance</label>
-                                    <input class="form-check-input" type="checkbox" id="flexSwitchCheckChecked" checked="">
+                                    <label class="form-check-label" for="balance-toggle">Show balance</label>
+                                    <input class="form-check-input" type="checkbox" id="balance-toggle" checked="">
                                 </div>
                                 
                             </div>
+
+                            <script>
+                                let total_balance = document.getElementById('total-balance')
+                                let balance_toggle = document.getElementById('balance-toggle')
+                                balance_toggle.addEventListener('click', (e)=>{
+                                    console.log(balance_toggle.value)
+                                })
+                            </script>
                         </div>
                     </div>
                     
