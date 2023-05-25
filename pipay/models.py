@@ -1,4 +1,6 @@
 from django.db import models
+from user.models import CustomUser
+
 
 # Create your models here.
 class GenerateCode(models.Model):
@@ -6,3 +8,39 @@ class GenerateCode(models.Model):
 
     def __str__(self):
         return str(self.coupon_code)
+
+class Currency(models.TextChoices):
+    USD= '$'
+    Naira= 'N'
+    pakistani_rupee= 'PKR'
+    ghanaian_cedis= 'GHS'
+    
+    def __str__(self):
+        return str(self.id)
+    
+class UsersBalance(models.Model):
+    
+    class Meta:
+        constraints = [
+            models.CheckConstraint(
+                name="%(app_label)s_%(class)s_currency_valid",
+                check=models.Q(currency__in=Currency.values)
+            )
+        ]
+    
+    user = models.OneToOneField(CustomUser, null=False, blank=False, on_delete=models.CASCADE, editable=False)
+    currency =models.CharField(max_length=50, editable=False, choices=Currency.choices, default=Currency.USD)
+    affilate = models.DecimalField(max_digits=12, decimal_places=2, default=0.00, editable=False)
+    task = models.DecimalField(max_digits=12, decimal_places=2, default=0.00, editable=False)
+    
+    def totalBalance(self):
+        total_balance = self.affilate + self.task
+        return total_balance
+    
+    def totalWithdraw(self):
+        total_withdraw = self.totalBalance
+        return total_withdraw
+    
+    def __str__(self):
+        return str(self.user)
+    

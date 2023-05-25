@@ -15,6 +15,11 @@
                 <li class="nav-item mb-1">
                     <a class="navbar-brand fs-6 ms-3 underline" href="{% url 'index' %}">Home</a>
                 </li>
+                {%if request.user.is_admin %}
+                <li class="nav-item mb-1">
+                    <a class="navbar-brand fs-6 ms-3 underline" href="{% url 'generate_code' %}">Generate coupon</a>
+                </li>
+                {%endif%}
                 <li class="nav-item mb-1">
                     <a class="navbar-brand fs-6 ms-3" href="{% url 'coupon_verify' %}">Coupon Checker</a>
                 </li>

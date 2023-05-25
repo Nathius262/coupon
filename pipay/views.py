@@ -2,18 +2,30 @@ from django.shortcuts import render, redirect
 from django.contrib import messages
 from user.models import CustomUser, UserReferralLink
 from user.utils import generate_ref_code
-from .models import GenerateCode
+from .models import GenerateCode, UsersBalance
 
 # Create your views here.
 def index_view(request):
     # the keyword "loc" of the dictionary below is to check if we are rendering the index page
     if request.user.is_authenticated:
-        user = CustomUser.objects.all()
+        """user = CustomUser.objects.all()
         context = {
             'loc': False,
             'members': user.count(),
             'referrals': UserReferralLink.objects.all().filter(user=request.user).count(),
         }
+        """
+        
+        try:
+            user_balance = UsersBalance.objects.get(user=request.user)
+        except UsersBalance.DoesNotExist:
+            return None
+        
+        context={
+            'loc': False,
+            'user_balance': user_balance
+        }
+        
         render_template = render(request, 'pipay/dashboard.html', context)
     else:
         render_template = render(request, 'pipay/landing_page.html', {'loc': True,})

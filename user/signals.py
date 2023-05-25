@@ -5,6 +5,7 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 from PIL import Image
 from .models import CustomUser, UserReferralLink
+from pipay.models import UsersBalance
 
 @receiver(post_save, sender=CustomUser)
 def save_profile_img(sender, instance, *args, **kwargs):
@@ -23,3 +24,5 @@ def save_profile_img(sender, instance, *args, **kwargs):
     if instance.referred_by:
         user= CustomUser.objects.get(username=instance.referred_by)
         UserReferralLink.objects.get_or_create(user=user, refered_user=instance)
+        
+    balance = UsersBalance.objects.get_or_create(user=instance)
