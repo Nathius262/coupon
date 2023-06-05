@@ -1,10 +1,11 @@
 from django import forms
+from django.core.exceptions import ObjectDoesNotExist
 from allauth.account.forms import SignupForm
 from .models import CustomUser
 from phonenumber_field.formfields import PhoneNumberField
 from phonenumber_field.widgets import PhoneNumberPrefixWidget
-from pipay.models import GenerateCode
-
+from pipay.models import GenerateCode, UsersBalance
+from pipay.constants import currency
 
 class CustomSignupForm(SignupForm):
     first_name = forms.CharField(max_length=60, label="First Name", widget=forms.TextInput(attrs={'placeholder':'First_Name'}))
@@ -44,12 +45,38 @@ class CustomSignupForm(SignupForm):
         user.last_name = self.cleaned_data['last_name']
         user.code = self.cleaned_data['code']
         user.phone_number = self.cleaned_data['phone_number']
+        
+        # get the referred user id
         try:
-            user.referred_by = str(CustomUser.objects.get(id=refered_by))
-        except:
-            user.referred_by = ''
+            referred_by = CustomUser.objects.get(id=refered_by)
+        except CustomUser.DoesNotExist:
+            referred_by = CustomUser.objects.get(username="admin") 
+        user.referred_by = str(referred_by)
+        
+        # add bonus to the exiting user that has refered this user
+        if user.referred_by:
+            topup_balance = UsersBalance.objects.get(user=referred_by.id)
+            bonus_naira = currency.dollar * 5
+            if currency.isBaseCurrency(topup_balance.currency):
+                topup_balance.affilate += bonus_naira
+                
+            else:
+                bonus_naira = currency.currencyConverter("N", topup_balance.currency, bonus_naira)
+                topup_balance.affilate += bonus_naira
+            topup_balance.save()
+        
         user.save()
-
+        
+        try:
+            code = GenerateCode.objects.get(coupon_code=user.code)
+            code.user = user
+            code.save()
+        except GenerateCode.DoesNotExist:
+            pass
+        
+        # create new users balance
+        UsersBalance.objects.get_or_create(user=user)                
+        
         return user
 
 

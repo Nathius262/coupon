@@ -15,7 +15,7 @@
                 <li class="nav-item mb-1">
                     <a class="navbar-brand fs-6 ms-3 underline" href="{% url 'index' %}">Home</a>
                 </li>
-                {%if request.user.is_admin %}
+                {%if request.user.is_staff %}
                 <li class="nav-item mb-1">
                     <a class="navbar-brand fs-6 ms-3 underline" href="{% url 'generate_code' %}">Generate coupon</a>
                 </li>
@@ -32,6 +32,25 @@
                 <li class="nav-item mb-1">
                     <a class="navbar-brand fs-6 ms-3" href="#">Advert post</a>
                 </li>
+                
+                <li class="nav-item mb-1 d-grid align-items-center">
+                    <div class="dropdown">
+                        <button class="btn btn-outline-secondary dropdown-toggle m-0" type="button" id="dropdownMenuButton" aria-expanded="false">
+                            {{user_currency}}
+                        </button>
+                        <ul id="dropdown-menu-ul" class="dropdown-menu">
+                            {% for currency in currency %}
+                            {% if not user_currency in currency%}
+                            <li class="dropdown-item currency" data-csrftoken="{{csrf_token}}">{{currency}}</li>
+                            {%endif%}
+                            {% endfor %}
+                        </ul> 
+                        
+
+                    
+                    </div>
+                </li>                
+                
                 {% if request.user.is_authenticated %}
                 <li class="nav-item mb-1">
                     <a class="navbar-brand fs-6 ms-3" href="{% url 'user:account_setting' %}">Account Settings</a>
@@ -46,6 +65,7 @@
                 <li class="nav-item mb-1">
                     <a class="navbar-brand fs-6 ms-3" href="{% url 'account_signup' %}">Sign up</a>
                 </li>
+
                 {% endif %}
             </ul>
         </div>

@@ -2,20 +2,43 @@ from django.shortcuts import render, redirect
 from django.contrib import messages
 from user.models import CustomUser, UserReferralLink
 from user.utils import generate_ref_code
-from .models import GenerateCode, UsersBalance
+from .models import GenerateCode, UsersBalance, Currency
+from django.http.response import JsonResponse
+from .constants import currency as c
 
 # Create your views here.
+def currency(request):
+    context = {}
+    if request.user.is_authenticated:
+        currencies = Currency.values
+        #print(currency)
+        context = {
+            "currency" :currencies,
+            "user_currency": request.user.user_currency.currency
+        }
+    return context
+
+def changeCurrency_view(request):
+    
+    if request.POST:
+        get_user_currency = request.POST.get('currency')
+        user = UsersBalance.objects.get(user=request.user)
+        affliate = c.currencyConverter(user.currency, get_user_currency, float(user.affilate))
+        task = c.currencyConverter(user.currency, get_user_currency, float(user.task))
+        ### reasigning currency to the usersbalance model based on the currency they have chosen
+        user.affilate = affliate
+        user.task = task
+        user.currency = get_user_currency
+        user.save()        
+        message = {
+            "status": "currency changed"
+        }
+    return JsonResponse(message, safe=True)
+
 def index_view(request):
     # the keyword "loc" of the dictionary below is to check if we are rendering the index page
-    if request.user.is_authenticated:
-        """user = CustomUser.objects.all()
-        context = {
-            'loc': False,
-            'members': user.count(),
-            'referrals': UserReferralLink.objects.all().filter(user=request.user).count(),
-        }
-        """
-        
+    
+    if request.user.is_authenticated:        
         try:
             user_balance = UsersBalance.objects.get(user=request.user)
         except UsersBalance.DoesNotExist:
@@ -44,7 +67,7 @@ def generateCoupon_view(request):
         if request.POST:
             code = generate_ref_code()
             # generating code and saving in the database "GenerateCode"
-            coupon_code, created = GenerateCode.objects.get_or_create(coupon_code=code)
+            coupon_code, created = GenerateCode.objects.get_or_create(coupon_code=code, generated_by=request.user)
             if created:
                 context['code'] = code
                 context['show_code'] = True

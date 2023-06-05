@@ -41,7 +41,7 @@ class CustomUser(AbstractBaseUser):
         return f'{self.first_name} {self.last_name}'
         
     def get_absolute_url(self):
-        return reverse('user:profile', args=[self.username])
+        return reverse('user:referred_user', args=[self.username])
 
     def get_referral_link(self):
         return reverse('user:custom_account_signup', args=[self.code])

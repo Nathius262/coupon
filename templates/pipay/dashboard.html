@@ -37,9 +37,16 @@
                         </div>
                     </div>
                     
-                    <div class="col-sm-6 mt-5">
+                    <div class="col-sm-6">
+                        
+                        <div class="row mt-md-0 mt-5">
+                            <div class="d-inline-flex align-items-center p-0 form-control">
+                                <input id="myInput" class="form-control" type="text" value="{{request.scheme}}://{{request.get_host}}{{request.user.get_referral_link}}" readonly>                                
+                               <i class="fa fa-clone fa-2x p-1"  onclick="copyText()"></i>
+                            </div>
+                        </div>
 
-                        <div class="row">
+                        <div class="row  mt-5">
                             <div class="col mx-2">
                                 <img src="{% static 'img/icon/g1.png' %}" alt="g1.png">
                                 <p class="mt-0">Withdraw</p>
@@ -66,25 +73,25 @@
                     <div class="col mx-auto container mt-3">
                         <div class="p-3 border rounded-5">
                             <p class="text-muted">Task <br> Earnings</p>
-                            <p class="h2 fw-bold">{{user_balance.currency}}{{user_balance.task}}</p>
+                            <p class="h5 fw-bold">{{user_balance.currency}} {{user_balance.task}}</p>
                         </div>
                     </div>
                     <div class="col mx-auto container mt-3">
                         <div class="p-3 border rounded-5">
                             <p class="text-muted">Affiliate <br> Earnings</p>
-                            <p class="h2 fw-bold">{{user_balance.currency}}{{user_balance.affilate}}</p>
+                            <p class="h5 fw-bold">{{user_balance.currency}} {{user_balance.affilate}}</p>
                         </div>
                     </div>
                     <div class="col mx-auto container mt-3">
                         <div class="p-3 border rounded-5">
                             <p class="text-muted">Total <br> Withdrawals</p>
-                            <p class="h2 fw-bold">$30</p>
+                            <p class="h5 fw-bold">$30</p>
                         </div>
                     </div>
                     <div class="col mx-auto container mt-3">
                         <div class="p-3 border rounded-5">
                             <p class="text-muted">Total <br> Earnings</p>
-                            <p class="h2 fw-bold">{{user_balance.currency}}{{user_balance.totalBalance}}</p>
+                            <p class="h5 fw-bold">{{user_balance.currency}} {{user_balance.totalBalance}}</p>
                         </div>
                     </div>
                 </div> 

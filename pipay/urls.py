@@ -7,4 +7,5 @@ urlpatterns = [
     path('coupon/generate', generateCoupon_view, name='generate_code'),
     path('coupon/verify', couponVerify_view, name='coupon_verify'),
     path('withdraw/', withdraw_view, name='withdraw'),
+    path('currency/change/', changeCurrency_view, name='currency_change'),
 ]
