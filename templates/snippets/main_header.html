@@ -1,13 +1,30 @@
 {% load static %}
 
 
-<section class="navbar-expand-md flex-md-nowrap p-0">
+<section class="navbar-expand-md flex-md-nowrap p-0 align-items-center">
 <nav class="navbar navbar-light">
     <a class="navbar-brand col-md-3 col-lg-2 me-0 px-2 fs-4" href="{% url 'index' %}"><img src="{% static '/img/logo3.png' %}" alt="logo" width="150"></a>
 
-    <button class="navbar-toggler nav_toggle_btn d-md-none collapsed mt-1 mb-1" type="button" data-bs-toggle="collapse" data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
+    <div class="nav-item mb-1 d-md-none d-grid align-items-center mx-auto ms-5 ">
+        <div class="dropdown me-5">
+            <button class="btn btn-outline-secondary dropdown-toggle m-0  px-2 mt-2" type="button" id="dropdownMenuButton" aria-expanded="false">
+                {{user_currency}}
+            </button>
+            <ul id="dropdown-menu-ul" class="dropdown-menu">
+                {% for currency in currency %}
+                {% if not user_currency in currency%}
+                <li class="dropdown-item currency" data-csrftoken="{{csrf_token}}">{{currency}}</li>
+                {%endif%}
+                {% endfor %}
+            </ul>
+        
+        </div>
+    </div>            
+
+    <button type="button" class="navbar-toggler nav_toggle_btn  px-2 d-md-none collapsed mt-3 mb-1 " data-bs-toggle="modal" data-bs-target="#nav-menu">
         <span class="navbar-toggler-icon"></span>
     </button>
+
     <div id="sidebarMenu" class="collapse navbar-collapse">
         <div class="nav_head ms-auto">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
@@ -30,7 +47,7 @@
                     <a class="navbar-brand fs-6 ms-3" href="#">Top Earners</a>
                 </li>
                 <li class="nav-item mb-1">
-                    <a class="navbar-brand fs-6 ms-3" href="#">Advert post</a>
+                    <a class="navbar-brand fs-6 ms-3" href="{% url 'advert_post' %}">Advert post</a>
                 </li>
                 
                 <li class="nav-item mb-1 d-grid align-items-center">
@@ -69,6 +86,7 @@
                 {% endif %}
             </ul>
         </div>
-    </div>    
+    </div>
+   
 </nav>
 <section>

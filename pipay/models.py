@@ -44,6 +44,7 @@ class UsersBalance(models.Model):
         total_balance = self.affilate + self.task
         return total_balance
     
+    @property
     def totalWithdraw(self):
         total_withdraw = self.totalBalance
         return total_withdraw

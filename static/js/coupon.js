@@ -10,7 +10,18 @@ function copyText() {
     navigator.clipboard.writeText(copyText.value);
 
     // Alert the copied text    
-    alert("Copied the text: " + copyText.value);
+    //alert("Copied the text: " + copyText.value);
+    let copyAlert = document.getElementById("copy-alert")
+    copyAlert.style.display = "block"
+    setTimeout(
+        function(){
+
+            //console.log("runing")
+            copyAlert.style.display = "none";
+        }, 3000
+    )
+    
+    
 }
 
 let dropdown = $('#dropdownMenuButton')
@@ -53,3 +64,66 @@ for(let i=0; i<currency.length;i++){
     })
 }
 
+
+//dashboard
+
+let total_balance = document.getElementById('total-balance')
+let balance_toggle = document.getElementById('balance-toggle')
+balance_toggle.addEventListener('click', (e)=>{
+    if (balance_toggle.value == "on"){    
+        toggleShowBalance(true)         
+        balance_toggle.value = "off"
+    }
+    else if (balance_toggle.value == "off"){
+        toggleShowBalance(false)
+        balance_toggle.value = "on"
+    }
+})
+
+function toggleShowBalance(boolean){
+
+    let totalBalance = document.getElementById("total-balance")
+    let taskEl = document.getElementById("task-el")
+    let affilateEl = document.getElementById("affilate-el")
+    let withdrawalEl = document.getElementById("withdraw-el")
+    let totalEarnEl = document.getElementById("total-earn-el")
+
+    if (boolean){
+        totalBalance.innerText ="****"
+        taskEl.innerText = "****"
+        affilateEl.innerText = "****"
+        withdrawalEl.innerText = "****"
+    }else{
+        $.ajax({
+            method:"get",
+            url: "/user/currency/info/",
+            success: function(data){
+                let currency = data.currency
+                totalBalance.innerText =`${currency} ${data.total_balance}`
+                taskEl.innerText = `${currency} ${data.task}`
+                affilateEl.innerText = `${currency} ${data.affilate}`
+                withdrawalEl.innerText = `${currency} ${data.total_withdraw}`
+                //totalEarnEl.innerText = data.
+                
+            },
+            error: function(err){
+                console.log(err)
+            }
+        })
+    }
+}
+
+
+///////////////////////////
+///////////////////////////
+///////////////////////////
+/////footer             ///
+///////////////////////////
+///////////////////////////
+///////////////////////////
+
+let darkmode = document.getElementById("dark-mode")
+
+darkmode.addEventListener("click", ()=>{
+    console.log("screen mode change!")
+})

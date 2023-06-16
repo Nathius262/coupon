@@ -2,6 +2,7 @@
     --black:black;
     --grey: rgb(214, 214, 214);
     --lightgrey:rgb(156, 156, 156);
+    --body-grey: rgb(231, 231, 231);
     --morelightgrey:rgb(216, 216, 216);
     --darkgrey:rgb(25, 25, 25);
     --darkgreyless:rgb(39, 39, 39);
@@ -17,6 +18,7 @@
 
 body{
     font-family: Helvetica, Arial, sans-serif;
+    background: var(--body-grey);
 }
 
 .show-dropdown{
@@ -66,6 +68,9 @@ dashboard page
 .form-check-input{
     background-color: var(--green);
     border-color: var(--green);
+}
+#balance-summary .col div{
+    background-color: var(--white);
 }
 
 /** 
@@ -157,6 +162,27 @@ withdraw page
 /*
 footer
 */
+#copy-alert{
+    position: fixed;
+    bottom: 20;
+    left: 12;
+    display: none;
+
+}
+#copy-alert span{
+    color: var(--blue);
+}
+
+#dark-mode{
+    background: var(--black);
+    color: var(--white);
+    position:fixed;
+    padding: 2px;
+    left: 0vw;
+}
+#dark-mode:hover{
+    cursor: pointer;
+}
 
 .footer-list a{
     color: var(--white);

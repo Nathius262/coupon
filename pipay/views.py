@@ -18,6 +18,22 @@ def currency(request):
         }
     return context
 
+# Create your views here.
+def userBalanceInfo(request):
+    context = {}
+    if request.user.is_authenticated:
+        
+        user = request.user.user_currency
+         
+        context = {           
+            "total_balance":user.totalBalance(),
+            "total_withdraw": user.totalWithdraw(),          
+            "affilate": user.affilate,
+            "task": user.task,
+            "currency": user.currency
+        }
+    return JsonResponse(context, safe=False)
+
 def changeCurrency_view(request):
     
     if request.POST:
@@ -95,3 +111,6 @@ def couponVerify_view(request):
 
 def withdraw_view(request): 
     return render(request, "pipay/withdraw.html")
+
+def advert_post_view(request):
+    return render(request, "pipay/task.html")

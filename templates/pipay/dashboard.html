@@ -13,36 +13,29 @@
                 <div class="row">
                     <div class="col-sm-6">
                         <div class="p-3 bg-gradient blue-bg rounded-5">
-                            <div>Welcome, <span class="w-user">{{request.user}}</span></div>
+                            <div>Welcome back, <span class="w-user">{{request.user}}</span></div>
                             <div class="mt-3">
                                 <div>Total Balance</div>
-                                <div id="total-balance" class="h2">$220.5</div>
+                                <div id="total-balance" class="h2">****</div>
                             </div>
 
                             <div class="mb-3 form-check form-switch d-grid justify-content-end form-group">
                                 <div class="">
                                     <label class="form-check-label" for="balance-toggle">Show balance</label>
-                                    <input class="form-check-input" type="checkbox" id="balance-toggle" checked="">
+                                    <input class="form-check-input" type="checkbox" id="balance-toggle" value="off">
                                 </div>
                                 
                             </div>
-
-                            <script>
-                                let total_balance = document.getElementById('total-balance')
-                                let balance_toggle = document.getElementById('balance-toggle')
-                                balance_toggle.addEventListener('click', (e)=>{
-                                    console.log(balance_toggle.value)
-                                })
-                            </script>
                         </div>
                     </div>
                     
                     <div class="col-sm-6">
                         
-                        <div class="row mt-md-0 mt-5">
+                        <div class="row mt-md-0 mt-5 p-4 bg-gradient blue-bg rounded-4">
+                            <h5 class="text-center">Affiliate Link:</h5>
                             <div class="d-inline-flex align-items-center p-0 form-control">
                                 <input id="myInput" class="form-control" type="text" value="{{request.scheme}}://{{request.get_host}}{{request.user.get_referral_link}}" readonly>                                
-                               <i class="fa fa-clone fa-2x p-1"  onclick="copyText()"></i>
+                               <button onclick="copyText()" class="btn btn-primary p-1 m-1"><i class="fa fa-clone">copy</i></button>
                             </div>
                         </div>
 
@@ -68,30 +61,30 @@
                 </div>
             </div>
 
-            <div class="container">
+            <div class="container" id="balance-summary">
                <div class="row row-cols-2 row-cols-md-5 mt-5 mx-auto">
                     <div class="col mx-auto container mt-3">
-                        <div class="p-3 border rounded-5">
+                        <div class="p-3 border shadow rounded-5">
                             <p class="text-muted">Task <br> Earnings</p>
-                            <p class="h5 fw-bold">{{user_balance.currency}} {{user_balance.task}}</p>
+                            <p class="h5 fw-bold" id="task-el">****</p>
                         </div>
                     </div>
                     <div class="col mx-auto container mt-3">
-                        <div class="p-3 border rounded-5">
+                        <div class="p-3 border shadow rounded-5">
                             <p class="text-muted">Affiliate <br> Earnings</p>
-                            <p class="h5 fw-bold">{{user_balance.currency}} {{user_balance.affilate}}</p>
+                            <p class="h5 fw-bold" id="affilate-el">****</p>
                         </div>
                     </div>
                     <div class="col mx-auto container mt-3">
-                        <div class="p-3 border rounded-5">
+                        <div class="p-3 border shadow rounded-5">
                             <p class="text-muted">Total <br> Withdrawals</p>
-                            <p class="h5 fw-bold">$30</p>
+                            <p class="h5 fw-bold" id="withdraw-el">****</p>
                         </div>
                     </div>
                     <div class="col mx-auto container mt-3">
-                        <div class="p-3 border rounded-5">
+                        <div class="p-3 border shadow rounded-5">
                             <p class="text-muted">Total <br> Earnings</p>
-                            <p class="h5 fw-bold">{{user_balance.currency}} {{user_balance.totalBalance}}</p>
+                            <p class="h5 fw-bold" id="total-earn-el">****</p>
                         </div>
                     </div>
                 </div> 

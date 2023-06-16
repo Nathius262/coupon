@@ -7,12 +7,7 @@
     
 <div class="container-fluid">
     <div class="row">
-
-        {% if request.user.is_authenticated %}
-        {% include 'snippets/sidebar.html' %}
-        {% endif %}
-
-        <main class="ms-sm-auto {% if request.user.is_authenticated %}col-md-9 col-lg-10{% endif %} px-md-4">
+        <main class="ms-sm-auto px-md-4">
 
             <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
                 <h1 class="h4">Task</h1>
