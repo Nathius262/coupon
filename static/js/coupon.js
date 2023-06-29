@@ -24,8 +24,8 @@ function copyText() {
     
 }
 
-let dropdown = $('#dropdownMenuButton')
-let dropdown_menu = $('#dropdown-menu-ul')
+let dropdown = $('.dropdownMenuButton')
+let dropdown_menu = $('.dropdown-menu-ul')
 dropdown.click(()=>{
     dropdown.toggleClass('show')
     dropdown.attr("aria-expanded", (_, attr) => attr =="false"?"true":"false");
@@ -122,8 +122,3 @@ function toggleShowBalance(boolean){
 ///////////////////////////
 ///////////////////////////
 
-let darkmode = document.getElementById("dark-mode")
-
-darkmode.addEventListener("click", ()=>{
-    console.log("screen mode change!")
-})

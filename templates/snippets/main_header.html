@@ -7,10 +7,10 @@
 
     <div class="nav-item mb-1 d-md-none d-grid align-items-center mx-auto ms-5 ">
         <div class="dropdown me-5">
-            <button class="btn btn-outline-secondary dropdown-toggle m-0  px-2 mt-2" type="button" id="dropdownMenuButton" aria-expanded="false">
+            <button class="dropdownMenuButton btn btn-outline-secondary dropdown-toggle m-0  px-2 mt-2" type="" id="dropdownMenuButton" aria-expanded="false">
                 {{user_currency}}
             </button>
-            <ul id="dropdown-menu-ul" class="dropdown-menu">
+            <ul id="dropdown-menu-ul" class="dropdown-menu dropdown-menu-ul">
                 {% for currency in currency %}
                 {% if not user_currency in currency%}
                 <li class="dropdown-item currency" data-csrftoken="{{csrf_token}}">{{currency}}</li>
@@ -52,10 +52,10 @@
                 
                 <li class="nav-item mb-1 d-grid align-items-center">
                     <div class="dropdown">
-                        <button class="btn btn-outline-secondary dropdown-toggle m-0" type="button" id="dropdownMenuButton" aria-expanded="false">
+                        <button class="dropdownMenuButton btn btn-outline-secondary dropdown-toggle m-0" type="button" id="dropdownMenuButton" aria-expanded="false">
                             {{user_currency}}
                         </button>
-                        <ul id="dropdown-menu-ul" class="dropdown-menu">
+                        <ul id="dropdown-menu-ul" class="dropdown-menu dropdown-menu-ul">
                             {% for currency in currency %}
                             {% if not user_currency in currency%}
                             <li class="dropdown-item currency" data-csrftoken="{{csrf_token}}">{{currency}}</li>

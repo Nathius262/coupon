@@ -36,16 +36,10 @@
         <div id="copy-alert" class="shadow">
             <span class="p-3 rounded-2 bg-light">Copied!</span>
         </div>
-        
-        <div id="dark-mode">
-            <i class="fa fa-sun-o"></i>
-        </div>
 
         {% include 'snippets/footer.html' %}
-        
-        <script src="{% static 'js/coupon.js' %}"></script>
-        <script src="{% static 'js/bootstrap.js' %}"></script>
 
+        
         <div class="modal" id="nav-menu" tabindex="-1" aria-labelledby="nav-menu" aria-modal="true" role="dialog">
             <div class="modal-dialog modal-fullscreen" style="height:80vh; color:var(--white);">
                 <div class="modal-content">
@@ -102,6 +96,8 @@
             </div>
         </div>
         
-        
+        <script src="{% static 'js/coupon.js' %}"></script>
+        <script src="{% static 'js/bootstrap.js' %}"></script>
+       
     </body>
 </html>

@@ -74,6 +74,11 @@ dashboard page
 }
 
 /** 
+dashboard page 
+**/
+
+
+/** 
 referral page 
 **/
 .copyToClipboard{
@@ -171,17 +176,6 @@ footer
 }
 #copy-alert span{
     color: var(--blue);
-}
-
-#dark-mode{
-    background: var(--black);
-    color: var(--white);
-    position:fixed;
-    padding: 2px;
-    left: 0vw;
-}
-#dark-mode:hover{
-    cursor: pointer;
 }
 
 .footer-list a{
