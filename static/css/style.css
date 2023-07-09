@@ -20,6 +20,10 @@ body{
     font-family: Helvetica, Arial, sans-serif;
     background: var(--body-grey);
 }
+.body-dark{
+    background: var(--black);
+    color: var(--white);
+}
 
 .show-dropdown{
     position: absolute; 
