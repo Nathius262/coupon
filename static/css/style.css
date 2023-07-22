@@ -25,6 +25,10 @@ body{
     color: var(--white);
 }
 
+#task-el, #affilate-el, #withdraw-el, #total-earn-el{
+    color: var(--black);
+}
+
 .show-dropdown{
     position: absolute; 
     inset: 0px auto auto 0px; 

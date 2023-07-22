@@ -1,6 +1,7 @@
 let bodyEl = document.querySelector("body")
 let navEl = document.querySelectorAll(".navbar")
 let modeBtn = document.getElementById("mode-btn")
+let imgLogo = document.getElementById("header-logo")
 
 window.addEventListener("DOMContentLoaded", ()=>{
     screenSwitcher(false)
@@ -57,6 +58,7 @@ function screenSwitcher(changeMode){
 function darkMode(){
     modeBtn.firstElementChild.classList.replace("fa-moon-o", "fa-sun-o")
     bodyEl.classList.add("body-dark")
+    imgLogo.innerHTML = `<img src=${imgLogoSrc} alt="logo" width="150">`
     navEl.forEach((element)=>{
         element.classList.replace("navbar-light", "navbar-dark")
     })
@@ -65,6 +67,7 @@ function darkMode(){
 function lightMode(){
     modeBtn.firstElementChild.classList.replace("fa-sun-o", "fa-moon-o")
     bodyEl.classList.remove("body-dark")
+    imgLogo.innerHTML = `<img src=${imgLogoSrc2} alt="logo" width="150">`
     navEl.forEach((element)=>{
         element.classList.replace("navbar-dark", "navbar-light")
     })
