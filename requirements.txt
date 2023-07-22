@@ -6,3 +6,5 @@ phonenumbers==8.13.3
 Pillow==9.3.0
 python-dotenv==0.21.0
 django_babel
+django-apscheduler
+django-mptt

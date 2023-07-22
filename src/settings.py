@@ -44,9 +44,12 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    
     #installed apps
+    
     'user',
     'pipay',
+    'scheduler',
 
     #django alllauth
     'allauth',
@@ -56,7 +59,9 @@ INSTALLED_APPS = [
     #django phonenumber
     'phonenumber_field',
     'django_babel',
-
+    
+    #django-schedule
+    'django_apscheduler',
 ]
 
 MIDDLEWARE = [
