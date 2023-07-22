@@ -35,7 +35,7 @@ class UsersBalance(models.Model):
             )
         ]
     
-    user = models.OneToOneField(CustomUser, null=False, blank=False, on_delete=models.CASCADE, editable=False, related_name="user_currency")
+    user = models.OneToOneField(CustomUser, null=True, blank=False, on_delete=models.CASCADE, editable=False, related_name="user_currency")
     currency =models.CharField(max_length=50, editable=False, choices=Currency.choices, default=Currency.naira)
     affilate = models.DecimalField(max_digits=12, decimal_places=2, default=0.00, editable=False)
     task = models.DecimalField(max_digits=12, decimal_places=2, default=0.00, editable=False)
@@ -51,4 +51,9 @@ class UsersBalance(models.Model):
     
     def __str__(self):
         return str(self.user)
+
+
+class DailyLoginTask(models.Model):
+    user = models.OneToOneField(CustomUser, null=True, blank=False, on_delete=models.CASCADE, editable=False, related_name="user_daily_task")
+    task_completed = models.BooleanField(default=False, null=True)
     
