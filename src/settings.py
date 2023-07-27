@@ -62,6 +62,9 @@ INSTALLED_APPS = [
     
     #django-schedule
     'django_apscheduler',
+    
+    #django-mptt
+    'mptt',
 ]
 
 MIDDLEWARE = [

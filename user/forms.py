@@ -6,7 +6,6 @@ from phonenumber_field.formfields import PhoneNumberField
 from phonenumber_field.widgets import PhoneNumberPrefixWidget
 from pipay.models import GenerateCode, UsersBalance
 from pipay.constants import currency
-from pipay.utils import affilate_topup_process
 
 class CustomSignupForm(SignupForm):
     first_name = forms.CharField(max_length=60, label="First Name", widget=forms.TextInput(attrs={'placeholder':'First_Name'}))
@@ -53,10 +52,6 @@ class CustomSignupForm(SignupForm):
         except CustomUser.DoesNotExist:
             referred_by = CustomUser.objects.get(username="admin") 
         user.referred_by = str(referred_by)
-        
-        # add bonus to the exiting user that has refered this user
-        if user.referred_by:
-            affilate_topup_process(referred_by, 300)    
         
         user.save()
         

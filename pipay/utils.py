@@ -10,11 +10,12 @@ def daily_task_process(user, top_up):
         
     else:
         bonus_naira = currency.currencyConverter("N", task_balace.currency, bonus_naira)
-        task_balace.affilate += bonus_naira
+        task_balace.task += bonus_naira
     task_balace.save()
     
     
 def affilate_topup_process(referred_by, topup):
+    print(f"{topup} added to your affilate balance")
     topup_balance = UsersBalance.objects.get(user=referred_by.id)
     bonus_naira = topup
     if currency.isBaseCurrency(topup_balance.currency):

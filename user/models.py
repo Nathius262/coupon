@@ -4,6 +4,8 @@ from django.contrib.auth.models import AbstractBaseUser
 from phonenumber_field.modelfields import PhoneNumberField
 from .managers import MyAccountManager
 from .utils import image_location
+from mptt.models import MPTTModel, TreeForeignKey
+from django.forms import ValidationError
 
 
 class CustomUser(AbstractBaseUser):
@@ -56,9 +58,21 @@ class CustomUser(AbstractBaseUser):
         return True
 
 
-class UserReferralLink(models.Model):
+class UserReferralLink(MPTTModel):
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, null=True, blank=True, related_name="user")
+    parent = TreeForeignKey("self", on_delete=models.CASCADE, null=True, blank=False, related_name="user_referral_parent")
     refered_user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, null=True, blank=True, related_name="refered_user")
+    
+    # maximum tree node level.
+    MAX_TREE_DEPTH = 3
         
     def __str__(self):
-        return f"{self.refered_user} refered by {self.user}"
+        return f"{self.user}"
+    
+    def clean(self):
+        if self.level > self.MAX_TREE_DEPTH:
+            raise ValidationError({'level': f"Foos can only be nested {self.MAX_TREE_DEPTH} levels deep"})
+
+    def save(self, *args, **kwargs):
+        self.clean()
+        super().save(*args, **kwargs)

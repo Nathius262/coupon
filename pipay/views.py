@@ -7,12 +7,15 @@ from django.http.response import JsonResponse
 from .constants import currency as c
 from .utils import daily_task_process
 
+
 # Create your views here.
 def currency(request):
     context = {}
     if request.user.is_authenticated:
         #check if daily login task is completed
         #if not completed do something...
+        
+                
         try:
             user_dail_login_task = DailyLoginTask.objects.all().get(user=request.user, task_completed=False)
             if (user_dail_login_task) and (user_dail_login_task.task_completed ==False):
