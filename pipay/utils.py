@@ -1,5 +1,6 @@
 from .models import UsersBalance
 from .constants import currency
+from user.models import CustomUser
 
 def daily_task_process(user, top_up):
     print(f"{top_up} added to your task balance")
@@ -25,3 +26,16 @@ def affilate_topup_process(referred_by, topup):
         bonus_naira = currency.currencyConverter("N", topup_balance.currency, bonus_naira)
         topup_balance.affilate += bonus_naira
     topup_balance.save()
+    
+    
+# returns user's id if exit
+def query_user_id(user):
+    """returns the users instance
+
+    Args:
+        user (insance): username or instance object
+    """
+    try:
+        return CustomUser.objects.get(username=user)
+    except CustomUser.DoesNotExist:
+        return None

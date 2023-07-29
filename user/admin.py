@@ -1,11 +1,10 @@
 from django.contrib import admin
-from . import models
 from django.contrib.auth.admin import UserAdmin
 from .models import *
-from mptt.admin import DraggableMPTTAdmin, MPTTAdminForm
-from django import http
-from django.contrib import messages
 
+#from django import http
+#from django.contrib import messages
+#from mptt.admin import DraggableMPTTAdmin, MPTTAdminForm
 
 
 # Register your models here.
@@ -19,9 +18,14 @@ class AccountAdmin(UserAdmin):
     list_filter = ('is_admin', 'is_staff')
     search_fields= ('email', 'username')
     fieldsets = ()
+    
+    
+class ReferralListAdmin(admin.ModelAdmin):
+    list_display = ['user',]
+    readonly_fields = ['user', 'user_list']
 
 
-
+"""
 class UserReferralAdmin(DraggableMPTTAdmin):
     mptt_indent_field = "username"
     list_display = (
@@ -39,9 +43,7 @@ class UserReferralAdmin(DraggableMPTTAdmin):
     related_products_cumulative_count.short_description = 'Related product (in tree)'
     
     def _move_node(self, request):
-        """
-        Redefine to validate 'pasted_on' referral_link level
-        """
+
         queryset = self.get_queryset(request)
         pasted_on = queryset.get(pk=request.POST.get('pasted_on'))
 
@@ -53,6 +55,7 @@ class UserReferralAdmin(DraggableMPTTAdmin):
             )
             return http.HttpResponse("Can't create 4th level referral_link")
         return super()._move_node(request)
-
+"""
 admin.site.register(CustomUser, AccountAdmin)
-admin.site.register(UserReferralLink, UserReferralAdmin)
+admin.site.register(ReferralList, ReferralListAdmin)
+#admin.site.register(UserReferralLink, UserReferralAdmin)

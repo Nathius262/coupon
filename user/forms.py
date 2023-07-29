@@ -1,11 +1,12 @@
 from django import forms
 from django.core.exceptions import ObjectDoesNotExist
 from allauth.account.forms import SignupForm
-from .models import CustomUser
+from .models import CustomUser, ReferralList
 from phonenumber_field.formfields import PhoneNumberField
 from phonenumber_field.widgets import PhoneNumberPrefixWidget
 from pipay.models import GenerateCode, UsersBalance
 from pipay.constants import currency
+from pipay.utils import affilate_topup_process, query_user_id
 
 class CustomSignupForm(SignupForm):
     first_name = forms.CharField(max_length=60, label="First Name", widget=forms.TextInput(attrs={'placeholder':'First_Name'}))
@@ -46,15 +47,6 @@ class CustomSignupForm(SignupForm):
         user.code = self.cleaned_data['code']
         user.phone_number = self.cleaned_data['phone_number']
         
-        # get the referred user id
-        try:
-            referred_by = CustomUser.objects.get(id=refered_by)
-        except CustomUser.DoesNotExist:
-            referred_by = CustomUser.objects.get(username="admin") 
-        user.referred_by = str(referred_by)
-        
-        user.save()
-        
         try:
             code = GenerateCode.objects.get(coupon_code=user.code)
             code.user = user
@@ -62,8 +54,44 @@ class CustomSignupForm(SignupForm):
         except GenerateCode.DoesNotExist:
             pass
         
+        # get the referred user id
+        try:
+            referred_by = CustomUser.objects.get(id=refered_by)
+        except CustomUser.DoesNotExist:
+            referred_by = CustomUser.objects.get(username="admin") 
+        user.referred_by = str(referred_by)
+        user.save()
+        
+        # add bonus to the exiting user that has refered this user
+        if user.referred_by:           
+            # add new referral profile to old user referral list
+            affilate_topup_process(referred_by, 3000)
+            
+            # first generation 
+            first_gen = ReferralList.objects.get(user=referred_by)
+            first_gen.user_list.add(user)
+            first_gen = query_user_id(first_gen)        
+            # second generation
+            try:
+                second_generation_referral =  ReferralList.objects.get(user_list=first_gen)
+                second_generation_referral = query_user_id(second_generation_referral)
+                affilate_topup_process(second_generation_referral, 300)
+                # thrid generation
+                try:                    
+                    third_gen_referral = ReferralList.objects.get(user_list=second_generation_referral)
+                    third_gen_referral = query_user_id(third_gen_referral)
+                    affilate_topup_process(third_gen_referral, 100)
+
+                except ReferralList.DoesNotExist:
+                    pass
+            except ReferralList.DoesNotExist:
+                pass      
+            
+        else:
+            pass
+        
         # create new users balance
-        UsersBalance.objects.get_or_create(user=user)                
+        UsersBalance.objects.get_or_create(user=user)         
         
         return user
 

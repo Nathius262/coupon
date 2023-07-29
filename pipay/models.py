@@ -77,3 +77,7 @@ class Notification(models.Model):
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, null=True)
     message = models.TextField(null=True)
     timestamp = models.DateTimeField(auto_now_add=True)
+    
+
+#class EarningHistory(models.Model):
+#    user=models.ForeignKey()

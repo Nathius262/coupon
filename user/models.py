@@ -57,22 +57,9 @@ class CustomUser(AbstractBaseUser):
     def has_module_perms(self, app_label):
         return True
 
-
-class UserReferralLink(MPTTModel):
-    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, null=True, blank=True, related_name="user")
-    parent = TreeForeignKey("self", on_delete=models.CASCADE, null=True, blank=False, related_name="user_referral_parent")
-    refered_user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, null=True, blank=True, related_name="refered_user")
+class ReferralList(models.Model):
+    user = models.OneToOneField(CustomUser, on_delete=models.CASCADE, null=True, blank=False, related_name="referral_user")
+    user_list = models.ManyToManyField(CustomUser, related_name="referral_list")
     
-    # maximum tree node level.
-    MAX_TREE_DEPTH = 3
-        
-    def __str__(self):
-        return f"{self.user}"
-    
-    def clean(self):
-        if self.level > self.MAX_TREE_DEPTH:
-            raise ValidationError({'level': f"Foos can only be nested {self.MAX_TREE_DEPTH} levels deep"})
-
-    def save(self, *args, **kwargs):
-        self.clean()
-        super().save(*args, **kwargs)
+    def __str__(self) :
+        return str(self.user)
