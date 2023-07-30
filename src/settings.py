@@ -29,7 +29,7 @@ SECRET_KEY = os.environ.get('SECRET_KEY', 'some_random_default_string')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get('DEBUG', False)
 
-ALLOWED_HOSTS = ['nathius.pythonanywhere.com', '127.0.0.1']
+ALLOWED_HOSTS = ['pipaytech.pythonanywhere.com', '127.0.0.1']
 
 if DEBUG:
     EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
@@ -82,10 +82,10 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
-                
+
                 "pipay.views.currency",
             ],
-            
+
         },
     },
 ]
@@ -109,7 +109,7 @@ else:
             'NAME': os.environ.get("NAME", "some_random_default_string"), # Username$database name
             'USER': os.environ.get("USER", "some_random_default_string"), #Username:
             'PASSWORD': os.environ.get("PASSWORD", "some_random_default_string"),
-            'HOST': os.environ.get("HOST", "some_random_default_string"), # Database host address           
+            'HOST': os.environ.get("HOST", "some_random_default_string"), # Database host address
 
         }
     }
