@@ -8,7 +8,7 @@
     --darkgreyless:rgb(39, 39, 39);
     --white: #ffff;
     --purple: rgb(139 110 187);
-    --blue:rgb(0, 128, 255);
+    --blue: #0a2a4a;/*rgb(0, 128, 255)*/
     --navy-blue: rgb(23, 34, 77);
     --navy-blue-dark: rgb(13, 19, 44);
     --green:rgb(67, 255, 203);
@@ -20,6 +20,16 @@ body{
     font-family: Helvetica, Arial, sans-serif;
     background: var(--body-grey);
 }
+.body-dark{
+    background: var(--black);
+    color: var(--white);
+}
+
+#task-el, #affilate-el, #withdraw-el, #total-earn-el{
+    color: var(--black);
+    font: bolder;
+
+}
 
 .show-dropdown{
     position: absolute; 
@@ -30,6 +40,41 @@ body{
 
 .blue-color{
     color: var(--blue);
+}
+.navbar, .bg-primary, .btn-primary {
+    background-color: var(--blue);
+}
+
+.btn-check:focus + .btn, .btn:focus{
+    background-color: var(--navy-blue-dark);
+
+}
+.btn-primary:hover{
+    background-color: var(--navy-blue-dark);
+    border: var(--navy-blue-dark);
+}
+#sectionHeader{
+    color: var(--white);
+}
+.nav_toggle_btn{
+    margin-left: auto;
+    position: absolute;
+    top:0;
+    right: 13px;
+}
+.navbar-toggler-icon{
+    color: var(--white);
+}
+
+.nav_head{
+    display: flex;
+    flex-basis: auto;
+    color: var(--lightgrey);
+    padding-top: 2%;
+    padding-bottom: 2%;
+}
+.nav_head li .nav-link{
+    color: var(--white);
 }
 .navy-blue-dark{
     color: var(--navy-blue-dark);
@@ -46,7 +91,7 @@ body{
     background-color: var(--lightgrey) !important;
 }
 .connet-bg{
-    color: var(--white);
+    color: var(--black);
     background-color: var(--lightgrey);
     width: 50px;
     height: 50px;
@@ -194,4 +239,27 @@ footer
 
 .list-inline-item a:hover{
     color: var(--lightgrey);
+}
+
+/*
+.circle-trans{
+    width: 300px;
+    height: 300px;
+    position: relative;
+    overflow: hidden;
+}
+
+.circle-trans::before{
+    content: '';
+    position: absolute;
+    bottom: 0%;
+    width: 100%;
+    height: 100%;
+    border-radius: 100%;
+    box-shadow: 0px 300px 0 300px #448ccb;
+}*/
+.affilate-icon{
+    width: 30%;
+    margin-bottom: 5px;
+
 }

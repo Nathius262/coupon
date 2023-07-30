@@ -39,14 +39,6 @@ def account_setting_view(request):
     }
     return render(request, 'user/account.html', context)
 
-def referrals_view(request, username):
-    user = get_object_or_404(CustomUser, username=username)
-    ref_user = UserReferralLink.objects.all().filter(user=user)
-    context = {
-        'user':user,
-        'ref_user': ref_user, 
-    }
-    return render(request, 'user/referred_users.html', context)
 
 def refer_link_view(request, *args, **kwargs):
     code = str(kwargs.get('ref_code'))

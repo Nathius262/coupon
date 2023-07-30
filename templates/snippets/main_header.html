@@ -2,8 +2,10 @@
 
 
 <section class="navbar-expand-md flex-md-nowrap p-0 align-items-center">
-<nav class="navbar navbar-light">
-    <a class="navbar-brand col-md-3 col-lg-2 me-0 px-2 fs-4" href="{% url 'index' %}"><img src="{% static '/img/logo3.png' %}" alt="logo" width="150"></a>
+<nav class="navbar navbar-dark sticky-top">
+    <a id="header-logo" class="navbar-brand col-md-3 col-lg-2 me-0 px-2 fs-4" href="{% url 'index' %}">
+        <img src="{% static '/img/logo.png' %}" alt="logo" width="150">
+    </a>
 
     <div class="nav-item mb-1 d-md-none d-grid align-items-center mx-auto ms-5 ">
         <div class="dropdown me-5">
@@ -19,9 +21,16 @@
             </ul>
         
         </div>
-    </div>            
+    </div>
+    
+    <div class="nav-item d-grid align-items-center mx-auto">
+        <button class="btn btn-dark me-5" id="mode-btn">
+            <i class="fa fa-moon-o"></i>
+        </button>
+        
+    </div>
 
-    <button type="button" class="navbar-toggler nav_toggle_btn  px-2 d-md-none collapsed mt-3 mb-1 " data-bs-toggle="modal" data-bs-target="#nav-menu">
+    <button type="button" class="navbar-toggler nav_toggle_btn mx-auto px-2 d-md-none collapsed mt-3 mb-1 " data-bs-toggle="modal" data-bs-target="#nav-menu">
         <span class="navbar-toggler-icon"></span>
     </button>
 

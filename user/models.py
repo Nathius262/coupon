@@ -4,6 +4,8 @@ from django.contrib.auth.models import AbstractBaseUser
 from phonenumber_field.modelfields import PhoneNumberField
 from .managers import MyAccountManager
 from .utils import image_location
+from mptt.models import MPTTModel, TreeForeignKey
+from django.forms import ValidationError
 
 
 class CustomUser(AbstractBaseUser):
@@ -55,10 +57,9 @@ class CustomUser(AbstractBaseUser):
     def has_module_perms(self, app_label):
         return True
 
-
-class UserReferralLink(models.Model):
-    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, null=True, blank=True, related_name="user")
-    refered_user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, null=True, blank=True, related_name="refered_user")
-        
-    def __str__(self):
-        return f"{self.refered_user} refered by {self.user}"
+class ReferralList(models.Model):
+    user = models.OneToOneField(CustomUser, on_delete=models.CASCADE, null=True, blank=False, related_name="referral_user")
+    user_list = models.ManyToManyField(CustomUser, related_name="referral_list")
+    
+    def __str__(self) :
+        return str(self.user)

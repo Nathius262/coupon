@@ -15,10 +15,14 @@
     </title>
     {% load static %}
     <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
+    <link rel="stylesheet" href="{% static 'css/font-awesome.min.css' %}">
 
     <!-- custom css -->
     <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'css/account.css' %}">
+
+    <script src="{% static 'js/jquery-2.1.1.min.js' %}"></script>
 
   </head>
   <body>
@@ -30,6 +34,7 @@
     {% endblock %}
 
     {% include 'snippets/footer.html' %}
+    {% include 'snippets/header_modal.html' %}
     <script src="{% static 'js/coupon.js' %}"></script>
     <script src="{% static 'js/bootstrap.js' %}"></script>
     {% endblock %}

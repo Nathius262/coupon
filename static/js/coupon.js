@@ -1,3 +1,12 @@
+let bodyEl = document.querySelector("body")
+let navEl = document.querySelectorAll(".navbar")
+let modeBtn = document.getElementById("mode-btn")
+let imgLogo = document.getElementById("header-logo")
+
+window.addEventListener("DOMContentLoaded", ()=>{
+    screenSwitcher(false)
+})
+
 function copyText() {
     // Get the text field
     var copyText = document.getElementById("myInput");
@@ -22,6 +31,39 @@ function copyText() {
     )
     
     
+}
+
+modeBtn.addEventListener("click", ()=>{
+    screenSwitcher(true)
+})
+
+
+function screenSwitcher(changeMode){
+    let screenMode = localStorage.getItem("mode")
+    if (screenMode == "night"){
+        changeMode?localStorage.setItem("mode", "day"):screenMode ="day"
+        darkMode()
+    }else if(screenMode == "day"){
+        console.log("light mode activated!")
+        changeMode?localStorage.setItem("mode", "night"):screenMode ="night"
+        lightMode()
+    }else{
+        console.log("first timer")
+        changeMode?localStorage.setItem("mode", "night"):screenMode ="night" 
+    }
+
+}
+
+//console.log(modeBtn.firstChild)
+function darkMode(){
+    modeBtn.firstElementChild.classList.replace("fa-moon-o", "fa-sun-o")
+    bodyEl.classList.add("body-dark")
+
+}
+
+function lightMode(){
+    modeBtn.firstElementChild.classList.replace("fa-sun-o", "fa-moon-o")
+    bodyEl.classList.remove("body-dark")
 }
 
 let dropdown = $('.dropdownMenuButton')
@@ -122,3 +164,6 @@ function toggleShowBalance(boolean){
 ///////////////////////////
 ///////////////////////////
 
+let footerDate = document.querySelector("#footer-date")
+let date = new Date
+footerDate.innerText = date.getFullYear()

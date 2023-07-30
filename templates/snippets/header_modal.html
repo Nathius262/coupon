@@ -1,0 +1,55 @@
+<div class="modal" id="nav-menu" tabindex="-1" aria-labelledby="nav-menu" aria-modal="true" role="dialog">
+    <div class="modal-dialog modal-fullscreen" style="height:80vh; color:var(--white);">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div id="sidebarMenu" class="">
+                    <div class="nav_head ms-auto">
+                        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            
+                            <li class="nav-item mb-1">
+                                <a class="navbar-brand fs-6 ms-3 underline" href="{% url 'index' %}">Home</a>
+                            </li>
+                            {%if request.user.is_staff %}
+                            <li class="nav-item mb-1">
+                                <a class="navbar-brand fs-6 ms-3 underline" href="{% url 'generate_code' %}">Generate coupon</a>
+                            </li>
+                            {%endif%}
+                            <li class="nav-item mb-1">
+                                <a class="navbar-brand fs-6 ms-3" href="{% url 'coupon_verify' %}">Coupon Checker</a>
+                            </li>
+                            <li class="nav-item mb-1">
+                                <a class="navbar-brand fs-6 ms-3" href="{% url 'coupon_vendor' %}">Smart Vendors</a>
+                            </li>
+                            <li class="nav-item mb-1">
+                                <a class="navbar-brand fs-6 ms-3" href="#">Top Earners</a>
+                            </li>
+                            <li class="nav-item mb-1">
+                                <a class="navbar-brand fs-6 ms-3" href="{% url 'advert_post' %}">Advert post</a>
+                            </li>    
+                            
+                            {% if request.user.is_authenticated %}
+                            <li class="nav-item mb-1">
+                                <a class="navbar-brand fs-6 ms-3" href="{% url 'user:account_setting' %}">Account Settings</a>
+                            </li>
+                            <li class="nav-item mb-1">
+                                <a class="navbar-brand fs-6 ms-3" href="{% url 'account_logout' %}">Logout</a>
+                            </li>
+                            {% else %}
+                            <li class="nav-item mb-1">
+                                <a class="navbar-brand fs-6 ms-3" href="{% url 'account_login' %}">Login</a>
+                            </li>
+                            <li class="nav-item mb-1">
+                                <a class="navbar-brand fs-6 ms-3" href="{% url 'account_signup' %}">Sign up</a>
+                            </li>
+            
+                            {% endif %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

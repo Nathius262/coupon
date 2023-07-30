@@ -19,7 +19,7 @@ from django.conf.urls.static import static
 from django.urls import path, include
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    path('admin/', admin.site.urls, name="admin"),
     path('account/', include('allauth.urls')),
     path('', include('pipay.urls')),
     path('profile/', include('user.urls'), name='user')

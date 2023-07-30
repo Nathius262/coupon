@@ -1,17 +1,33 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
-from user.models import CustomUser, UserReferralLink
+from user.models import CustomUser
 from user.utils import generate_ref_code
-from .models import GenerateCode, UsersBalance, Currency
+from .models import GenerateCode, UsersBalance, Currency, DailyLoginTask
 from django.http.response import JsonResponse
 from .constants import currency as c
+from .utils import daily_task_process
+from user.models import ReferralList
+
 
 # Create your views here.
 def currency(request):
     context = {}
     if request.user.is_authenticated:
+        #check if daily login task is completed
+        #if not completed do something...            
+        try:
+            user_dail_login_task = DailyLoginTask.objects.all().get(user=request.user, task_completed=False)
+            if (user_dail_login_task) and (user_dail_login_task.task_completed ==False):
+                user_dail_login_task.task_completed = True
+                user_dail_login_task.save()
+                daily_task_process(request.user, 200)
+            else:
+                pass
+                
+        except DailyLoginTask.DoesNotExist:
+            pass
+        
         currencies = Currency.values
-        #print(currency)
         context = {
             "currency" :currencies,
             "user_currency": request.user.user_currency.currency

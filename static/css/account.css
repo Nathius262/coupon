@@ -7,6 +7,11 @@
     --white: white;
 }
 
+.body-dark .account_bg{
+    background-color: var(--black);
+    color: var(--white);
+}
+
 .account_bg{
     background-color: var(--white);
     border-radius: 5%;
