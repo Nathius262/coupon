@@ -37,33 +37,41 @@ modeBtn.addEventListener("click", ()=>{
     screenSwitcher(true)
 })
 
-
 function screenSwitcher(changeMode){
     let screenMode = localStorage.getItem("mode")
     if (screenMode == "night"){
-        changeMode?localStorage.setItem("mode", "day"):screenMode ="day"
-        darkMode()
+        if (changeMode) {
+            lightMode()
+            localStorage.setItem("mode", "day")
+        }else {
+            darkMode()
+        }
     }else if(screenMode == "day"){
-        console.log("light mode activated!")
-        changeMode?localStorage.setItem("mode", "night"):screenMode ="night"
-        lightMode()
+        if(changeMode){
+            console.log("not true")
+            darkMode()
+            localStorage.setItem("mode", "night")
+        }else {
+            lightMode()
+        }
     }else{
-        console.log("first timer")
-        changeMode?localStorage.setItem("mode", "night"):screenMode ="night" 
+        if(changeMode){
+            darkMode()
+            localStorage.setItem("mode", "night")
+        }else screenMode ="day";
     }
-
 }
+
 
 //console.log(modeBtn.firstChild)
 function darkMode(){
-    modeBtn.firstElementChild.classList.replace("fa-moon-o", "fa-sun-o")
     bodyEl.classList.add("body-dark")
-
+    modeBtn.firstElementChild.classList.replace("fa-moon-o", "fa-sun-o")
 }
 
 function lightMode(){
-    modeBtn.firstElementChild.classList.replace("fa-sun-o", "fa-moon-o")
     bodyEl.classList.remove("body-dark")
+    modeBtn.firstElementChild.classList.replace("fa-sun-o", "fa-moon-o")
 }
 
 let dropdown = $('.dropdownMenuButton')
@@ -111,16 +119,19 @@ for(let i=0; i<currency.length;i++){
 
 let total_balance = document.getElementById('total-balance')
 let balance_toggle = document.getElementById('balance-toggle')
-balance_toggle.addEventListener('click', (e)=>{
-    if (balance_toggle.value == "on"){    
-        toggleShowBalance(true)         
-        balance_toggle.value = "off"
-    }
-    else if (balance_toggle.value == "off"){
-        toggleShowBalance(false)
-        balance_toggle.value = "on"
-    }
-})
+try {
+    balance_toggle.addEventListener('click', (e)=>{
+        if (balance_toggle.value == "on"){    
+            toggleShowBalance(true)         
+            balance_toggle.value = "off"
+        }
+        else if (balance_toggle.value == "off"){
+            toggleShowBalance(false)
+            balance_toggle.value = "on"
+        }
+    })
+} catch (TypeError) {
+}
 
 function toggleShowBalance(boolean){
 

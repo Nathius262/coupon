@@ -7,6 +7,8 @@
         <img src="{% static '/img/logo.png' %}" alt="logo" width="150">
     </a>
 
+    {% if request.user.is_authenticated %}
+
     <div class="nav-item mb-1 d-md-none d-grid align-items-center mx-auto ms-5 ">
         <div class="dropdown me-5">
             <button class="dropdownMenuButton btn btn-outline-secondary dropdown-toggle m-0  px-2 mt-2" type="" id="dropdownMenuButton" aria-expanded="false">
@@ -22,6 +24,7 @@
         
         </div>
     </div>
+    {% endif %}
     
     <div class="nav-item d-grid align-items-center mx-auto">
         <button class="btn btn-dark me-5" id="mode-btn">
@@ -39,7 +42,7 @@
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
 
                 <li class="nav-item mb-1">
-                    <a class="navbar-brand fs-6 ms-3 underline" href="{% url 'index' %}">Home</a>
+                    <a class="navbar-brand fs-6 ms-3 underline" href="{% url 'index' %}">{%if request.user.is_authenticated%}Dashboard{%else%}Home{%endif%}</a>
                 </li>
                 {%if request.user.is_staff %}
                 <li class="nav-item mb-1">
@@ -58,6 +61,8 @@
                 <li class="nav-item mb-1">
                     <a class="navbar-brand fs-6 ms-3" href="{% url 'advert_post' %}">Advert post</a>
                 </li>
+
+                {% if request.user.is_authenticated %}
                 
                 <li class="nav-item mb-1 d-grid align-items-center">
                     <div class="dropdown">
@@ -76,8 +81,7 @@
                     
                     </div>
                 </li>                
-                
-                {% if request.user.is_authenticated %}
+            
                 <li class="nav-item mb-1">
                     <a class="navbar-brand fs-6 ms-3" href="{% url 'user:account_setting' %}">Account Settings</a>
                 </li>
@@ -95,6 +99,10 @@
                 {% endif %}
             </ul>
         </div>
+    </div>
+
+    <div style="width: 50px;" class="d-none d-lg-block me-3 border rounded-5">
+        <img width="100%" class="rounded-5" src="{{request.user.picture_url}}" alt="{{reqest.user}} profile image">
     </div>
    
 </nav>

@@ -2,10 +2,17 @@
 
 
 <section class="navbar-expand-md flex-md-nowrap p-0">
-<nav class="navbar navbar-dark sticky-top">
+<nav class="navbar navbar-dark sticky-top align-items-center">
     <a class="navbar-brand col-md-3 col-lg-2 me-0 px-2 fs-4" href="{% url 'index' %}"><img src="{% static '/img/logo.png' %}" alt="logo" width="150"></a>
 
-    <button class="navbar-toggler nav_toggle_btn d-md-none collapsed mt-1 mb-1" type="button" data-bs-toggle="collapse" data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
+    <div class="nav-item d-grid align-items-center mx-auto">
+        <button class="btn btn-dark me-5" id="mode-btn">
+            <i class="fa fa-moon-o"></i>
+        </button>
+        
+    </div>
+
+    <button type="button" class="navbar-toggler nav_toggle_btn mx-auto px-2 d-md-none collapsed mt-3 mb-1 " data-bs-toggle="modal" data-bs-target="#nav-menu">
         <span class="navbar-toggler-icon"></span>
     </button>
     {% if loc %}
@@ -51,15 +58,17 @@
 </nav>
 
 <section class="py-4 text-center navbar mt-0" id="sectionHeader">
-    <div class="row py-md-3">
-      <div class="col-lg-6 col-md-8 mx-auto">
-        <h1 class="fw-bold">CONNECT AND EARN</h1>
-        <p>
-            We are online/Network Marketing Community build to provide people with opportunity
-            to take advantage of the internet and turn our everyday social media into a tool for Earning (i.e Having skills 
-            and making passive income
-        </p>
-      </div>
+    <div class="container">
+        <div class="row py-md-3 ">
+        <div class="col-lg-6 col-md-8 mx-auto">
+            <h1 class="fw-bold">CONNECT AND EARN</h1>
+            <p>
+                We are online/Network Marketing Community build to provide people with opportunity
+                to take advantage of the internet and turn our everyday social media into a tool for Earning (i.e Having skills 
+                and making passive income
+            </p>
+        </div>
+        </div>
     </div>
   </section>
 <section>

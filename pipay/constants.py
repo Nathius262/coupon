@@ -50,6 +50,7 @@ class Currency:
         return value
     
     def naira_pkr(self, currency, amount):
+        
         """a function that convert between naira and Pakistani Rupee
 
         Args:

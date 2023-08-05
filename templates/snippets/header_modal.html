@@ -1,5 +1,5 @@
 <div class="modal" id="nav-menu" tabindex="-1" aria-labelledby="nav-menu" aria-modal="true" role="dialog">
-    <div class="modal-dialog modal-fullscreen" style="height:80vh; color:var(--white);">
+    <div class="modal-dialog modal-fullscreen" style="height:100vh; width:70vw; color:var(--white);">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -8,23 +8,22 @@
                 <div id="sidebarMenu" class="">
                     <div class="nav_head ms-auto">
                         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-            
                             <li class="nav-item mb-1">
-                                <a class="navbar-brand fs-6 ms-3 underline" href="{% url 'index' %}">Home</a>
+                                <a class="navbar-brand fs-6 ms-3 underline" href="{% url 'index' %}">{% if request.user.is_authenticated %} <i class="fa fa-dashboard"></i> Dashboard{%else%} <i class="fa fa-home"></i> Home{% endif %}</a>
                             </li>
                             {%if request.user.is_staff %}
                             <li class="nav-item mb-1">
-                                <a class="navbar-brand fs-6 ms-3 underline" href="{% url 'generate_code' %}">Generate coupon</a>
+                                <a class="navbar-brand fs-6 ms-3 underline" href="{% url 'generate_code' %}"> <i class="fa fa-gear"></i> Generate coupon</a>
                             </li>
                             {%endif%}
                             <li class="nav-item mb-1">
-                                <a class="navbar-brand fs-6 ms-3" href="{% url 'coupon_verify' %}">Coupon Checker</a>
+                                <a class="navbar-brand fs-6 ms-3" href="{% url 'coupon_verify' %}"><i class="fa fa-user-check"></i>Coupon Checker</a>
                             </li>
                             <li class="nav-item mb-1">
                                 <a class="navbar-brand fs-6 ms-3" href="{% url 'coupon_vendor' %}">Smart Vendors</a>
                             </li>
                             <li class="nav-item mb-1">
-                                <a class="navbar-brand fs-6 ms-3" href="#">Top Earners</a>
+                                <a class="navbar-brand fs-6 ms-3" href="#"><i class="fa fa-thin fa-graduation-cap"></i>Top Earners</a>
                             </li>
                             <li class="nav-item mb-1">
                                 <a class="navbar-brand fs-6 ms-3" href="{% url 'advert_post' %}">Advert post</a>
