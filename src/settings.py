@@ -61,7 +61,7 @@ INSTALLED_APPS = [
     'django_babel',
     
     #django-schedule
-    'django_apscheduler',
+    #'django_apscheduler',
     
     #django-mptt
     'mptt',
