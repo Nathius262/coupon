@@ -2,46 +2,86 @@
     <div class="modal-dialog modal-fullscreen" style="height:100vh; width:70vw; color:var(--white);">
         <div class="modal-content">
             <div class="modal-header">
+                {% if request.user.is_authenticated %}
+                <div class="profile d-flex align-items-center">
+                    <div style="width: 40px;" class="d-lg-block me-3 border rounded-5">
+                        <img width="100%" class="rounded-5" src="{{request.user.picture_url}}" alt="{{reqest.user}} profile image">
+                    </div>
+
+                    <div>
+                        <p class="m-0 p-0 fw-bolder fs-6">{{request.user.first_name}} {{request.user.last_name}}</p>
+                        <p class="m-0 p-0">@{{request.user}}</p>
+                    </div>
+                </div>
+                {%endif%}
+
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
                 <div id="sidebarMenu" class="">
                     <div class="nav_head ms-auto">
                         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                            <li class="nav-item mb-1">
-                                <a class="navbar-brand fs-6 ms-3 underline" href="{% url 'index' %}">{% if request.user.is_authenticated %} <i class="fa fa-dashboard"></i> Dashboard{%else%} <i class="fa fa-home"></i> Home{% endif %}</a>
+                            <li class="nav-item mb-4">
+                                <a class="navbar-brand fs-6 ms-3 underline" href="{% url 'index' %}">{% if request.user.is_authenticated %} <i class="fa fa-desktop me-2"></i> Dashboard{%else%} <i class="fa fa-home me-2"></i> Home{% endif %}</a>
                             </li>
                             {%if request.user.is_staff %}
-                            <li class="nav-item mb-1">
-                                <a class="navbar-brand fs-6 ms-3 underline" href="{% url 'generate_code' %}"> <i class="fa fa-gear"></i> Generate coupon</a>
+                            <li class="nav-item mb-4">
+                                <a class="navbar-brand fs-6 ms-3 underline" href="{% url 'generate_code' %}"> <i class="fa fa-gear me-2"></i> Generate coupon</a>
                             </li>
                             {%endif%}
-                            <li class="nav-item mb-1">
-                                <a class="navbar-brand fs-6 ms-3" href="{% url 'coupon_verify' %}"><i class="fa fa-user-check"></i>Coupon Checker</a>
+                            
+                            <li class="nav-item mb-4">
+                                <a class="navbar-brand fs-6 ms-3" href="#"><i class="fa fa-thin fa-graduation-cap me-2"></i> Top Earners</a>
                             </li>
-                            <li class="nav-item mb-1">
-                                <a class="navbar-brand fs-6 ms-3" href="{% url 'coupon_vendor' %}">Smart Vendors</a>
-                            </li>
-                            <li class="nav-item mb-1">
-                                <a class="navbar-brand fs-6 ms-3" href="#"><i class="fa fa-thin fa-graduation-cap"></i>Top Earners</a>
-                            </li>
-                            <li class="nav-item mb-1">
-                                <a class="navbar-brand fs-6 ms-3" href="{% url 'advert_post' %}">Advert post</a>
-                            </li>    
+                            <li class="nav-item mb-4">
+                                <a class="navbar-brand fs-6 ms-3" href="{% url 'advert_post' %}"> <i class="fa-brands fa-adversal me-2"></i> Advert post</a>
+                            </li> 
+                            
+                            <div class="nav-item mb-4 d-grid align-items-center mx-auto">
+                                <button class="btn btn-dark me-5 mode-btn" id="mode-btn" onclick="screenSwitcher(true)">
+                                    <i class="fa-solid fa-sun me-2"></i> Dark theme: on
+                                </button>
+                                
+                            </div>
                             
                             {% if request.user.is_authenticated %}
-                            <li class="nav-item mb-1">
-                                <a class="navbar-brand fs-6 ms-3" href="{% url 'user:account_setting' %}">Account Settings</a>
+                            
+                            <li class="nav-item mb-4">
+                                <a class="navbar-brand fs-6 ms-3" href="{% url 'user:account_setting' %}"> <i class="fa fa-regular fa-user me-2"></i> User Profile</a>
                             </li>
-                            <li class="nav-item mb-1">
-                                <a class="navbar-brand fs-6 ms-3" href="{% url 'account_logout' %}">Logout</a>
+                            <li class="nav-item mb-4">
+                                <a class="navbar-brand fs-6 ms-3" href="#"> <i class="fa fa-solid fa-credit-card me-2"></i> Payment</a>
+                            </li>
+                            <li class="nav-item mb-4">
+                                <a class="navbar-brand fs-6 ms-3" href="#"> <i class="fa-solid fa-money-bill-trend-up me-2"></i> Earning History</a>
+                            </li>
+                            <li class="nav-item mb-4">
+                                <a class="navbar-brand fs-6 ms-3" href="#"> <i class="fa fa-hand-holding-usd me-2"></i> Pay Rumble</a>
+                            </li>
+                            <li class="nav-item mb-4">
+                                <a class="navbar-brand fs-6 ms-3" href="#"> <i class="fa-solid fa-store me-2"></i> Market Place</a>
+                            </li>
+                            <li class="nav-item mb-4">
+                                <a class="navbar-brand fs-6 ms-3" href="#"> <i class="fa fa-gift me-2"></i> Courses</a>
+                            </li>
+                            <li class="nav-item mb-4">
+                                <a class="navbar-brand fs-6 ms-3" href="#"> <i class="fa-solid fa-right-left me-2"></i> Contest</a>
+                            </li>
+                            <li class="nav-item mb-4">
+                                <a class="navbar-brand fs-6 ms-3" href="{% url 'account_logout' %}"> <i class="fa-solid fa-right-from-bracket me-2"></i> Logout</a>
                             </li>
                             {% else %}
-                            <li class="nav-item mb-1">
-                                <a class="navbar-brand fs-6 ms-3" href="{% url 'account_login' %}">Login</a>
+                            <li class="nav-item mb-4">
+                                <a class="navbar-brand fs-6 ms-3" href="{% url 'coupon_verify' %}"><i class="fa-solid fa-check-double me-2"></i> Coupon Checker</a>
                             </li>
-                            <li class="nav-item mb-1">
-                                <a class="navbar-brand fs-6 ms-3" href="{% url 'account_signup' %}">Sign up</a>
+                            <li class="nav-item mb-4">
+                                <a class="navbar-brand fs-6 ms-3" href="{% url 'coupon_vendor' %}"> <i class="fa-solid fa-ticket me-2"></i> Smart Vendors</a>
+                            </li>
+                            <li class="nav-item mb-4">
+                                <a class="navbar-brand fs-6 ms-3" href="{% url 'account_login' %}"> <i class="fa-solid fa-right-to-bracket me-2"></i> Login</a>
+                            </li>
+                            <li class="nav-item mb-4">
+                                <a class="navbar-brand fs-6 ms-3" href="{% url 'account_signup' %}"> <i class="fa-solid fa-user-plus me-2"></i> Sign up</a>
                             </li>
             
                             {% endif %}

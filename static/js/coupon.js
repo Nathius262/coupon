@@ -66,12 +66,12 @@ function screenSwitcher(changeMode){
 //console.log(modeBtn.firstChild)
 function darkMode(){
     bodyEl.classList.add("body-dark")
-    modeBtn.firstElementChild.classList.replace("fa-moon-o", "fa-sun-o")
+    modeBtn.firstElementChild.classList.replace( "fa-sun", "fa-moon")
 }
 
 function lightMode(){
     bodyEl.classList.remove("body-dark")
-    modeBtn.firstElementChild.classList.replace("fa-sun-o", "fa-moon-o")
+    modeBtn.firstElementChild.classList.replace("fa-moon", "fa-sun")
 }
 
 let dropdown = $('.dropdownMenuButton')
