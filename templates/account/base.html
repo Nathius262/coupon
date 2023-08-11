@@ -1,19 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    {% load static %}
-    <link rel="icon" href="{% static '/img/favio_icon.png' %}" type="image/png"  sizes="16x16" />
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="PiPay is designed for a simple, effortless and convenient customer experience. With its vast national network of banks, merchants, and service providers">
+    <meta name="keywords" content="pipay, pipaytech">
+    <meta name="author" content="pipaytech">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{% block head_title %}{% endblock %}</title>
     {% block extra_head %}
     {% endblock %}
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>
-      {% block header %}
-      {% endblock header %}
-    </title>
+
     {% load static %}
+    <link rel="icon" href="{% static '/img/favio_icon.png' %}" type="image/png"  sizes="16x16" />
     <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
     <link rel="stylesheet" href="{% static 'fontawesome/css/fontawesome.css' %}">
     <link rel="stylesheet" href="{% static 'fontawesome/css/brands.css' %}">
