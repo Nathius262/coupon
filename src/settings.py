@@ -111,8 +111,7 @@ if DEBUG:
         }
     }
 else:
-    DATABASES = {
-        """'default': {
+    """'default': {
             'ENGINE': 'django.db.backends.mysql',
             'NAME': os.environ.get("NAME", "some_random_default_string"), # Username$database name
             'USER': os.environ.get("USER", "some_random_default_string"), #Username:
@@ -120,6 +119,8 @@ else:
             'HOST': os.environ.get("HOST", "some_random_default_string"), # Database host address
 
         }"""
+    DATABASES = {
+
         'default': {
             'ENGINE': 'django.db.backends.mysql',
             "NAME":  'pipaytech$pipaytech',
