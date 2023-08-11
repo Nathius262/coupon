@@ -123,9 +123,9 @@ else:
 
         'default': {
             'ENGINE': 'django.db.backends.mysql',
-            "NAME":  'pipaytech$pipaytech',
+            "NAME":  'pipaytech$data',
             "USER": 'pipaytech',
-            "PASSWORD":  'fairynath123',
+            "PASSWORD":  'fairynathius123',
             "HOST":  'pipaytech.mysql.pythonanywhere-services.com'
 
         }
