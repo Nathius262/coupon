@@ -112,12 +112,20 @@ if DEBUG:
     }
 else:
     DATABASES = {
-        'default': {
+        """'default': {
             'ENGINE': 'django.db.backends.mysql',
             'NAME': os.environ.get("NAME", "some_random_default_string"), # Username$database name
             'USER': os.environ.get("USER", "some_random_default_string"), #Username:
             'PASSWORD': os.environ.get("PASSWORD", "some_random_default_string"),
             'HOST': os.environ.get("HOST", "some_random_default_string"), # Database host address
+
+        }"""
+        'default': {
+            'ENGINE': 'django.db.backends.mysql',
+            "NAME":  'pipaytech$pipaytech',
+            "USER": 'pipaytech',
+            "PASSWORD":  'fairynath123',
+            "HOST":  'pipaytech.mysql.pythonanywhere-services.com'
 
         }
     }
