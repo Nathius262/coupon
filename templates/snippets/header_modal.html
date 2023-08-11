@@ -45,6 +45,10 @@
                             </div>
                             
                             {% if request.user.is_authenticated %}
+
+                            <li class="nav-item mb-4">
+                                <a class="navbar-brand fs-6 ms-3" href="#"> <i class="fa-solid fa-money-bill-trend-up me-2"></i> Pay Task</a>
+                            </li>
                             
                             <li class="nav-item mb-4">
                                 <a class="navbar-brand fs-6 ms-3" href="{% url 'user:account_setting' %}"> <i class="fa fa-regular fa-user me-2"></i> User Profile</a>
