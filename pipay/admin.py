@@ -3,8 +3,8 @@ from .models import GenerateCode, UsersBalance, DailyLoginTask
 
 # Register your models here.
 class GenerateCodeAdmin(admin.ModelAdmin):
-    list_display = ['id', 'coupon_code']
-    list_filter = []
+    list_display = ['id', 'generated_by', 'coupon_code']
+    list_filter = ['generated_by',]
     search_fields = []
     
 class UsersBalanceAdmin(admin.ModelAdmin):
