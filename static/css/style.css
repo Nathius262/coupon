@@ -15,7 +15,13 @@
     --width:50px;
     --height:50px;
 }
+img{
+    width: 100%;
+}
 
+.section{
+    margin-top: 150px;
+}
 
 body{
     font-family: Helvetica, Arial, sans-serif;
@@ -24,6 +30,10 @@ body{
 .body-dark{
     background: var(--black);
     color: var(--white);
+}
+.body-dark .blue-color, .body-dark .navy-blue, .body-dark .navy-blue a{
+    color: var(--white);
+    text-decoration: underline;
 }
 
 #task-el, #affilate-el, #withdraw-el, #total-earn-el{
