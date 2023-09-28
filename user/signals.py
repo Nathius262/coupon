@@ -15,11 +15,11 @@ def create_users_profile(sender, instance, created, *args, **kwargs):
     if created:
         """
         user_balance_account creates a UsersBalance object related to the created user
-        and topsup N3000 to the new user
+        and topsup N4800/$10 to the new user
         
         user_daily_login_task_profile creates  a DailyLoginTAsk object as related to the created user
         """
-        user_balance_account = UsersBalance(user=user, task=2000)
+        user_balance_account = UsersBalance(user=user, task=4800)
         user_balance_account.save()        
         
         user_daily_login_task_profile = DailyLoginTask(user=user)
