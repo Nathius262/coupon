@@ -40,29 +40,23 @@
 .nav_head a:hover{
     color: var(--morelightgrey);
 }
+
 .affilate{
     position: relative;
-    height: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     width: 100%;
+    height: 100;
+    overflow-x: hidden;
+    overflow-y: none;
 }
-.affilate-inner{
+.affilate div{
     position: absolute;
-    font-size: 100px;
-    top: 0;
-    text-align: center;
-    display: flex;
-    justify-content: center;
-    opacity: .1;    
 }
-.affilate-inner-2{
-    position: absolute;
-    display: flex;
-    justify-content: center;
-    top: 40;
-    left: 33%;
-    margin: auto;
-    text-align: center;
-    
+.affilate .fs-1 {
+    font-size: 100 !important;
+    opacity: .1;
 }
 /*
 animation
@@ -182,4 +176,10 @@ animation
         border-radius: 50%;
     }
 
+}
+
+@media screen and (max-width:495px) {
+    .affilate .fs-1{
+        font-size: 70 !important;
+    }
 }

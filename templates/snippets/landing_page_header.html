@@ -2,155 +2,50 @@
 
 
 <section class="navbar-expand-md flex-md-nowrap p-0">
-    <nav class="navbar navbar-dark sticky-top">
-        <a id="header-logo" class="navbar-brand col-md-3 col-lg-2 me-0 px-2 fs-4" href="{% url 'index' %}">
-            <img src="{% static '/img/logo.png' %}" alt="logo" width="150">
-        </a>
-    
-        {% if request.user.is_authenticated %}
-    
-        <div class="nav-item mb-1 d-md-none d-grid align-items-center mx-auto ms-5 ">
-            <div class="dropdown me-5">
-                <button class="dropdownMenuButton btn btn-outline-secondary dropdown-toggle m-0  px-2 mt-2" type="" id="dropdownMenuButton" aria-expanded="false">
-                    {{user_currency}}
-                </button>
-                <ul id="dropdown-menu-ul" class="dropdown-menu dropdown-menu-ul">
-                    {% for currency in currency %}
-                    {% if not user_currency in currency%}
-                    <li class="dropdown-item currency" data-csrftoken="{{csrf_token}}">{{currency}}</li>
-                    {%endif%}
-                    {% endfor %}
-                </ul>
-            
-            </div>
-        </div>
-        {% endif %}
-        
-        <div class="nav-item d-none d-md-grid align-items-center mx-auto">
-            <button class="btn btn-dark me-5" id="mode-btn">
-                <i class="fa-solid fa-sun"></i>
-            </button>
-            
-        </div>
-    
-        <button type="button" class="navbar-toggler nav_toggle_btn mx-auto px-2 d-md-none collapsed mt-3 mb-1 " data-bs-toggle="modal" data-bs-target="#nav-menu">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-    
-        <div id="" class="collapse navbar-collapse">
-            <div class="nav_head ms-auto">
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-    
-                    <li class="nav-item mb-1">
-                        <a class="navbar-brand fs-6 ms-3 underline" href="{% url 'index' %}">{%if request.user.is_authenticated%}Dashboard{%else%}Home{%endif%}</a>
-                    </li>
-                    {%if request.user.is_staff %}
-                    <li class="nav-item mb-1">
-                        <a class="navbar-brand fs-6 ms-3 underline" href="{% url 'generate_code' %}">Generate coupon</a>
-                    </li>
-                    {%endif%}
-                    <li class="nav-item mb-1">
-                        <a class="navbar-brand fs-6 ms-3" href="{% url 'coupon_verify' %}">Coupon Checker</a>
-                    </li>
-                    <li class="nav-item mb-1">
-                        <a class="navbar-brand fs-6 ms-3" href="{% url 'coupon_vendor' %}">Smart Vendors</a>
-                    </li>
-                    <li class="nav-item mb-1">
-                        <a class="navbar-brand fs-6 ms-3" href="#">Top Earners</a>
-                    </li>
-                    <li class="nav-item mb-1">
-                        <a class="navbar-brand fs-6 ms-3" href="{% url 'advert_post' %}">Advert post</a>
-                    </li>
-    
-                    {% if request.user.is_authenticated %}
-                    
-                    <li class="nav-item mb-1 d-grid align-items-center">
-                        <div class="dropdown">
-                            <button class="dropdownMenuButton btn btn-outline-secondary dropdown-toggle m-0" type="button" id="dropdownMenuButton" aria-expanded="false">
-                                {{user_currency}}
-                            </button>
-                            <ul id="dropdown-menu-ul" class="dropdown-menu dropdown-menu-ul">
-                                {% for currency in currency %}
-                                {% if not user_currency in currency%}
-                                <li class="dropdown-item currency" data-csrftoken="{{csrf_token}}">{{currency}}</li>
-                                {%endif%}
-                                {% endfor %}
-                            </ul> 
-                            
-    
-                        
-                        </div>
-                    </li>                
+    {% include 'snippets/nav.html' %}
+
+    <section class="py-4 navbar mt-0" id="sectionHeader">
+        <div class="container">
+            <div class="row d-flex justify-content-center py-md-3 align-items-center">
+            <div class="col-lg-6 mx-auto">
+
+                <!--animation background-->
+                <div class="area" >
+                    <ul class="circles">
+                        <li></li>
+                        <li></li>
+                        <li></li>
+                        <li></li>
+                        <li></li>
+                        <li></li>
+                        <li></li>
+                        <li></li>
+                        <li></li>
+                        <li></li>
+                    </ul>
+                </div >
+                <!--animation background end-->
                 
-                    <li class="nav-item mb-1">
-                        <a class="navbar-brand fs-6 ms-3" href="{% url 'user:account_setting' %}">Account Settings</a>
-                    </li>
-                    <li class="nav-item mb-1">
-                        <a class="navbar-brand fs-6 ms-3" href="{% url 'account_logout' %}">Logout</a>
-                    </li>
-                    {% else %}
-                    <li class="nav-item mb-1">
-                        <a class="navbar-brand fs-6 ms-3" href="{% url 'account_login' %}">Login</a>
-                    </li>
-                    <li class="nav-item mb-1">
-                        <a class="navbar-brand fs-6 ms-3" href="{% url 'account_signup' %}">Sign up</a>
-                    </li>
-    
-                    {% endif %}
-                </ul>
+                <h1 class="">Pipay - The Next Generation Affiliate Marketing Platform</h1>
+                <p class="fs-4">
+                    At Pipay, we envision a world where anyone can unleash their 
+                    earning potential through the power of affiliate marketing. 
+                    Our platform empowers users to effortlessly generate income by
+                    referring others and completing real-time tasks, revolutionizing 
+                    the way people monetize their online presence. We strive to create 
+                    a seamless, inclusive, and lucrative ecosystem that rewards 
+                    collaboration, creativity, and entrepreneurship
+                </p>
             </div>
-        </div>
-    
-        {% if request.user.is_authenticated%}
-    
-        <div style="width: 40px;" class="d-none d-lg-block me-3 border rounded-5">
-            <img width="100%" class="rounded-5" src="{{request.user.picture_url}}" alt="{{reqest.user}} profile image">
-        </div>
-       {%endif%}
-    </nav>
 
-<section class="py-4 navbar mt-0" id="sectionHeader">
-    <div class="container">
-        <div class="row d-flex justify-content-center py-md-3 align-items-center">
-        <div class="col-lg-6 mx-auto">
-
-            <!--animation background-->
-            <div class="area" >
-                <ul class="circles">
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                </ul>
-            </div >
-            <!--animation background end-->
-            
-            <h1 class="">Pipay - The Next Generation Affiliate Marketing Platform</h1>
-            <p class="fs-4">
-                At Pipay, we envision a world where anyone can unleash their 
-                earning potential through the power of affiliate marketing. 
-                Our platform empowers users to effortlessly generate income by
-                 referring others and completing real-time tasks, revolutionizing 
-                 the way people monetize their online presence. We strive to create 
-                 a seamless, inclusive, and lucrative ecosystem that rewards 
-                 collaboration, creativity, and entrepreneurship
-            </p>
-        </div>
-
-        <div class="col-lg-6 mt-lg-0 mt-sm-5 justify-self-end">
-            <div class=""> <!--style="background-image: url('{% static 'img/dashboard_desktop.png' %}'); background-size:cover; width:100%; height:100%;"-->
-                <div class="">
-                    <img style="width: 100%; height:70%" src="{% static 'img/a1.jpeg' %}" alt="">
+            <div class="col-lg-6 mt-lg-0 mt-sm-5 justify-self-end">
+                <div class=""> <!--style="background-image: url('{% static 'img/dashboard_desktop.png' %}'); background-size:cover; width:100%; height:100%;"-->
+                    <div class="">
+                        <img style="width: 100%; height:70%" src="{% static 'img/a1.jpeg' %}" alt="">
+                    </div>
                 </div>
+            </div>     
             </div>
-        </div>     
         </div>
-    </div>
-  </section>
+    </section>
 <section>
