@@ -4,10 +4,13 @@
 }
 
 .load_img{
+    position: relative;
     width: var(--width);
     height: var(--height);
-    background-color:var(--grey);
     border-radius: 50%;
+    padding: 0;
+    background-color:var(--grey);    
+    overflow: hidden;
 }
 
 .circle_bg{

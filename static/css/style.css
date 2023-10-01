@@ -248,6 +248,24 @@ withdraw page
     box-shadow: 0 0.5rem 1rem rgba(109, 109, 109, 0.15) !important;
 }
 
+.affilate{
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100;
+    overflow-x: hidden;
+    overflow-y: hidden;
+}
+.affilate div{
+    position: absolute;
+}
+.affilate .fs-1 {
+    font-size: 100 !important;
+    opacity: .1;
+}
+
   /* CUSTOMIZE THE CAROUSEL
 -------------------------------------------------- */
 
@@ -266,7 +284,7 @@ withdraw page
     height: 32rem;
   }
   .carousel-item > img {
-    object-fit:contain;
+    object-fit:fit;
     position: absolute;
     top: 0;
     left: 0;
@@ -332,3 +350,11 @@ footer
     margin-bottom: 5px;
 
 }
+
+/*
+@media screen and (min-width:547px) {
+    .modal-fullscreen{
+        width: 30vw !important;
+    }
+}
+*/

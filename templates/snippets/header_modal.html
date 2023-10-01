@@ -9,7 +9,7 @@
                     </div>
 
                     <div>
-                        <p class="m-0 p-0 fw-bolder fs-6">{{request.user.first_name}} {{request.user.last_name}}</p>
+                        <p class="m-0 p-0 fw-bolder fs-4">{{request.user.first_name}} {{request.user.last_name}}</p>
                         <p class="m-0 p-0">@{{request.user}}</p>
                     </div>
                 </div>
@@ -22,19 +22,19 @@
                     <div class="nav_head ms-auto">
                         <ul class="me-auto mb-2 mb-lg-0">
                             <li class="nav-item mb-4">
-                                <a class="navbar-brand fs-6 ms-3 underline" href="{% url 'index' %}">{% if request.user.is_authenticated %} <i class="fa fa-desktop me-2"></i> Dashboard{%else%} <i class="fa fa-home me-2"></i> Home{% endif %}</a>
+                                <a class="navbar-brand fs-4 ms-3 underline" href="{% url 'index' %}">{% if request.user.is_authenticated %} <i class="fa fa-desktop me-2"></i> Dashboard{%else%} <i class="fa fa-home me-2"></i> Home{% endif %}</a>
                             </li>
                             {%if request.user.is_staff %}
                             <li class="nav-item mb-4">
-                                <a class="navbar-brand fs-6 ms-3 underline" href="{% url 'generate_code' %}"> <i class="fa fa-gear me-2"></i> Generate coupon</a>
+                                <a class="navbar-brand fs-4 ms-3 underline" href="{% url 'generate_code' %}"> <i class="fa fa-gear me-2"></i> Generate coupon</a>
                             </li>
                             {%endif%}
                             
                             <li class="nav-item mb-4">
-                                <a class="navbar-brand fs-6 ms-3" href="#"><i class="fa fa-thin fa-graduation-cap me-2"></i> Top Earners</a>
+                                <a class="navbar-brand fs-4 ms-3" href="#"><i class="fa fa-thin fa-graduation-cap me-2"></i> Top Earners</a>
                             </li>
                             <li class="nav-item mb-4">
-                                <a class="navbar-brand fs-6 ms-3" href="{% url 'advert_post' %}"> <i class="fa-brands fa-adversal me-2"></i> Advert post</a>
+                                <a class="navbar-brand fs-4 ms-3" href="{% url 'advert_post' %}"> <i class="fa-brands fa-adversal me-2"></i> Advert post</a>
                             </li> 
                             
                             <div class="nav-item mb-4 d-grid align-items-center mx-auto">
@@ -47,45 +47,45 @@
                             {% if request.user.is_authenticated %}
 
                             <li class="nav-item mb-4">
-                                <a class="navbar-brand fs-6 ms-3" href="#"> <i class="fa-solid fa-money-bill-trend-up me-2"></i> Pay Task</a>
+                                <a class="navbar-brand fs-4 ms-3" href="#"> <i class="fa-solid fa-money-bill-trend-up me-2"></i> Pay Task</a>
                             </li>
                             
                             <li class="nav-item mb-4">
-                                <a class="navbar-brand fs-6 ms-3" href="{% url 'user:account_setting' %}"> <i class="fa fa-regular fa-user me-2"></i> User Profile</a>
+                                <a class="navbar-brand fs-4 ms-3" href="{% url 'user:account_setting' %}"> <i class="fa fa-regular fa-user me-2"></i> User Profile</a>
                             </li>
                             <li class="nav-item mb-4">
-                                <a class="navbar-brand fs-6 ms-3" href="#"> <i class="fa fa-solid fa-credit-card me-2"></i> Payment</a>
+                                <a class="navbar-brand fs-4 ms-3" href="#"> <i class="fa fa-solid fa-credit-card me-2"></i> Payment</a>
                             </li>
                             <li class="nav-item mb-4">
-                                <a class="navbar-brand fs-6 ms-3" href="#"> <i class="fa-solid fa-money-bill-trend-up me-2"></i> Earning History</a>
+                                <a class="navbar-brand fs-4 ms-3" href="#"> <i class="fa-solid fa-money-bill-trend-up me-2"></i> Earning History</a>
                             </li>
                             <li class="nav-item mb-4">
-                                <a class="navbar-brand fs-6 ms-3" href="#"> <i class="fa fa-hand-holding-usd me-2"></i> Pay Rumble</a>
+                                <a class="navbar-brand fs-4 ms-3" href="#"> <i class="fa fa-hand-holding-usd me-2"></i> Pay Rumble</a>
                             </li>
                             <li class="nav-item mb-4">
-                                <a class="navbar-brand fs-6 ms-3" href="#"> <i class="fa-solid fa-store me-2"></i> Market Place</a>
+                                <a class="navbar-brand fs-4 ms-3" href="#"> <i class="fa-solid fa-store me-2"></i> Market Place</a>
                             </li>
                             <li class="nav-item mb-4">
-                                <a class="navbar-brand fs-6 ms-3" href="#"> <i class="fa fa-gift me-2"></i> Courses</a>
+                                <a class="navbar-brand fs-4 ms-3" href="#"> <i class="fa fa-gift me-2"></i> Courses</a>
                             </li>
                             <li class="nav-item mb-4">
-                                <a class="navbar-brand fs-6 ms-3" href="#"> <i class="fa-solid fa-right-left me-2"></i> Contest</a>
+                                <a class="navbar-brand fs-4 ms-3" href="#"> <i class="fa-solid fa-right-left me-2"></i> Contest</a>
                             </li>
                             <li class="nav-item mb-4">
-                                <a class="navbar-brand fs-6 ms-3" href="{% url 'account_logout' %}"> <i class="fa-solid fa-right-from-bracket me-2"></i> Logout</a>
+                                <a class="navbar-brand fs-4 ms-3" href="{% url 'account_logout' %}"> <i class="fa-solid fa-right-from-bracket me-2"></i> Logout</a>
                             </li>
                             {% else %}
                             <li class="nav-item mb-4">
-                                <a class="navbar-brand fs-6 ms-3" href="{% url 'coupon_verify' %}"><i class="fa-solid fa-check-double me-2"></i> Coupon Checker</a>
+                                <a class="navbar-brand fs-4 ms-3" href="{% url 'coupon_verify' %}"><i class="fa-solid fa-check-double me-2"></i> Coupon Checker</a>
                             </li>
                             <li class="nav-item mb-4">
-                                <a class="navbar-brand fs-6 ms-3" href="{% url 'coupon_vendor' %}"> <i class="fa-solid fa-ticket me-2"></i> Smart Vendors</a>
+                                <a class="navbar-brand fs-4 ms-3" href="{% url 'coupon_vendor' %}"> <i class="fa-solid fa-ticket me-2"></i> Smart Vendors</a>
                             </li>
                             <li class="nav-item mb-4">
-                                <a class="navbar-brand fs-6 ms-3" href="{% url 'account_login' %}"> <i class="fa-solid fa-right-to-bracket me-2"></i> Login</a>
+                                <a class="navbar-brand fs-4 ms-3" href="{% url 'account_login' %}"> <i class="fa-solid fa-right-to-bracket me-2"></i> Login</a>
                             </li>
                             <li class="nav-item mb-4">
-                                <a class="navbar-brand fs-6 ms-3" href="{% url 'account_signup' %}"> <i class="fa-solid fa-user-plus me-2"></i> Sign up</a>
+                                <a class="navbar-brand fs-4 ms-3" href="{% url 'account_signup' %}"> <i class="fa-solid fa-user-plus me-2"></i> Sign up</a>
                             </li>
             
                             {% endif %}
