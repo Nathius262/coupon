@@ -65,6 +65,9 @@ INSTALLED_APPS = [
     
     #django-mptt
     'mptt',
+    
+    #notifications
+    'notifications',
 ]
 
 MIDDLEWARE = [

@@ -7,6 +7,7 @@ from django.http.response import JsonResponse
 from .constants import currency as c
 from .utils import daily_task_process
 from user.models import ReferralList
+from notifications.signals import notify
 
 
 # Create your views here.
@@ -21,6 +22,7 @@ def currency(request):
                 user_dail_login_task.task_completed = True
                 user_dail_login_task.save()
                 daily_task_process(request.user, 200)
+                notify.send(user_dail_login_task, recipient=request.user, verb="Daily login bonus", level='success')
             else:
                 pass
                 
