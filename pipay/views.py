@@ -21,6 +21,7 @@ def currency(request):
             if (user_dail_login_task) and (user_dail_login_task.task_completed ==False):
                 user_dail_login_task.task_completed = True
                 user_dail_login_task.save()
+                #daily login bonus
                 daily_task_process(request.user, 200)
                 notify.send(user_dail_login_task, recipient=request.user, verb="Daily login bonus", level='success')
             else:

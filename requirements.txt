@@ -8,3 +8,4 @@ python-dotenv==0.21.0
 django_babel
 django-apscheduler
 django-mptt
+django-notifications-hq==1.8.2
