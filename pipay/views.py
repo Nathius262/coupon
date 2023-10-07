@@ -131,5 +131,9 @@ def couponVerify_view(request):
 def withdraw_view(request): 
     return render(request, "pipay/withdraw.html")
 
+def topEarners_view(request):
+    
+    return render(request, "pipay/top_earners.html")
+
 def advert_post_view(request):
     return render(request, "pipay/task.html")

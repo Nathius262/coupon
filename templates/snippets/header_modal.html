@@ -57,19 +57,26 @@
                                 <a class="navbar-brand fs-4 ms-3" href="#"> <i class="fa fa-solid fa-credit-card me-2"></i> Payment</a>
                             </li>
                             <li class="nav-item mb-4">
-                                <a class="navbar-brand fs-4 ms-3" href="#"> <i class="fa-solid fa-money-bill-trend-up me-2"></i> Earning History</a>
+                                <a class="navbar-brand fs-4 ms-3" href="{% url 'notifications:all' %}"> <i class="fa-solid fa-money-bill-trend-up me-2"></i> Earning History</a>
                             </li>
                             <li class="nav-item mb-4">
                                 <a class="navbar-brand fs-4 ms-3" href="#"> <i class="fa fa-hand-holding-usd me-2"></i> Pay Rumble</a>
                             </li>
                             <li class="nav-item mb-4">
-                                <a class="navbar-brand fs-4 ms-3" href="#"> <i class="fa-solid fa-store me-2"></i> Market Place</a>
+                                <a class="navbar-brand fs-4 ms-3" href="#"> <i class="fa-solid fa-store me-2"></i> Pay Store</a>
                             </li>
+                            <li class="nav-item mb-4">
+                                <a class="navbar-brand fs-4 ms-3" href="#"> <i class="fa-brands fa-product-hunt me-2"></i> Pay Gig</a>
+                            </li>
+
                             <li class="nav-item mb-4">
                                 <a class="navbar-brand fs-4 ms-3" href="#"> <i class="fa fa-gift me-2"></i> Courses</a>
                             </li>
                             <li class="nav-item mb-4">
                                 <a class="navbar-brand fs-4 ms-3" href="#"> <i class="fa-solid fa-right-left me-2"></i> Contest</a>
+                            </li>
+                            <li class="nav-item mb-4">
+                                <a class="navbar-brand fs-4 ms-3" href="{% url 'notifications:all' %}"> <i class="fa-solid fa-bell me-2"></i> Notifications</a>
                             </li>
                             <li class="nav-item mb-4">
                                 <a class="navbar-brand fs-4 ms-3" href="{% url 'account_logout' %}"> <i class="fa-solid fa-right-from-bracket me-2"></i> Logout</a>
@@ -79,7 +86,7 @@
                                 <a class="navbar-brand fs-4 ms-3" href="{% url 'coupon_verify' %}"><i class="fa-solid fa-check-double me-2"></i> Coupon Checker</a>
                             </li>
                             <li class="nav-item mb-4">
-                                <a class="navbar-brand fs-4 ms-3" href="{% url 'coupon_vendor' %}"> <i class="fa-solid fa-ticket me-2"></i> Smart Vendors</a>
+                                <a class="navbar-brand fs-4 ms-3" href="{% url 'coupon_vendor' %}"> <i class="fa-solid fa-ticket me-2"></i> Get Coupon Code</a>
                             </li>
                             <li class="nav-item mb-4">
                                 <a class="navbar-brand fs-4 ms-3" href="{% url 'account_login' %}"> <i class="fa-solid fa-right-to-bracket me-2"></i> Login</a>
