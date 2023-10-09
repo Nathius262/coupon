@@ -24,13 +24,13 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 DEBUG = config('DEBUG', default=False, cast=bool)
 
-ALLOWED_HOSTS = ["192.81.209.20",]
+ALLOWED_HOSTS = ["192.81.209.20", 'localhost']
 
 ROOT_URLCONF = f'{config("PROJECT_NAME")}.urls'
 
 WSGI_APPLICATION = f'{config("PROJECT_NAME")}.wsgi.application'
 
-ASGI_APPLICATION = f'{config("PROJECT_NAME")}.routing.application'
+#ASGI_APPLICATION = f'{config("PROJECT_NAME")}.routing.application'
 
 if DEBUG:
     EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
