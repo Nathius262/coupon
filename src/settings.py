@@ -25,7 +25,7 @@ SECRET_KEY = config("SECRET_KEY")
 
 DEBUG = config('DEBUG', default=False, cast=bool)
 
-ALLOWED_HOSTS = ["192.81.209.20", 'localhost']
+ALLOWED_HOSTS = ["161.35.14.145", 'localhost', 'pipaytech.com', 'www.pipaytech.com']
 
 ROOT_URLCONF = f'{config("PROJECT_NAME")}.urls'
 
@@ -46,6 +46,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    
+    'storages',
     
     #installed apps
     
@@ -188,8 +190,13 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static'),
 ]
 
+
+AWS_DEFAULT_ACL = 'public-read'
+
+STATIC_URL = '{}/{}/'.format(AWS_S3_ENDPOINT_URL, AWS_LOCATION)
+
 #STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
-STATIC_URL = 'https://%s/%s/' % (AWS_S3_ENDPOINT_URL, AWS_LOCATION)
+#STATIC_URL = 'https://%s/%s/' % (AWS_S3_ENDPOINT_URL, AWS_LOCATION)
 TEMP = os.path.join(BASE_DIR, 'temp')
 STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
@@ -204,4 +211,4 @@ EMAIL_USE_TLS = True
 DEFAULT_FROM_EMAIL = 'Pipaytech Team <noreply@pipaytech.com>'
 
 
-BASE_URL = "http://192.81.209.20"
+BASE_URL = "pipaytech.com"
