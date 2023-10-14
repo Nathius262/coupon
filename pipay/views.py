@@ -86,7 +86,10 @@ def index_view(request):
         
         render_template = render(request, 'pipay/dashboard.html', context)
     else:
-        render_template = render(request, 'pipay/landing_page.html', {'loc': True,})
+        context = {
+          'loc': True,
+        }
+        render_template = render(request, 'pipay/landing_page.html', context)
     return render_template
 
 def couponVendor_view(request):

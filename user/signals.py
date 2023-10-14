@@ -7,6 +7,7 @@ from PIL import Image
 from .models import CustomUser, ReferralList
 from pipay.models import UsersBalance, DailyLoginTask
 from pipay.utils import affilate_topup_process
+import cloudinary.uploader
 #from pipay.utils import daily_task_process
 
 @receiver(post_save, sender=CustomUser)
@@ -28,16 +29,20 @@ def create_users_profile(sender, instance, created, *args, **kwargs):
         ReferralList(user=user).save()
         
 
-@receiver(post_save, sender=CustomUser)
-def save_profile_img(sender, instance, *args, **kwargs):
-    SIZE = 600, 600
-    if instance.picture:
-        pic = Image.open(instance.picture.path)
-        try:
-            pic.thumbnail(SIZE, Image.LANCZOS)
-            pic.save(instance.picture.path)
-        except:
-            if pic.mode in ("RGBA", 'P'):
-                profile_pic = pic.convert("RGB")
-                profile_pic.thumbnail(SIZE, Image.LANCZOS)
-                profile_pic.save(instance.picture.path)
+#@receiver(post_save, sender=CustomUser)
+def save_profile_img(sender, instance, created, *args, **kwargs):
+    if not created:
+      SIZE = 600, 600
+      if instance.picture:
+          file_path = instance.picture.path
+          pic = Image.open(file_path)
+          try:
+              pic.thumbnail(SIZE, Image.LANCZOS)
+              cloudinary_response = cloudinary.uploader.upload(file_path)
+              pic.save(cloudinary_response['secure_url'])
+          except:
+              if pic.mode in ("RGBA", 'P'):
+                  profile_pic = pic.convert("RGB")
+                  profile_pic.thumbnail(SIZE, Image.LANCZOS)
+                  cloudinary_response = cloudinary.uploader.upload(file_path)
+                  profile_pic.save(cloudinary_response['secure_url'])
