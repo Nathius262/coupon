@@ -3,7 +3,7 @@
 {% block title %}Dashboard{% endblock %}
 {% load static %}
 
-{% block content %}   
+{% block content %} 
     
 <div class="container mt-5 mb-5">
     <div class="row">
@@ -39,28 +39,28 @@
                             <h5 class="text-center">Affiliate Link:</h5>
                             <div class="d-inline-flex align-items-center p-0 form-control">
                                 <input id="myInput" class="form-control" type="text" value="{{request.scheme}}://{{request.get_host}}{{request.user.get_referral_link}}" readonly>                                
-                               <button onclick="copyText()" class="btn btn-primary p-1 m-1"><i class="fa fa-clone">copy</i></button>
+                               <button onclick="copyText(true)" class="btn btn-primary p-1 m-1"><i class="fa fa-clone">copy</i></button>
                             </div>
                         </div>
 
                         <div class="container">
-                            <div class="row mt-5">
-                                <div class="col mx-auto">
+                            <div class="row mt-5 dashboard-icon">
+                                <a href="{% url 'withdraw' %}" class="col mx-auto nav-link">
                                     <img src="{% static 'img/icon/g1.png' %}" alt="g1.png">
                                     <p class="mt-0">Withdraw</p>
-                                </div>
-                                <div class="col mx-auto">
+                                </a>
+                                <a href="{% url 'advert_post' %}" class="col mx-auto nav-link">
                                     <img src="{% static 'img/icon/g2.png' %}" alt="g2.png">
                                     <p class="mt-0">Tasks</p>
-                                </div>
-                                <div class="col mx-auto">
+                                </a>
+                                <a href="#" class="col mx-auto nav-link">
                                     <img src="{% static 'img/icon/g3.png' %}" alt="g3.png">
                                     <p class="mt-0">Earnings</p>
-                                </div>
-                                <div class="col mx-auto">
+                                </a>
+                                <a href="{% url 'user:referral_list' request.user %}" class="col mx-auto nav-link">
                                     <img src="{% static 'img/icon/g4.png' %}" alt="g4.png">
                                     <p class="mt-0">Referals</p>
-                                </div>
+                                </a>
                             </div>
                         </div>
                     </div>
@@ -110,6 +110,18 @@
                         </div>
                     </div>
                 </div> 
+            </div>
+
+            <div class="row section blue-bg p-5">
+                <div class="col-md-6 justify-content-center">
+                    <h5 class="text-center h1">Add Vendor</h5>
+                    <p class="fs-5">use the link below by sharing to users you want to add as a vendor to this platform</p>
+                    <div class="d-inline-flex align-items-center p-0 form-control">
+                        <input id="vendorInput" class="form-control" type="text" value="{{request.scheme}}://{{request.get_host}}{% url 'user:vendor_profile' %}" readonly>                                
+                    <button onclick="copyText(false)" class="btn btn-primary p-1 m-1"><i class="fa fa-clone">copy</i></button>
+                    </div>
+                </div>
+                
             </div>
             
             {% include 'snippets/carousel.html' %}

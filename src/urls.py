@@ -23,7 +23,7 @@ urlpatterns = [
     path('account/', include('allauth.urls')),
     path('notifications/', include('notifications.urls'), name="notifications"),
     path('', include('pipay.urls')),
-    path('profile/', include('user.urls'), name='user')
+    path('', include('user.urls'), name='user')
 ]
 
 if settings.DEBUG:

@@ -4,8 +4,6 @@ from django.contrib.auth.models import AbstractBaseUser
 from phonenumber_field.modelfields import PhoneNumberField
 from .managers import MyAccountManager
 from .utils import image_location
-from mptt.models import MPTTModel, TreeForeignKey
-from django.forms import ValidationError
 
 
 class CustomUser(AbstractBaseUser):
@@ -46,7 +44,7 @@ class CustomUser(AbstractBaseUser):
         return reverse('user:referred_user', args=[self.username])
 
     def get_referral_link(self):
-        return reverse('user:custom_account_signup', args=[self.code])
+        return reverse('user:custom_account_signup', args=[self.username])
 
     def __str__(self):
         return self.username
@@ -63,3 +61,9 @@ class ReferralList(models.Model):
     
     def __str__(self) :
         return str(self.user)
+    
+class VendorProfile(models.Model):
+    user=models.ForeignKey(CustomUser, on_delete=models.CASCADE, null=True, blank=False, related_name="vendor_profile")
+    whatsapp_link = models.URLField(max_length=200, db_index=True, unique=True, blank=True)
+    bank_name = models.CharField(max_length=100, blank=True)
+    

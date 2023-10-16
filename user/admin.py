@@ -23,6 +23,11 @@ class AccountAdmin(UserAdmin):
 class ReferralListAdmin(admin.ModelAdmin):
     list_display = ['user',]
     readonly_fields = ['user', 'user_list']
+    
+    
+class VendorProfileAdmin(admin.ModelAdmin):
+    list_display = ['user', 'whatsapp_link', 'bank_name']
+    readonly_fields = ['user', 'whatsapp_link', 'bank_name']
 
 
 """
@@ -58,4 +63,5 @@ class UserReferralAdmin(DraggableMPTTAdmin):
 """
 admin.site.register(CustomUser, AccountAdmin)
 admin.site.register(ReferralList, ReferralListAdmin)
+admin.site.register(VendorProfile, VendorProfileAdmin)
 #admin.site.register(UserReferralLink, UserReferralAdmin)

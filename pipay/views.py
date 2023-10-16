@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
-from user.models import CustomUser
+from user.models import CustomUser, VendorProfile
 from user.utils import generate_ref_code
 from .models import GenerateCode, UsersBalance, Currency, DailyLoginTask
 from django.http.response import JsonResponse
@@ -8,6 +8,7 @@ from .constants import currency as c
 from .utils import daily_task_process
 from user.models import ReferralList
 from notifications.signals import notify
+from decimal import Decimal
 
 
 # Create your views here.
@@ -22,8 +23,9 @@ def currency(request):
                 user_dail_login_task.task_completed = True
                 user_dail_login_task.save()
                 #daily login bonus
-                daily_task_process(request.user, 200)
-                notify.send(user_dail_login_task, recipient=request.user, verb="Daily login bonus", level='success')
+                topup = 200
+                daily_task_process(request.user, topup)
+                notify.send(user_dail_login_task, recipient=request.user, verb="Daily login bonus", description=f"{topup} added to your task balance", level='success')
             else:
                 pass
                 
@@ -46,7 +48,7 @@ def userBalanceInfo(request):
          
         context = {           
             "total_balance":user.totalBalance(),
-            "total_withdraw": user.totalWithdraw(),          
+            "total_withdraw": Decimal('0.00'), #user.totalWithdraw(),
             "affilate": user.affilate,
             "task": user.task,
             "currency": user.currency
@@ -94,7 +96,7 @@ def index_view(request):
 
 def couponVendor_view(request):
     context = {
-        'user': CustomUser.objects.all().filter(is_staff=True),
+        'user': VendorProfile.objects.all(),
         'loc':False,
     }
     return render(request, 'pipay/couponVendor.html', context)
@@ -111,7 +113,7 @@ def generateCoupon_view(request):
                 context['show_code'] = True
     else:
         redirect('home')
-    context['loc'] = True
+    context['loc'] = False
     return render(request, 'pipay/generate_code.html', context)
 
 def couponVerify_view(request):

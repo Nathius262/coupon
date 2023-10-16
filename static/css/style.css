@@ -14,9 +14,19 @@
     --green:rgb(67, 255, 203);
     --width:50px;
     --height:50px;
+    --gold:rgb(255 222 0);
+}
+
+.gold-color{
+    color:var(--gold);
 }
 main .section img{
     width: 100%;
+}
+
+.dashboard-icon a{
+    transform: translate(50%);
+    transition: transform .5;
 }
 
 .section{

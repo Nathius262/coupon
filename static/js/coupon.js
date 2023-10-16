@@ -7,9 +7,15 @@ window.addEventListener("DOMContentLoaded", ()=>{
     screenSwitcher(false)
 })
 
-function copyText() {
+function copyText(input) {
     // Get the text field
-    var copyText = document.getElementById("myInput");
+    var copyText;
+    if (input===true){
+        copyText= document.getElementById("myInput");
+    }else{
+        copyText= document.getElementById("vendorInput");
+    }
+    
 
     // Select the text field
     copyText.select();

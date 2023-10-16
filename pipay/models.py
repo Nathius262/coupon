@@ -1,5 +1,6 @@
 from django.db import models
 from user.models import CustomUser
+from decimal import Decimal
 
 # Create your models here.
 class GenerateCode(models.Model):
@@ -48,12 +49,12 @@ class UsersBalance(models.Model):
     task = models.DecimalField(max_digits=12, decimal_places=2, default=0.00, editable=False)
     
     def totalBalance(self):
-        total_balance = self.affilate + self.task
+        total_balance = self.affilate
         return total_balance
     
     @property
     def totalWithdraw(self):
-        total_withdraw = self.totalBalance
+        total_withdraw = None
         return total_withdraw
     
     def __str__(self):
