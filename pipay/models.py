@@ -57,6 +57,10 @@ class UsersBalance(models.Model):
         total_withdraw = None
         return total_withdraw
     
+    def totalEarnings(self):
+        total_earnings = self.affilate + self.task
+        return total_earnings
+    
     def __str__(self):
         return str(self.user)
 

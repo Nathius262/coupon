@@ -152,6 +152,7 @@ function toggleShowBalance(boolean){
         taskEl.innerText = "****"
         affilateEl.innerText = "****"
         withdrawalEl.innerText = "****"
+        totalEarnEl.innerHTML = "****"
     }else{
         $.ajax({
             method:"get",
@@ -162,7 +163,7 @@ function toggleShowBalance(boolean){
                 taskEl.innerText = `${currency} ${data.task}`
                 affilateEl.innerText = `${currency} ${data.affilate}`
                 withdrawalEl.innerText = `${currency} ${data.total_withdraw}`
-                //totalEarnEl.innerText = data.
+                totalEarnEl.innerText = `${currency} ${data.total_earning}`
                 
             },
             error: function(err){

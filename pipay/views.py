@@ -48,6 +48,7 @@ def userBalanceInfo(request):
          
         context = {           
             "total_balance":user.totalBalance(),
+            "total_earning": user.totalEarnings(),
             "total_withdraw": Decimal('0.00'), #user.totalWithdraw(),
             "affilate": user.affilate,
             "task": user.task,
