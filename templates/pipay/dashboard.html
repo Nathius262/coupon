@@ -111,7 +111,8 @@
                     </div>
                 </div> 
             </div>
-
+            
+            {% if request.user.is_staff %}
             <div class="row section blue-bg p-5">
                 <div class="col-md-6 justify-content-center">
                     <h5 class="text-center h1">Add Vendor</h5>
@@ -123,6 +124,7 @@
                 </div>
                 
             </div>
+            {% endif %}
             
             {% include 'snippets/carousel.html' %}
         </main>
