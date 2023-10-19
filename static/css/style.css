@@ -43,7 +43,7 @@ body{
 }
 .body-dark .blue-color, .body-dark .navy-blue, .body-dark .navy-blue a{
     color: var(--white);
-    text-decoration: underline;
+    /*text-decoration: underline;*/
 }
 ul{
     list-style: none;
@@ -104,6 +104,9 @@ ul{
 }
 #sectionHeader{
     color: var(--white);
+}
+.scroll-y-top-el, .scroll-y-down-el, .scroll-x-top-el, .scroll-x-down-el{
+    transition: transform 2s ease;
 }
 .nav_toggle_btn{
     margin-left: auto;
