@@ -20,6 +20,10 @@
         </div>
       </div>
 
+      {% if message %}
+      <p class="text-danger m-5">{{message}}}</p>
+      {% endif %}
+
       <div class="col-12">
         <label for="user" class="form-label">Username<!-- <span class="text-muted">(Optional)</span>----></label>
         <input name="user" type="text" class="form-control" id="user" placeholder="Username" value="{{request.user}}" required="">

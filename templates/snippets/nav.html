@@ -38,6 +38,11 @@
     <div id="" class="collapse navbar-collapse me-5">
         <div class="nav_head ms-auto">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                {% if request.user.is_admin %}
+                <li class="nav-item mb-4">
+                    <a class="navbar-brand fs-6 ms-3" href="/admin/">Admin</a>
+                </li>
+                {% endif %}
                 <li class="nav-item mb-4">
                     <a class="navbar-brand fs-6 ms-3" href="{% url 'index' %}">{% if request.user.is_authenticated %} Dashboard{%else%} Home{% endif %}</a>
                 </li>

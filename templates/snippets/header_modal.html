@@ -32,11 +32,7 @@
                             
                             <li class="nav-item mb-4">
                                 <a class="navbar-brand fs-4 ms-3" href="#"><i class="fa fa-thin fa-graduation-cap me-2"></i> Top Earners</a>
-                            </li>
-                            <li class="nav-item mb-4">
-                                <a class="navbar-brand fs-4 ms-3" href="{% url 'advert_post' %}"> <i class="fa-brands fa-adversal me-2"></i> Advert post</a>
-                            </li> 
-                            
+                            </li>                           
                             <div class="nav-item mb-4 d-grid align-items-center mx-auto">
                                 <button class="btn btn-dark me-5 mode-btn" id="mode-btn" onclick="screenSwitcher(true)">
                                     <i class="fa-solid fa-sun me-2"></i> Dark theme: on
@@ -45,9 +41,11 @@
                             </div>
                             
                             {% if request.user.is_authenticated %}
-
                             <li class="nav-item mb-4">
-                                <a class="navbar-brand fs-4 ms-3" href="#"> <i class="fa-solid fa-money-bill-trend-up me-2"></i> Pay Task</a>
+                                <a class="navbar-brand fs-4 ms-3" href="{% url 'advert_post' %}"> <i class="fa-brands fa-adversal me-2"></i> Advert post</a>
+                            </li>
+                            <li class="nav-item mb-4">
+                                <a class="navbar-brand fs-4 ms-3" href="{% url 'task_post' %}"> <i class="fa-solid fa-money-bill-trend-up me-2"></i> Pay Task</a>
                             </li>
                             
                             <li class="nav-item mb-4">

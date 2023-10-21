@@ -60,16 +60,19 @@ def referral_list_view(request, *args, **kwargs):
     return render(request, "user/referral_list.html", context)
 
 def vendor_profile_view(request):
+    context = {}
     if request.POST:
         user = CustomUser.objects.get(username=request.POST['user'])
         whatsapp_link = request.POST['whatsapp_link']
         bank_name = request.POST['bank_name']
-        obj, created = VendorProfile.objects.get_or_create(user=user, whatsapp_link=whatsapp_link, bank_name=bank_name)
-        if created:
-            user.is_staff = True
-            user.save()
-        messages.success(request, f'{request.user} has been added as a vendor')
-        return redirect('/')
-            
-    return render(request, "user/vendor_profile.html")
+        try:
+            obj, created = VendorProfile.objects.get_or_create(user=user, whatsapp_link=whatsapp_link, bank_name=bank_name)
+            if created:
+                user.is_staff = True
+                user.save()
+                messages.success(request, f'{request.user} has been added as a vendor')
+                return redirect('/')
+        except:
+            context["message"] = "user with this profile already exit!"
+    return render(request, "user/vendor_profile.html", context)
         

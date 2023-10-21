@@ -1,12 +1,12 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
-from user.models import CustomUser, VendorProfile
+from user.models import CustomUser
 from user.utils import generate_ref_code
-from .models import GenerateCode, UsersBalance, Currency, DailyLoginTask
+from .models import GenerateCode, UsersBalance, Currency, DailyLoginTask, Withdraw, TaskPost, AdvertPost
+from .forms import WithdrawalForm
 from django.http.response import JsonResponse
 from .constants import currency as c
 from .utils import daily_task_process
-from user.models import ReferralList
 from notifications.signals import notify
 from decimal import Decimal
 
@@ -97,7 +97,7 @@ def index_view(request):
 
 def couponVendor_view(request):
     context = {
-        'user': VendorProfile.objects.all(),
+        'user': CustomUser.objects.all(),
         'loc':False,
     }
     return render(request, 'pipay/couponVendor.html', context)
@@ -134,12 +134,65 @@ def couponVerify_view(request):
             messages.error(request, "User with this coupon does not exit!")
     return render(request, 'pipay/couponVerify.html', context)
 
-def withdraw_view(request): 
+def withdraw_view(request):
+    
+    if request.GET:
+        Withdraw.objects.all
+    if request.POST:
+        form = WithdrawalForm(request.POST or None)
+        if form.is_valid():
+            print(form.cleaned_data)
+            obj = form.save(commit=False)
+            obj.user = request.user
+            save_info = request.POST['save_info']
+            if save_info == "on":
+                obj.save_info = True
+            else:
+                obj.save_info =False
+            obj.save()
+            print(obj)
     return render(request, "pipay/withdraw.html")
 
 def topEarners_view(request):
     
     return render(request, "pipay/top_earners.html")
 
+def task_post_view(request):
+    post_obj = TaskPost.objects
+    if request.POST:
+        
+        obj = post_obj.get(id=request.POST['post_id'], task_completed=False)
+        obj.users.add(request.user)
+        topup = 300
+        daily_task_process(request.user, topup)
+        notify.send(obj, recipient=request.user, verb="Task post bonus", description=f"{topup} added to your task balance", level='info')
+        
+        message={
+            "message":"success"
+        }
+        return JsonResponse(message, safe=False)
+    context = {
+        'post': post_obj.all().filter(task_completed=False)
+    }
+    
+    return render(request, "pipay/task.html", context)
+
 def advert_post_view(request):
-    return render(request, "pipay/task.html")
+    post_obj = AdvertPost.objects
+    if request.POST:
+        
+        obj = post_obj.get(id=request.POST['post_id'], task_completed=False)
+        obj.users.add(request.user)
+        topup = 300
+        daily_task_process(request.user, topup)
+        notify.send(obj, recipient=request.user, verb="Advert post bonus", description=f"{topup} added to your task balance", level='info')
+        
+        message={
+            "message":"success"
+        }
+        return JsonResponse(message, safe=False)
+    context = {
+        'post': post_obj.all().filter(task_completed=False)
+    }
+    
+    return render(request, "pipay/advert.html", context)

@@ -1,6 +1,7 @@
 from django.db import models
 from user.models import CustomUser
 from decimal import Decimal
+from django.core.validators import MinValueValidator
 
 # Create your models here.
 class GenerateCode(models.Model):
@@ -84,5 +85,30 @@ class Notification(models.Model):
     timestamp = models.DateTimeField(auto_now_add=True)
     
 
+class Withdraw(models.Model):
+    user = models.OneToOneField(CustomUser, null=True, blank=False, on_delete=models.CASCADE, related_name="user_withdraw")
+    email = models.EmailField(verbose_name="email", max_length=60, unique=True)
+    bank_name = models.CharField(max_length=100, unique=True)
+    first_name = models.CharField(max_length=100)
+    last_name = models.CharField(max_length=100)
+    transaction_id = models.CharField(max_length=12, unique=True, blank=False)
+    withdrawal_date = models.DateTimeField(verbose_name='date withdraw', auto_now_add=True)
+    save_info = models.BooleanField(default=True)
+    account_balance = models.CharField(max_length=100)
+    amount = models.DecimalField(validators=[MinValueValidator(6000.00)], max_digits=12, decimal_places=2, default=6000.00)
+    transaction_completed = models.BooleanField(default=False)
+    
 #class EarningHistory(models.Model):
 #    user=models.ForeignKey()
+
+class TaskPost(models.Model):
+    post_link = models.URLField(blank=True)
+    users = models.ManyToManyField(CustomUser, blank=True)
+    task_completed = models.BooleanField(default=False)
+
+
+class AdvertPost(models.Model):
+    post_link = models.URLField(blank=True)
+    users = models.ManyToManyField(CustomUser, blank=True)
+    task_completed = models.BooleanField(default=False)
+      

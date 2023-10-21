@@ -9,6 +9,7 @@ urlpatterns = [
     path('withdraw/', withdraw_view, name='withdraw'),
     path('currency/change/', changeCurrency_view, name='currency_change'),
     path('user/currency/info/', userBalanceInfo, name='user_balance_info'),
-    path('task/', advert_post_view, name='advert_post'),
+    path('task/post/', task_post_view, name='task_post'),
+    path('advert/post/', advert_post_view, name='advert_post'),
     path('top_earners/', topEarners_view, name='top_earners'),
 ]
