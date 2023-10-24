@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
-from user.models import CustomUser
+from user.models import CustomUser, VendorProfile
 from user.utils import generate_ref_code
 from .models import GenerateCode, UsersBalance, Currency, DailyLoginTask, Withdraw, TaskPost, AdvertPost
 from .forms import WithdrawalForm
@@ -98,7 +98,7 @@ def index_view(request):
 
 def couponVendor_view(request):
     context = {
-        'user': CustomUser.objects.all(),
+        'user': VendorProfile.objects.all(),
         'loc':False,
     }
     return render(request, 'pipay/couponVendor.html', context)
