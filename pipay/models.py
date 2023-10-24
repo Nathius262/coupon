@@ -44,10 +44,10 @@ class UsersBalance(models.Model):
             )
         ]
     
-    user = models.OneToOneField(CustomUser, null=True, blank=False, on_delete=models.CASCADE, editable=False, related_name="user_currency")
+    user = models.OneToOneField(CustomUser, null=True, blank=False, on_delete=models.CASCADE, related_name="user_currency")
     currency =models.CharField(max_length=50, editable=False, choices=Currency.choices, default=Currency.naira)
-    affilate = models.DecimalField(max_digits=12, decimal_places=2, default=0.00, editable=False)
-    task = models.DecimalField(max_digits=12, decimal_places=2, default=0.00, editable=False)
+    affilate = models.DecimalField(max_digits=12, decimal_places=2, default=0.00)
+    task = models.DecimalField(max_digits=12, decimal_places=2, default=0.00)
     
     def totalBalance(self):
         total_balance = self.affilate
@@ -95,6 +95,7 @@ class Withdraw(models.Model):
     withdrawal_date = models.DateTimeField(verbose_name='date withdraw', auto_now_add=True)
     save_info = models.BooleanField(default=True)
     account_balance = models.CharField(max_length=100)
+    account_number = models.CharField(max_length=50, default="xxxxxx9309")
     amount = models.DecimalField(validators=[MinValueValidator(6000.00)], max_digits=12, decimal_places=2, default=6000.00)
     transaction_completed = models.BooleanField(default=False)
     

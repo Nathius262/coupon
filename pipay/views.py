@@ -9,6 +9,7 @@ from .constants import currency as c
 from .utils import daily_task_process
 from notifications.signals import notify
 from decimal import Decimal
+from django.db.models import F, FloatField, ExpressionWrapper
 
 
 # Create your views here.
@@ -135,13 +136,9 @@ def couponVerify_view(request):
     return render(request, 'pipay/couponVerify.html', context)
 
 def withdraw_view(request):
-    
-    if request.GET:
-        Withdraw.objects.all
     if request.POST:
         form = WithdrawalForm(request.POST or None)
         if form.is_valid():
-            print(form.cleaned_data)
             obj = form.save(commit=False)
             obj.user = request.user
             save_info = request.POST['save_info']
@@ -150,12 +147,25 @@ def withdraw_view(request):
             else:
                 obj.save_info =False
             obj.save()
-            print(obj)
     return render(request, "pipay/withdraw.html")
 
+def withdraw_list_view(request):
+    order = Withdraw.objects.all()
+    context = {
+        'object': order
+    }
+    return render(request, "pipay/withdraw_list.html", context)
+
 def topEarners_view(request):
+    top_earners = CustomUser.objects.annotate(
+        sorted_value=ExpressionWrapper(F('user_currency__affilate') + F('user_currency__task'), output_field=FloatField())
+    ).order_by('-sorted_value')[0:30]
     
-    return render(request, "pipay/top_earners.html")
+    context = {
+        "top_earners":top_earners,
+    }
+    
+    return render(request, "pipay/top_earners.html", context)
 
 def task_post_view(request):
     post_obj = TaskPost.objects

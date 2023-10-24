@@ -7,5 +7,5 @@ class WithdrawalForm(forms.ModelForm):
         model = Withdraw
         fields = [
             'email', 'bank_name', 'first_name', 
-            'last_name', 'account_balance', 'amount',
+            'last_name', 'account_balance', 'amount', 'account_number',
             ]
