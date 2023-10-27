@@ -8,7 +8,7 @@ class GenerateCode(models.Model):
     """GenerateCode generates unique code for each users that is about to 
     register on this platform
     """
-    coupon_code = models.CharField(max_length=12, unique=True)
+    coupon_code = models.CharField(max_length=12, unique=True, null=True, blank=False)
     generated_by = models.ForeignKey(CustomUser, on_delete=models.SET_NULL, null=True, blank=False, related_name="generated_by")
     user = models.OneToOneField(CustomUser, on_delete=models.CASCADE, null=True, blank=True, related_name="user_code")
 
@@ -91,7 +91,7 @@ class Withdraw(models.Model):
     bank_name = models.CharField(max_length=100, unique=True)
     first_name = models.CharField(max_length=100)
     last_name = models.CharField(max_length=100)
-    transaction_id = models.CharField(max_length=12, unique=True, blank=False)
+    transaction_id = models.CharField(max_length=12, unique=True, blank=False, null=True)
     withdrawal_date = models.DateTimeField(verbose_name='date withdraw', auto_now_add=True)
     save_info = models.BooleanField(default=True)
     account_balance = models.CharField(max_length=100)

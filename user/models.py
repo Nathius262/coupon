@@ -12,7 +12,7 @@ class CustomUser(AbstractBaseUser):
     first_name = models.CharField(max_length=100)
     last_name = models.CharField(max_length=100)
     phone_number = PhoneNumberField(null=True, blank=True)
-    code = models.CharField(max_length=12, unique=True, blank=False)
+    code = models.CharField(max_length=12, unique=True, blank=False, null=True)
     referred_by = models.CharField(max_length=100, blank=True)
     picture = models.ImageField(upload_to=image_location, default="default.jpg", null=True, blank=True)
     date_joined = models.DateTimeField(verbose_name='date joined', auto_now_add=True)

@@ -146,6 +146,7 @@ def withdraw_view(request):
                 obj.save_info = True
             else:
                 obj.save_info =False
+            obj.transaction_id = generate_ref_code()
             obj.save()
     return render(request, "pipay/withdraw.html")
 

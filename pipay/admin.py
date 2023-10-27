@@ -4,7 +4,7 @@ from .models import GenerateCode, UsersBalance, DailyLoginTask, Withdraw, TaskPo
 # Register your models here.
 class GenerateCodeAdmin(admin.ModelAdmin):
     list_display = ['id', 'generated_by', 'coupon_code']
-    list_filter = ['generated_by',]
+    list_filter = ['generated_by', 'user']
     search_fields = []
     
 class UsersBalanceAdmin(admin.ModelAdmin):
