@@ -86,9 +86,9 @@ class Notification(models.Model):
     
 
 class Withdraw(models.Model):
-    user = models.OneToOneField(CustomUser, null=True, blank=False, on_delete=models.CASCADE, related_name="user_withdraw")
-    email = models.EmailField(verbose_name="email", max_length=60, unique=True)
-    bank_name = models.CharField(max_length=100, unique=True)
+    user = models.ForeignKey(CustomUser, null=True, blank=False, on_delete=models.CASCADE, related_name="user_withdraw")
+    email = models.EmailField(verbose_name="email", max_length=60, blank=False, null=True)
+    bank_name = models.CharField(max_length=100, blank=False, null=True)
     first_name = models.CharField(max_length=100)
     last_name = models.CharField(max_length=100)
     transaction_id = models.CharField(max_length=12, unique=True, blank=False, null=True)

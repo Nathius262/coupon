@@ -141,17 +141,23 @@ def withdraw_view(request):
         if form.is_valid():
             obj = form.save(commit=False)
             obj.user = request.user
-            save_info = request.POST['save_info']
+            save_info = form.cleaned_data['save_info']
             if save_info == "on":
                 obj.save_info = True
             else:
                 obj.save_info =False
             obj.transaction_id = generate_ref_code()
             obj.save()
-    return render(request, "pipay/withdraw.html")
+            messages.info(request, "pending: Your transaction is being processed!")
+        else:
+            messages.error(request, "error: an error occured, please try again")
+    form = WithdrawalForm()
+    obj = Withdraw.objects.all().filter(user=request.user)
+    return render(request, "pipay/withdraw.html", {"form": form, 'obj':obj})
 
 def withdraw_list_view(request):
     order = Withdraw.objects.all()
+
     context = {
         'object': order
     }
