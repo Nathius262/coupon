@@ -51,6 +51,7 @@ INSTALLED_APPS = [
     
     'user',
     'pipay',
+    'process',
     'scheduler',
 
     #django alllauth

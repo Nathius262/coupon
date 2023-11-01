@@ -27,7 +27,7 @@
                 </div>
                 <div class="col p-4 d-flex flex-column position-static">
                   <strong class="d-inline-block mb-2 blue-color">{{user.username}}</strong>
-                  <a href="mailto:{{user.email}}">user.email</a>
+                  <a href="mailto:{{user.email}}" class="nav-link">{{user.email}}</a>
                   <p>Referral{% if user.referral_user.user_list.all.count > 1 %}s{% endif %} {{user.referral_user.user_list.all.count}}</p>
                   <p class="mb-0 py-2" style="border-left: 1px solid var(black);">Amount {{user.user_currency.currency}}{{user.user_currency.totalEarnings}}</p>
                 </div>

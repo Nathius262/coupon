@@ -47,6 +47,11 @@
 
                   </div>
                   <div class="col-md-7 col-lg-8">
+                    {% if not enable.enable %}
+                    <p class="text-danger align-self-center">
+                      Withdraw not available at the moment
+                    </p>
+                    {%else%}
                     <h4 class="mb-3">Bank Info</h4>
                     <form class="needs-validation" novalidate="" method="post">{% csrf_token %}
                       <div class="row g-3">
@@ -162,8 +167,9 @@
             
                       <hr class="my-4">
             
-                      <button class="w-100 btn btn-primary btn-lg" type="submit">Place withdraw</button>
+                      <button class="w-100 btn btn-primary btn-lg" type="submit" {% if not enable.enable %}disabled{% endif %}>Place withdraw</button>
                     </form>
+                    {%endif%}
                   </div>
                 </div>
               </main>

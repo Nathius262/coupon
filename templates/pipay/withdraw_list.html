@@ -50,30 +50,7 @@
   </div>
 </div>
 <script>
-  let form = document.querySelector('#form-withdraw')
-  console.log('test')
-  form.addEventListener('submit', (e)=>{
-    e.preventDefault()
-    e.stopPropagation()
-    let dataobj = {
-        'transaction_id':form.transaction_id.value,
-        csrfmiddlewaretoken:"{{ csrf_token }}",
-    }
-    console.log(dataobj)
-    /*
-    $.ajax({
-        type:'POST',
-        url: "/currency/change/",
-        data:dataobj,
-        success: function(data){
-            console.log(data)
-            window.location.reload()
-        },
-        error: function(error){
-            console.log(error)
-        },
-    });*/
-  })
+  let csrf_token = "{{csrf_token}}"
 </script>
 {% endblock content %}
 

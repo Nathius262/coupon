@@ -6,11 +6,12 @@ from .models import GenerateCode, UsersBalance, Currency, DailyLoginTask, Withdr
 from .forms import WithdrawalForm
 from django.http.response import JsonResponse
 from .constants import currency as c
-from .utils import daily_task_process
+from .utils import daily_task_process, affilate_deduct_process, task_deduct_process
 from notifications.signals import notify
 from decimal import Decimal
 from django.db.models import F, FloatField, ExpressionWrapper
-
+import json
+from process.models import WithdrawalEnable, SaveWithdrawData
 
 # Create your views here.
 def currency(request):
@@ -153,13 +154,31 @@ def withdraw_view(request):
             messages.error(request, "error: an error occured, please try again")
     form = WithdrawalForm()
     obj = Withdraw.objects.all().filter(user=request.user)
-    return render(request, "pipay/withdraw.html", {"form": form, 'obj':obj})
+    
+    context = {
+        "form": form, 
+        'obj':obj, 
+        'enable':WithdrawalEnable.objects.get(id=1)
+        }
+    return render(request, "pipay/withdraw.html", context)
 
 def withdraw_list_view(request):
     order = Withdraw.objects.all()
-
+    if request.method == 'POST':
+        json_data = json.loads(request.body)
+        transaction_completed = json_data.get('transaction_completed')
+        for i in transaction_completed:
+            obj = order.get(id=i)
+            if obj.account_balance == "affilate":          
+                affilate_deduct_process(obj, obj.amount)
+            elif obj.account_balance == "task":
+                task_deduct_process(obj, obj.amount)
+            obj.transaction_completed = True
+            obj.save()
+        return JsonResponse({"message":"success"}, safe=False)
+        
     context = {
-        'object': order
+        'object': order.filter(transaction_completed=False)
     }
     return render(request, "pipay/withdraw_list.html", context)
 

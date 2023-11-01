@@ -173,6 +173,47 @@ function toggleShowBalance(boolean){
     }
 }
 
+let form = document.getElementById('form-withdraw')
+form.addEventListener('submit', function(event){
+    event.stopPropagation()
+    event.preventDefault()
+    let formObj;
+    let completedTransactions = [];
+    let checkboxes = document.querySelectorAll('input[name^="transaction_completed"]');
+    checkboxes.forEach(function (checkbox) {
+        if (checkbox.checked) {
+          // Extract the transaction ID from the checkbox name
+          let transactionId = checkbox.value;
+          completedTransactions.push(transactionId);
+        }
+    });
+    let formdata = new FormData(form)
+    formObj = Object.fromEntries(formdata)
+    formObj.transaction_completed = completedTransactions
+
+
+    let option = {
+        method:"POST",
+        headers:{
+            "X-CSRFToken":csrf_token,
+        },
+        body: JSON.stringify(formObj)
+    }
+
+    let url = "/withdraw/list/"
+
+    fetch(url, option)
+    .then(response => {
+        return response
+    })
+    .then(data => {
+    })
+    .catch(error =>{
+        console.log(error)
+    })
+    
+})
+
 
 ///////////////////////////
 ///////////////////////////
