@@ -12,5 +12,6 @@ urlpatterns = [
     path('user/currency/info/', userBalanceInfo, name='user_balance_info'),
     path('task/post/', task_post_view, name='task_post'),
     path('advert/post/', advert_post_view, name='advert_post'),
+    path('paygig/', pay_gig_view, name='pay_gig'),
     path('top_earners/', topEarners_view, name='top_earners'),
 ]

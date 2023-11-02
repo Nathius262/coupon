@@ -105,11 +105,23 @@ class Withdraw(models.Model):
 class TaskPost(models.Model):
     post_link = models.URLField(blank=True)
     users = models.ManyToManyField(CustomUser, blank=True)
+    embed_link = models.TextField(null=True, blank=True)
+    description = models.TextField(null=True, blank=True)
     task_completed = models.BooleanField(default=False)
 
 
 class AdvertPost(models.Model):
     post_link = models.URLField(blank=True)
+    embed_link = models.TextField(null=True, blank=True)
+    description = models.TextField(null=True, blank=True)
+    users = models.ManyToManyField(CustomUser, blank=True)
+    task_completed = models.BooleanField(default=False)
+    
+
+class PayGig(models.Model):
+    post_link = models.URLField(blank=True)
+    embed_link = models.TextField(null=True, blank=True)
+    description = models.TextField(null=True, blank=True)
     users = models.ManyToManyField(CustomUser, blank=True)
     task_completed = models.BooleanField(default=False)
       

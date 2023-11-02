@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib import messages
 from user.models import CustomUser, VendorProfile
 from user.utils import generate_ref_code
-from .models import GenerateCode, UsersBalance, Currency, DailyLoginTask, Withdraw, TaskPost, AdvertPost
+from .models import GenerateCode, UsersBalance, Currency, DailyLoginTask, Withdraw, TaskPost, AdvertPost, PayGig
 from .forms import WithdrawalForm
 from django.http.response import JsonResponse
 from .constants import currency as c
@@ -232,3 +232,23 @@ def advert_post_view(request):
     }
     
     return render(request, "pipay/advert.html", context)
+
+def pay_gig_view(request):
+    post_obj = PayGig.objects
+    if request.POST:
+        
+        obj = post_obj.get(id=request.POST['post_id'], task_completed=False)
+        obj.users.add(request.user)
+        topup = 300
+        daily_task_process(request.user, topup)
+        notify.send(obj, recipient=request.user, verb="Pay Gig bonus", description=f"{topup} added to your task balance", level='success')
+        
+        message={
+            "message":"success"
+        }
+        return JsonResponse(message, safe=False)
+    context = {
+        'post': post_obj.all().filter(task_completed=False)
+    }
+    
+    return render(request, "pipay/pay_gig.html", context)

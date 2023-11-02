@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import GenerateCode, UsersBalance, DailyLoginTask, Withdraw, TaskPost, AdvertPost
+from .models import GenerateCode, UsersBalance, DailyLoginTask, Withdraw, TaskPost, AdvertPost, PayGig
 
 # Register your models here.
 class GenerateCodeAdmin(admin.ModelAdmin):
@@ -29,7 +29,11 @@ class TaskPostAdmin(admin.ModelAdmin):
 class AdvertPostAdmin(admin.ModelAdmin):
     list_display = ['post_link', 'task_completed']
     list_filter = ['task_completed']
-    
+
+
+class PayGigAdmin(admin.ModelAdmin):
+    list_display = ['post_link', 'task_completed']
+    list_filter = ['task_completed']
 
 admin.site.register(UsersBalance, UsersBalanceAdmin)
 admin.site.register(GenerateCode, GenerateCodeAdmin)
@@ -37,3 +41,4 @@ admin.site.register(DailyLoginTask, DailyLoginTaskAdmin)
 admin.site.register(Withdraw, WithdrawAdmin)
 admin.site.register(TaskPost, TaskPostAdmin)
 admin.site.register(AdvertPost, AdvertPostAdmin)
+admin.site.register(PayGig, PayGigAdmin)

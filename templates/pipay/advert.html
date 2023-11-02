@@ -1,6 +1,6 @@
 {% extends 'index.html' %}
 
-{% block title %}Task{% endblock %}
+{% block title %}Advert{% endblock %}
 {% load static %}
 
 {% block content %}   
@@ -53,9 +53,13 @@
                 <h2 class="col-md-11">Advert Posts</h2>
                 <div class="col-md-11 shadow p-5 m-2">
                     {% for task in post %}
-                    <div class="row mx-3 justify-content-between align-items-center">
-                        <div id="" data-link="{{task.post_link}}" data-ident="{{task.id}}" class="link col-md-8 nav-link fs-4">{{task.post_link}}</div>
-                        <button id="" type="button" class="post-btn col-md-3 btn btn-primary rounded-5 fs-4" {% if request.user in task.users.all %}disabled{% endif %}>Post</button>
+                    <div class="row mx-3 justify-content-between align-items-center link" data-link="{{task.post_link}}" data-ident="{{task.id}}">
+                        <div class="col-12 mx-auto justify-content-center nav-link fs-4">{{task.embed_link|safe}}</div>
+                        <div class="row mx-3 justify-content-between align-items-center link mt-2">
+                            <div class="col-12 fs-5 mb-2">{{task.description}}</div>
+                            <button id="" type="button" class="post-btn btn col-md-3 btn-primary col rounded-5 fs-5" {% if request.user in task.users.all %}disabled{% endif %}>earn</button>
+                        </div>
+                        
                     </div>
                     <hr class="mr-4">
                     
@@ -69,14 +73,9 @@
 <script>
     let postBtn = document.querySelectorAll('.post-btn')
     let csrf_token = "{{ csrf_token }}"
-    
-    
-
     for( let i=0; i<postBtn.length; i++){
         postBtn[i].addEventListener('click', ()=>{
-            console.log("something...")
             let post = document.querySelectorAll('.link')
-            console.log(post[i])
             let link = post[i].dataset['link']
             let postId = post[i].dataset['ident']
             let dataobj = {
