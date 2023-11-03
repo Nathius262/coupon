@@ -11,6 +11,7 @@ from notifications.signals import notify
 from decimal import Decimal
 from django.db.models import F, FloatField, ExpressionWrapper
 import json
+from django.http import HttpResponse
 from process.models import WithdrawalEnable, SaveWithdrawData
 
 # Create your views here.
@@ -137,8 +138,9 @@ def couponVerify_view(request):
     return render(request, 'pipay/couponVerify.html', context)
 
 def withdraw_view(request):
-    if request.POST:
-        form = WithdrawalForm(request.POST or None)
+    if request.POST or request.method == 'POST':
+        json_data = json.loads(request.body)
+        form = WithdrawalForm(request.POST or json_data or None, request=request)
         if form.is_valid():
             obj = form.save(commit=False)
             obj.user = request.user
@@ -149,11 +151,12 @@ def withdraw_view(request):
                 obj.save_info =False
             obj.transaction_id = generate_ref_code()
             obj.save()
-            messages.info(request, "pending: Your transaction is being processed!")
+            return JsonResponse({"success": "success"}, content_type="application/json", safe=False)
         else:
-            messages.error(request, "error: an error occured, please try again")
-    form = WithdrawalForm()
-    obj = Withdraw.objects.all().filter(user=request.user)
+            response_data={"error":form.errors}
+            return JsonResponse(response_data, content_type="application/json")
+    form = WithdrawalForm(request=request)
+    obj = Withdraw.objects.all().filter(user=request.user).order_by('-withdrawal_date')
     
     context = {
         "form": form, 

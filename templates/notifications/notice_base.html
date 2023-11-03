@@ -68,6 +68,80 @@
             .mb-auto, .my-auto {
                 margin-bottom: auto!important;
             }
+            #pageload{
+                margin: 0;
+                padding: 0;
+                top: 0;
+                left: 0;
+                font-family: montserrat;
+                background: black;
+                height: 100vh;
+                width: 100%;
+                position: fixed;
+                z-index: 100;
+              }
+            
+              .pageload{
+                  display: flex;
+                  text-align: center;
+                  justify-content: center;
+                  align-items: center;
+                  min-height: 100vh;
+              }
+            
+              .pageload_inner{
+                  position: absolute;
+                  width: 200px;
+                  height: 200px;
+                  border-radius: 50%;
+                  animation: pageload_inner 2s linear infinite;
+              }
+              #root{
+                  display:none;
+              }
+            
+              @keyframes pageload_inner {
+                  0%{
+                      transform: rotate(0deg);
+                      box-shadow: 1px 5px 2px #e65c00;
+                  }
+            
+                  50%{
+                      transform: rotate(180deg);
+                      box-shadow: 1px 5px 2px #18b201;
+                  }
+            
+                  100%{
+                      transform: rotate(360deg);
+                      box-shadow: 1px 5px 2px #0456c8;
+                  }
+              }
+            
+              .pageload_inner::before{
+                  position: absolute;
+                  content: '';
+                  left: 0;
+                  top: 0;
+                  height: 100%;
+                  width: 100%;
+                  border-radius: 50%;
+                  box-shadow: 0 0 5px rgba(255, 255, 255, .3);
+              }
+            
+              .loading{
+                  color: #737373;
+                  font-size: 20px;
+                  text-transform: uppercase;
+                  letter-spacing: 1px;
+                  line-height: 200px;
+                  animation: text 2s ease-in-out infinite;
+              }
+            
+              @keyframes text {
+                  50%{
+                      color: black;
+                  }
+              }
         </style>
     </head>
     <body>
@@ -76,21 +150,41 @@
             let imgLogoSrc = "{% static 'img/logo2.png' %}"
             let imgLogoSrc2 = "{% static 'img/logo3.png' %}"
         </script>
-        
-        {% if loc %}
-        {% include 'snippets/landing_page_header.html' %}
-        {% else %}
-        {% include 'snippets/main_header.html' %}
-        {% endif %}   
-        
-        {% include 'snippets/message.html' %}
-        {% block content %} 
-        {% endblock %}
 
-        {% include 'snippets/footer.html' %}
-
+        <div id="root">
         
-        {% include 'snippets/header_modal.html' %}
+            {% if loc %}
+            {% include 'snippets/landing_page_header.html' %}
+            {% else %}
+            {% include 'snippets/main_header.html' %}
+            {% endif %}   
+            
+            {% include 'snippets/message.html' %}
+            {% block content %} 
+            {% endblock %}
+
+            {% include 'snippets/footer.html' %}
+
+            
+            {% include 'snippets/header_modal.html' %}
+
+        </div>
+        <div id="pageload">
+            <div class="pageload">
+                <div class="pageload_inner">
+                </div>
+                <span class="loading">loading...</span>
+            </div>
+            <script>
+                let pageload = document.getElementById('pageload')
+                let rootEl = document.getElementById('root')
+                window.addEventListener("load", () => {
+                    rootEl.style.display = "block"
+                    pageload.style.display = "none"
+                    
+                })
+            </script>
+        </div>  
         
         <script src="{% static 'js/coupon.js' %}"></script>
 

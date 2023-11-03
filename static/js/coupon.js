@@ -214,3 +214,48 @@ function objectEl(elementClass, axis, sign){
     }
     
 }
+
+
+function test(url, option){
+    fetch(url, option)
+    .then(response  =>{
+        return response.text()
+    })
+    .then(data => {
+        let json_response = JSON.parse(data);
+
+        if (json_response.success){
+            
+            pagedone.style.display = 'block'
+            setTimeout(function(){
+                pagedone.style.display = 'none'
+                window.location.reload()
+            }, 4000)
+        }
+        else if (json_response.error){
+            var jsonObject = json_response;
+
+            // Access the 'error' object
+            var errorObject = jsonObject.error;
+            let errorEl = document.querySelector('#error')
+
+
+            // Iterate through the properties of the 'error' object
+            for (var key in errorObject) {
+                if (errorObject.hasOwnProperty(key)) {
+                    var errorMessages = errorObject[key];
+
+                    // Log or process the error messages
+                    for (var i = 0; i < errorMessages.length; i++) {
+                        
+                        errorEl.innerText =`${key}:  ${errorMessages[i]}`
+                    }
+                }
+            }
+        }
+      
+    })
+    .catch(error =>{
+      console.log(error)
+    })
+}
