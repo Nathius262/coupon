@@ -32,6 +32,7 @@
 
         
         <script src="{% static 'js/jquery-2.1.1.min.js' %}"></script>
+        {% include 'google/ads_tag.html' %}
         <link rel="icon" href="{% static 'img/favio_icon.png' %}" type="image/png"  sizes="16x16" />
         <title>Pipay {% block title %} {% endblock %}</title>
         <style>
@@ -132,8 +133,6 @@
             <div id="copy-alert" class="shadow">
                 <span class="p-3 rounded-2 bg-light">Copied!</span>
             </div>
-
-            {% include 'google/ads_tag.html' %}
 
             {% include 'snippets/footer.html' %}
             
