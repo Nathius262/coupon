@@ -24,6 +24,7 @@ urlpatterns = [
     path('account/', include('allauth.urls')),
     path('notifications/', include('notifications.urls'), name="notifications"),
     path('', include('pipay.urls')),
+    path('', include('process.urls')),
     path('', include('user.urls'), name='user'),
     path('ads.txt', TemplateView.as_view(template_name='ads.txt', content_type='text/plain')),
 ]
