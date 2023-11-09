@@ -166,23 +166,28 @@ def withdraw_view(request):
     return render(request, "pipay/withdraw.html", context)
 
 def withdraw_list_view(request):
-    order = Withdraw.objects.all()
-    if request.method == 'POST':
-        json_data = json.loads(request.body)
-        transaction_completed = json_data.get('transaction_completed')
-        for i in transaction_completed:
-            obj = order.get(id=i)
-            if obj.account_balance == "affilate":          
-                affilate_deduct_process(obj, obj.amount)
-            elif obj.account_balance == "task":
-                task_deduct_process(obj, obj.amount)
-            obj.transaction_completed = True
-            obj.save()
-        return JsonResponse({"message":"success"}, safe=False)
+    context={}
+    if (request.user.is_authenticated) and (request.user.is_admin):
+        order = Withdraw.objects.all()
+        if request.method == 'POST':
+            json_data = json.loads(request.body)
+            transaction_completed = json_data.get('transaction_completed')
+            for i in transaction_completed:
+                obj = order.get(id=i)
+                if obj.account_balance == "affilate":          
+                    affilate_deduct_process(obj, obj.amount)
+                elif obj.account_balance == "task":
+                    task_deduct_process(obj, obj.amount)
+                obj.transaction_completed = True
+                obj.save()
+            return JsonResponse({"message":"success"}, safe=False)
         
-    context = {
-        'object': order.filter(transaction_completed=False)
-    }
+        context = {
+            'object': order.filter(transaction_completed=False)
+        }
+    else:
+        messages.warning(request, 'You must be an admin to view this page')
+        return redirect('/')
     return render(request, "pipay/withdraw_list.html", context)
 
 def topEarners_view(request):
