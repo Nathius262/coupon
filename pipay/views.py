@@ -13,13 +13,15 @@ from django.db.models import F, FloatField, ExpressionWrapper
 import json
 from django.http import HttpResponse
 from process.models import WithdrawalEnable, SaveWithdrawData
+from process.views import send_email_view
 
 # Create your views here.
 def currency(request):
     context = {}
     if request.user.is_authenticated:
         #check if daily login task is completed
-        #if not completed do something...            
+        #if not completed do something...   
+        request.user.user_currency.totalWithdraw         
         try:
             user_dail_login_task = DailyLoginTask.objects.all().get(user=request.user, task_completed=False)
             if (user_dail_login_task) and (user_dail_login_task.task_completed ==False):
@@ -52,7 +54,7 @@ def userBalanceInfo(request):
         context = {           
             "total_balance":user.totalBalance(),
             "total_earning": user.totalEarnings(),
-            "total_withdraw": Decimal('0.00'), #user.totalWithdraw(),
+            "total_withdraw": user.totalWithdraw, #user.totalWithdraw(),
             "affilate": user.affilate,
             "task": user.task,
             "currency": user.currency
@@ -179,7 +181,8 @@ def withdraw_list_view(request):
                 elif obj.account_balance == "task":
                     task_deduct_process(obj, obj.amount)
                 obj.transaction_completed = True
-                obj.save()
+                send_email_view(instance=obj)
+                obj.save()              
             return JsonResponse({"message":"success"}, safe=False)
         
         context = {

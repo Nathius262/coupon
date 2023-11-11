@@ -55,7 +55,10 @@ class UsersBalance(models.Model):
     
     @property
     def totalWithdraw(self):
-        total_withdraw = None
+        withdraw = Withdraw.objects.all().filter(user=self.user, transaction_completed=True)
+        total_withdraw =Decimal('0.00')
+        for i in withdraw:
+            total_withdraw += i.amount           
         return total_withdraw
     
     def totalEarnings(self):
@@ -98,6 +101,12 @@ class Withdraw(models.Model):
     account_number = models.CharField(max_length=50, default="xxxxxx9309")
     amount = models.DecimalField(validators=[MinValueValidator(6000.00)], max_digits=12, decimal_places=2, default=6000.00)
     transaction_completed = models.BooleanField(default=False)
+    
+    class Meta:
+        ordering = [
+            'withdrawal_date',
+            
+        ]
     
 #class EarningHistory(models.Model):
 #    user=models.ForeignKey()
