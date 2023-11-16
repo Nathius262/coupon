@@ -10,19 +10,17 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.0/ref/settings/
 """
 
-from pathlib import Path
 import os
-from pathlib import Path
 from decouple import config
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve().parent.parent
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 SECRET_KEY = config("SECRET_KEY")
 
 DEBUG = config('DEBUG', default=False, cast=bool)
 
-ALLOWED_HOSTS = ["161.35.14.145", 'localhost', 'pipaytech.com', 'www.pipaytech.com', 'dashboard.nm.161-35-14-145.nip.io']
+ALLOWED_HOSTS = ["161.35.14.145", 'localhost', 'pipaytech.com', 'www.pipaytech.com', 'console.cloudinary.com', 'dashboard.nm.161-35-14-145.nip.io']
 
 ROOT_URLCONF = f'{config("PROJECT_NAME")}.urls'
 
@@ -34,8 +32,8 @@ WSGI_APPLICATION = f'{config("PROJECT_NAME")}.wsgi.application'
 
 INSTALLED_APPS = [
 
-    #'cloudinary_storage',
-    
+    'cloudinary_storage',
+    'django.contrib.sites',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -43,7 +41,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     
-    #'cloudinary',
+    
+    'cloudinary',
     
     
     
@@ -165,23 +164,51 @@ ACCOUNT_SESSION_REMEMBER = None
 PHONENUMBER_DB_FORMAT = 'NATIONAL'
 PHONENUMBER_DEFAULT_REGION = 'NG'
 
+
+MEDIA_URL = '/media/'  # or any prefix you choose
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+
+
+STATIC_URL = '/static/'
+STATICFILES_STORAGE = 'cloudinary_storage.storage.StaticCloudinaryStorage'
+
+#STATIC_ROOT = os.path.join(BASE_DIR, '/static/')
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, 'static/'),
+    #os.path.join(BASE_DIR, MEDIA_URL)
+)
+
+CLOUDINARY_STORAGE = {
+    'CLOUD_NAME': config('AWS_ACCESS_KEY_ID'),
+    'API_KEY': config('API_KEY'),
+    'API_SECRET': config('API_SECRET'),
+    'STATICFILES_MANIFEST_ROOT': os.path.join(BASE_DIR, 'my-manifest-directory'),
+    'SECURE': True,
+    'MEDIA_TAG': 'media',
+    'INVALID_VIDEO_ERROR_MESSAGE': 'Please upload a valid video file.',
+    'EXCLUDE_DELETE_ORPHANED_MEDIA_PATHS': (),
+    'STATIC_TAG': 'static',
+    'STATICFILES_MANIFEST_ROOT': os.path.join(BASE_DIR, 'manifest'),
+    'STATIC_IMAGES_EXTENSIONS': ['jpg', 'jpe', 'jpeg', 'jpc', 'jp2', 'j2k', 'wdp', 'jxr',
+                                 'hdp', 'png', 'gif', 'webp', 'bmp', 'tif', 'tiff', 'ico'],
+    'STATIC_VIDEOS_EXTENSIONS': ['mp4', 'webm', 'flv', 'mov', 'ogv' ,'3gp' ,'3g2' ,'wmv' ,
+                                 'mpeg' ,'flv' ,'mkv' ,'avi'],
+    'MAGIC_FILE_PATH': 'magic',
+    'PREFIX': MEDIA_URL
+}
+
+
+
+
 if DEBUG:
     EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.sqlite3',
-            'NAME': BASE_DIR / 'db.sqlite3',
+            'NAME': os.path.join(BASE_DIR , 'db.sqlite3'),
         }
     }
-    STATIC_URL = 'static/'
-    #MEDIA_URL = 'media/'
-    MEDIA_ROOT = os.path.join(BASE_DIR, "media_cdn")
-    STATIC_ROOT = os.path.join(BASE_DIR, "static_cdn")
 
-    STATICFILES_DIRS = (
-        os.path.join(BASE_DIR, STATIC_URL),
-        #os.path.join(BASE_DIR, MEDIA_URL)
-    )
 else:
     DATABASES = {
         'default': {
@@ -194,7 +221,7 @@ else:
         }
     }
 
-    AWS_ACCESS_KEY_ID = config('AWS_ACCESS_KEY_ID')
+    """AWS_ACCESS_KEY_ID = config('AWS_ACCESS_KEY_ID')
     AWS_SECRET_ACCESS_KEY = config('AWS_SECRET_ACCESS_KEY')
     AWS_STORAGE_BUCKET_NAME = config('AWS_STORAGE_BUCKET_NAME')
     AWS_S3_ENDPOINT_URL = config('AWS_S3_ENDPOINT_URL')
@@ -217,38 +244,8 @@ else:
     STATIC_URL = 'https://%s/%s/' % (AWS_S3_ENDPOINT_URL, AWS_LOCATION)
     TEMP = os.path.join(BASE_DIR, 'temp')
     STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
-    DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
-    """
+    DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'"""
 
-    CLOUDINARY_STORAGE = {
-        'CLOUD_NAME': 'dkbhpgwwo',
-        'API_KEY': '238455699553498',
-        'API_SECRET': 'pSIi_UQPGzIupwjrRm7e1eGk-08',
-        'SECURE': True,
-        'MEDIA_TAG': 'media',
-        'INVALID_VIDEO_ERROR_MESSAGE': 'Please upload a valid video file.',
-        'EXCLUDE_DELETE_ORPHANED_MEDIA_PATHS': (),
-        'STATIC_TAG': 'static',
-        'STATICFILES_MANIFEST_ROOT': os.path.join(BASE_DIR, 'manifest'),
-        'STATIC_IMAGES_EXTENSIONS': ['jpg', 'jpe', 'jpeg', 'jpc', 'jp2', 'j2k', 'wdp', 'jxr',
-                                    'hdp', 'png', 'gif', 'webp', 'bmp', 'tif', 'tiff', 'ico'],
-        'STATIC_VIDEOS_EXTENSIONS': ['mp4', 'webm', 'flv', 'mov', 'ogv' ,'3gp' ,'3g2' ,'wmv' ,
-                                    'mpeg' ,'flv' ,'mkv' ,'avi'],
-        'MAGIC_FILE_PATH': 'magic'
-    }
-
-    MEDIA_URL = '/media/'  # or any prefix you choose
-    DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
-
-    STATIC_URL = '/static/'
-    STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
-
-    STATICFILES_STORAGE = 'cloudinary_storage.storage.StaticHashedCloudinaryStorage'
-
-    #STATICFILES_DIRS = [
-    #    os.path.join(BASE_DIR, 'static')
-    #]
-    """
     SECURE_SSL_REDIRECT = True
     SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
     CSRF_COOKIE_SECURE = True
@@ -285,3 +282,23 @@ else:
             },
         },
     }
+"""
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'file': {
+            'level': 'ERROR',
+            'class': 'logging.FileHandler',
+            'filename': os.path.join(BASE_DIR, 'logs', 'error.log'),
+        },
+    },
+    'loggers': {
+        'django': {
+            'handlers': ['file'],
+            'level': 'ERROR',
+            'propagate': True,
+        },
+    },
+}"""
