@@ -248,11 +248,11 @@ def pay_gig_view(request):
     post_obj = PayGig.objects
     if request.POST:
         
-        obj = post_obj.get(id=request.POST['post_id'], task_completed=False)
+        """obj = post_obj.get(id=request.POST['post_id'], task_completed=False)
         obj.users.add(request.user)
         topup = 300
         daily_task_process(request.user, topup)
-        notify.send(obj, recipient=request.user, verb="Pay Gig bonus", description=f"{topup} added to your task balance", level='success')
+        notify.send(obj, recipient=request.user, verb="Pay Gig bonus", description=f"{topup} added to your task balance", level='success')"""
         
         message={
             "message":"success"
