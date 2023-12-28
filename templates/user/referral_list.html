@@ -1,0 +1,58 @@
+{% extends 'index.html' %}
+{% block title %}Referral{% endblock title %}
+{% load static %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/vendors.css' %}">
+
+<div class="mt-5 mb-5">
+  <div class="row row-cols-1 mb-5">
+
+    <div class="col mx-auto h2 fw-bold navy-blue text-center mb-5">
+      <div class="container">My Referral List</div>
+    </div> 
+
+    <div class="col blue-bg">
+      <div class="container py-5">
+        <div class="row row-cols-1 mx-auto">
+          <div class="col h4">View List of Users You have Refferred</div>
+          <div class="col">
+            <p>You have {{referral_list.user_list.all.count}} number of users refferred on this platform</p>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="row row-cols-1 row-cols-md-2 container mx-auto">
+
+        {% for users in referral_list.user_list.all %}
+          <div class="col mt-5">
+            <div class="">
+              <div class="d-flex justify-content-between align-items-center">
+                <div class="d-flex justify-content-between align-items-center">
+                  <div class="">
+                    <div class="load_img">
+                      <img style="object-fit: fit; width:100%; height:100%;" class="" src="{{users.picture_url}}" alt="{{users.username}} profile pix">
+                    </div>
+                  </div>
+                  <div class="container me-3">
+                    <p class="fs-5 navy-blue">{{users.username}}</p>
+                    <p class="text-muted d-flex align-items-center justify-content-between">{{users.email}}</p>
+                  </div>
+                </div>
+                
+                
+              </div>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+
+  </div>
+</div>
+
+{% include 'snippets/affilate_ads.html' %}
+{% endblock content %}

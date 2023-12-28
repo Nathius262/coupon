@@ -1,12 +1,13 @@
 from django import forms
 from django.core.exceptions import ObjectDoesNotExist
 from allauth.account.forms import SignupForm
-from .models import CustomUser, ReferralList
+from .models import CustomUser, ReferralList, VendorProfile
 from phonenumber_field.formfields import PhoneNumberField
 from phonenumber_field.widgets import PhoneNumberPrefixWidget
 from pipay.models import GenerateCode, UsersBalance
 from pipay.constants import currency
 from pipay.utils import affilate_topup_process, query_user_id
+from notifications.signals import notify
 
 class CustomSignupForm(SignupForm):
     first_name = forms.CharField(max_length=60, label="First Name", widget=forms.TextInput(attrs={'placeholder':'First_Name'}))
@@ -65,7 +66,9 @@ class CustomSignupForm(SignupForm):
         # add bonus to the exiting user that has refered this user
         if user.referred_by:           
             # add new referral profile to old user referral list
-            affilate_topup_process(referred_by, 3000)
+            topup=3000
+            affilate_topup_process(referred_by, topup)
+            notify.send(user, recipient=referred_by, verb="Referral bonus", description=f"{topup} added to your affilate balance", level='info')
             
             # first generation 
             first_gen = ReferralList.objects.get(user=referred_by)
@@ -73,14 +76,18 @@ class CustomSignupForm(SignupForm):
             first_gen = query_user_id(first_gen)        
             # second generation
             try:
-                second_generation_referral =  ReferralList.objects.get(user_list=first_gen)
-                second_generation_referral = query_user_id(second_generation_referral)
-                affilate_topup_process(second_generation_referral, 300)
+                second_generation_referral_obj =  ReferralList.objects.get(user_list=first_gen)
+                second_generation_referral = query_user_id(second_generation_referral_obj)
+                topup = 300
+                affilate_topup_process(second_generation_referral, topup)
+                notify.send(second_generation_referral_obj, recipient=second_generation_referral, verb="Referral bonus", description=f"{topup} added to your affilate balance", level='info')
                 # thrid generation
                 try:                    
-                    third_gen_referral = ReferralList.objects.get(user_list=second_generation_referral)
-                    third_gen_referral = query_user_id(third_gen_referral)
-                    affilate_topup_process(third_gen_referral, 100)
+                    third_gen_referral_obj = ReferralList.objects.get(user_list=second_generation_referral)
+                    third_gen_referral = query_user_id(third_gen_referral_obj)
+                    topup=100
+                    affilate_topup_process(third_gen_referral, topup)
+                    notify.send(second_generation_referral_obj, recipient=third_gen_referral, verb="Referral bonus", description=f"{topup} added to your affilate balance", level='info')
 
                 except ReferralList.DoesNotExist:
                     pass
@@ -130,3 +137,4 @@ class AccountSettingsForm(forms.ModelForm):
             except CustomUser.DoesNotExist:
                 return username
             raise forms.ValidationError('username "%s" is already in use.' % account.username)
+        

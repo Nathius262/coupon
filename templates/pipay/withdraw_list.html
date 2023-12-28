@@ -1,0 +1,101 @@
+{% extends 'index.html' %}
+{% block title %}Smart Vendors{% endblock title %}
+{% load static %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/vendors.css' %}">
+
+<div class="mt-5 mb-5">
+  <div class="row row-cols-1 mb-5">
+
+    <div class="col mx-auto h2 fw-bold navy-blue text-center mb-5">
+      <div class="container">Withdrawal List</div>
+    </div> 
+
+
+    <form id="form-withdraw" class="" method="post">{% csrf_token %}
+      <div class="table-responsive container">
+        <table class="table table-striped table-sm">
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">User</th>
+              <th scope="col">Bank</th>
+              <th scope="col">Transaction Id</th>
+              <th scope="col">Account</th>
+              <th scope="col">Amount</th>
+              <th scope="col">Completed</th>
+              <th scope="col">Approve</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for obj in object %}
+            <tr>
+              <td>{{obj.count}}</td>
+              <td>{{obj.user}}</td>
+              <td>{{obj.bank_name}}</td>
+              <td>{{obj.transaction_id}}</td>
+              <td>{{obj.account_balance}}</td>
+              <td>{{obj.amount}}</td>
+              <td>{{obj.transaction_completed}}</td>
+              <td><input name="transaction_completed" value="{{obj.id}}" class="" type="checkbox" ></td>
+            </tr>
+            {% endfor %}
+
+          </tbody>
+        </table>
+      </div>
+      <button class="container btn btn-primary col-sm-4 mx-auto" type="submit">Approve</button>
+    </form>
+  </div>
+</div>
+<script>
+  let csrf_token = "{{csrf_token}}"
+  let form = document.getElementById('form-withdraw')
+  form.addEventListener('submit', function(event){
+      event.stopPropagation()
+      event.preventDefault()
+      let formObj;
+      let completedTransactions = [];
+      let checkboxes = document.querySelectorAll('input[name^="transaction_completed"]');
+      checkboxes.forEach(function (checkbox) {
+          if (checkbox.checked) {
+            // Extract the transaction ID from the checkbox name
+            let transactionId = checkbox.value;
+            completedTransactions.push(transactionId);
+          }
+      });
+      let formdata = new FormData(form)
+      formObj = Object.fromEntries(formdata)
+      formObj.transaction_completed = completedTransactions
+
+
+      let option = {
+          method:"POST",
+          headers:{
+              "X-CSRFToken":csrf_token,
+          },
+          body: JSON.stringify(formObj)
+      }
+
+      let url = "/withdraw/list/"
+
+      fetch(url, option)
+      .then(response => {
+          return response.json()
+      })
+      .then(data => {
+        if (data['message'] == 'success'){
+          window.location.reload()
+        }
+        
+      })
+      .catch(error =>{
+          console.log(error)
+      })
+      
+  })
+
+</script>
+{% endblock content %}
+

@@ -7,6 +7,9 @@ from PIL import Image
 from .models import CustomUser, ReferralList
 from pipay.models import UsersBalance, DailyLoginTask
 from pipay.utils import affilate_topup_process
+from django.conf import settings
+from notifications.signals import notify
+
 #from pipay.utils import daily_task_process
 
 @receiver(post_save, sender=CustomUser)
@@ -15,11 +18,13 @@ def create_users_profile(sender, instance, created, *args, **kwargs):
     if created:
         """
         user_balance_account creates a UsersBalance object related to the created user
-        and topsup N4800/$10 to the new user
+        and topsup N2000 to the new user
         
         user_daily_login_task_profile creates  a DailyLoginTAsk object as related to the created user
         """
-        user_balance_account = UsersBalance(user=user, task=4800)
+        topup = 2000
+        user_balance_account = UsersBalance(user=user, task=topup)
+        notify.send(CustomUser.objects.get(username=user), recipient=user, verb="Welcome bonus", description=f"{topup} added to your task balance", level='success')
         user_balance_account.save()        
         
         user_daily_login_task_profile = DailyLoginTask(user=user)
@@ -28,16 +33,24 @@ def create_users_profile(sender, instance, created, *args, **kwargs):
         ReferralList(user=user).save()
         
 
-@receiver(post_save, sender=CustomUser)
-def save_profile_img(sender, instance, *args, **kwargs):
-    SIZE = 600, 600
-    if instance.picture:
-        pic = Image.open(instance.picture.path)
-        try:
-            pic.thumbnail(SIZE, Image.LANCZOS)
-            pic.save(instance.picture.path)
-        except:
-            if pic.mode in ("RGBA", 'P'):
-                profile_pic = pic.convert("RGB")
-                profile_pic.thumbnail(SIZE, Image.LANCZOS)
-                profile_pic.save(instance.picture.path)
+#@receiver(post_save, sender=CustomUser)
+def save_profile_img(sender, instance, created, *args, **kwargs):
+    if not created:
+        SIZE = 600, 600
+        if instance.picture:   
+            if settings.DEBUG:
+                pass
+            else:
+                import cloudinary.uploader
+                file_path = instance.picture.path
+                pic = Image.open(file_path)
+                try:
+                    pic.thumbnail(SIZE, Image.LANCZOS)
+                    cloudinary_response = cloudinary.uploader.upload(file_path)
+                    pic.save(cloudinary_response['secure_url'])
+                except:
+                    if pic.mode in ("RGBA", 'P'):
+                        profile_pic = pic.convert("RGB")
+                        profile_pic.thumbnail(SIZE, Image.LANCZOS)
+                        cloudinary_response = cloudinary.uploader.upload(file_path)
+                        profile_pic.save(cloudinary_response['secure_url'])

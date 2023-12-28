@@ -7,8 +7,6 @@
     <section class="py-4 navbar mt-0" id="sectionHeader">
         <div class="container">
             <div class="row d-flex justify-content-center py-md-3 align-items-center">
-            <div class="col-lg-6 mx-auto">
-
                 <!--animation background-->
                 <div class="area" >
                     <ul class="circles">
@@ -25,27 +23,45 @@
                     </ul>
                 </div >
                 <!--animation background end-->
-                
-                <h1 class="">Pipay - The Next Generation Affiliate Marketing Platform</h1>
-                <p class="fs-4">
-                    At Pipay, we envision a world where anyone can unleash their 
-                    earning potential through the power of affiliate marketing. 
-                    Our platform empowers users to effortlessly generate income by
-                    referring others and completing real-time tasks, revolutionizing 
-                    the way people monetize their online presence. We strive to create 
-                    a seamless, inclusive, and lucrative ecosystem that rewards 
-                    collaboration, creativity, and entrepreneurship
-                </p>
-            </div>
-
-            <div class="col-lg-6 mt-lg-0 mt-sm-5 justify-self-end">
-                <div class=""> <!--style="background-image: url('{% static 'img/dashboard_desktop.png' %}'); background-size:cover; width:100%; height:100%;"-->
-                    <div class="">
-                        <img style="width: 100%; height:70%" src="{% static 'img/a1.jpeg' %}" alt="">
+                <div class="col-12">
+                    
+                    <h1 class="mb-2 h1 text-center"><strong> Pipay - The Next Generation Affiliate Marketing Platform</strong></h1>
+                    <p class="fs-4 mb-5 text-center">
+                        At Pipay, we envision a world where anyone can unleash their 
+                        earning potential through the power of affiliate marketing. 
+                    </p>
+                    <div style="position: relative; z-index:1;" class="d-grid gap-2 d-sm-flex justify-content-sm-center">
+                        <a href="{% url 'account_signup' %}" class="btn btn-outline-info btn-lg px-4 me-sm-3 fw-bold">Join</a>
+                        <a href="{% url 'coupon_vendor' %}" class="btn btn-outline-light btn-lg px-4">Get Coupon</a>
                     </div>
                 </div>
-            </div>     
+
+                <div class="row d-flex justify-content-center py-md-3 align-items-center section scroll-y-top-el">
+                                    
+                    <div class="col-lg-6 mx-auto ">                
+                        <div class="p-0 justify-self-end">
+                            <p class="fs-3 mt-5 text-md-center">
+                                Our platform empowers users to effortlessly generate income by
+                                referring others and completing real-time tasks, revolutionizing 
+                                the way people monetize their online presence. We strive to create 
+                                a seamless, inclusive, and lucrative ecosystem that rewards 
+                                collaboration, creativity, and entrepreneurship
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-6 mt-lg-0 mt-sm-5 justify-self-end">
+                        <div class=""> <!--style="background-image: url('{% static 'img/dashboard_desktop.png' %}'); background-size:cover; width:100%; height:100%;"-->
+                            <div class="">
+                                <img style="width: 100%; height:70%" src="{% static 'img/a1.jpeg' %}" alt="">
+                            </div>
+                        </div>
+                    </div> 
+                </div>
+    
             </div>
+
+            
         </div>
     </section>
 <section>

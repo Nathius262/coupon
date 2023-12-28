@@ -17,13 +17,16 @@ from django.contrib import admin
 from django.conf import settings
 from django.conf.urls.static import static
 from django.urls import path, include
+from django.views.generic import TemplateView
 
 urlpatterns = [
     path('admin/', admin.site.urls, name="admin"),
     path('account/', include('allauth.urls')),
     path('notifications/', include('notifications.urls'), name="notifications"),
     path('', include('pipay.urls')),
-    path('profile/', include('user.urls'), name='user')
+    path('', include('process.urls')),
+    path('', include('user.urls'), name='user'),
+    path('ads.txt', TemplateView.as_view(template_name='ads.txt', content_type='text/plain')),
 ]
 
 if settings.DEBUG:

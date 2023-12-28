@@ -1,12 +1,14 @@
 from django.db import models
 from user.models import CustomUser
+from decimal import Decimal
+from django.core.validators import MinValueValidator
 
 # Create your models here.
 class GenerateCode(models.Model):
     """GenerateCode generates unique code for each users that is about to 
     register on this platform
     """
-    coupon_code = models.CharField(max_length=12, unique=True)
+    coupon_code = models.CharField(max_length=12, unique=True, null=True, blank=False)
     generated_by = models.ForeignKey(CustomUser, on_delete=models.SET_NULL, null=True, blank=False, related_name="generated_by")
     user = models.OneToOneField(CustomUser, on_delete=models.CASCADE, null=True, blank=True, related_name="user_code")
 
@@ -42,19 +44,26 @@ class UsersBalance(models.Model):
             )
         ]
     
-    user = models.OneToOneField(CustomUser, null=True, blank=False, on_delete=models.CASCADE, editable=False, related_name="user_currency")
+    user = models.OneToOneField(CustomUser, null=True, blank=False, on_delete=models.CASCADE, related_name="user_currency")
     currency =models.CharField(max_length=50, editable=False, choices=Currency.choices, default=Currency.naira)
-    affilate = models.DecimalField(max_digits=12, decimal_places=2, default=0.00, editable=False)
-    task = models.DecimalField(max_digits=12, decimal_places=2, default=0.00, editable=False)
+    affilate = models.DecimalField(max_digits=12, decimal_places=2, default=0.00)
+    task = models.DecimalField(max_digits=12, decimal_places=2, default=0.00)
     
     def totalBalance(self):
-        total_balance = self.affilate + self.task
+        total_balance = self.affilate
         return total_balance
     
     @property
     def totalWithdraw(self):
-        total_withdraw = self.totalBalance
+        withdraw = Withdraw.objects.all().filter(user=self.user, transaction_completed=True)
+        total_withdraw =Decimal('0.00')
+        for i in withdraw:
+            total_withdraw += i.amount           
         return total_withdraw
+    
+    def totalEarnings(self):
+        total_earnings = self.affilate + self.task
+        return total_earnings
     
     def __str__(self):
         return str(self.user)
@@ -79,5 +88,49 @@ class Notification(models.Model):
     timestamp = models.DateTimeField(auto_now_add=True)
     
 
+class Withdraw(models.Model):
+    user = models.ForeignKey(CustomUser, null=True, blank=False, on_delete=models.CASCADE, related_name="user_withdraw")
+    email = models.EmailField(verbose_name="email", max_length=60, blank=False, null=True)
+    bank_name = models.CharField(max_length=100, blank=False, null=True)
+    first_name = models.CharField(max_length=100)
+    last_name = models.CharField(max_length=100)
+    transaction_id = models.CharField(max_length=12, unique=True, blank=False, null=True)
+    withdrawal_date = models.DateTimeField(verbose_name='date withdraw', auto_now_add=True)
+    save_info = models.BooleanField(default=True)
+    account_balance = models.CharField(max_length=100)
+    account_number = models.CharField(max_length=50, default="xxxxxx9309")
+    amount = models.DecimalField(validators=[MinValueValidator(6000.00)], max_digits=12, decimal_places=2, default=6000.00)
+    transaction_completed = models.BooleanField(default=False)
+    
+    class Meta:
+        ordering = [
+            'withdrawal_date',
+            
+        ]
+    
 #class EarningHistory(models.Model):
 #    user=models.ForeignKey()
+
+class TaskPost(models.Model):
+    post_link = models.URLField(blank=True)
+    users = models.ManyToManyField(CustomUser, blank=True)
+    embed_link = models.TextField(null=True, blank=True)
+    description = models.TextField(null=True, blank=True)
+    task_completed = models.BooleanField(default=False)
+
+
+class AdvertPost(models.Model):
+    post_link = models.URLField(blank=True)
+    embed_link = models.TextField(null=True, blank=True)
+    description = models.TextField(null=True, blank=True)
+    users = models.ManyToManyField(CustomUser, blank=True)
+    task_completed = models.BooleanField(default=False)
+    
+
+class PayGig(models.Model):
+    post_link = models.URLField(blank=True)
+    embed_link = models.TextField(null=True, blank=True)
+    description = models.TextField(null=True, blank=True)
+    users = models.ManyToManyField(CustomUser, blank=True)
+    task_completed = models.BooleanField(default=False)
+      

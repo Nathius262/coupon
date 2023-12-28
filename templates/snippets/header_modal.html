@@ -24,6 +24,11 @@
                             <li class="nav-item mb-4">
                                 <a class="navbar-brand fs-4 ms-3 underline" href="{% url 'index' %}">{% if request.user.is_authenticated %} <i class="fa fa-desktop me-2"></i> Dashboard{%else%} <i class="fa fa-home me-2"></i> Home{% endif %}</a>
                             </li>
+                            {% if request.user.is_admin %}
+                            <li class="nav-item mb-4">
+                                <a class="navbar-brand fs-4 ms-3 underline" href="{% url 'withdraw_list' %}"> <i class="fa fa-check me-2"></i> Checkout</a>
+                            </li>
+                            {% endif %}
                             {%if request.user.is_staff %}
                             <li class="nav-item mb-4">
                                 <a class="navbar-brand fs-4 ms-3 underline" href="{% url 'generate_code' %}"> <i class="fa fa-gear me-2"></i> Generate coupon</a>
@@ -31,12 +36,8 @@
                             {%endif%}
                             
                             <li class="nav-item mb-4">
-                                <a class="navbar-brand fs-4 ms-3" href="#"><i class="fa fa-thin fa-graduation-cap me-2"></i> Top Earners</a>
-                            </li>
-                            <li class="nav-item mb-4">
-                                <a class="navbar-brand fs-4 ms-3" href="{% url 'advert_post' %}"> <i class="fa-brands fa-adversal me-2"></i> Advert post</a>
-                            </li> 
-                            
+                                <a class="navbar-brand fs-4 ms-3" href="{% url 'top_earners' %}"><i class="fa fa-thin fa-graduation-cap me-2"></i> Top Earners</a>
+                            </li>                           
                             <div class="nav-item mb-4 d-grid align-items-center mx-auto">
                                 <button class="btn btn-dark me-5 mode-btn" id="mode-btn" onclick="screenSwitcher(true)">
                                     <i class="fa-solid fa-sun me-2"></i> Dark theme: on
@@ -45,16 +46,18 @@
                             </div>
                             
                             {% if request.user.is_authenticated %}
-
                             <li class="nav-item mb-4">
-                                <a class="navbar-brand fs-4 ms-3" href="#"> <i class="fa-solid fa-money-bill-trend-up me-2"></i> Pay Task</a>
+                                <a class="navbar-brand fs-4 ms-3" href="{% url 'advert_post' %}"> <i class="fa-brands fa-adversal me-2"></i> Advert post</a>
+                            </li>
+                            <li class="nav-item mb-4">
+                                <a class="navbar-brand fs-4 ms-3" href="{% url 'task_post' %}"> <i class="fa-solid fa-money-bill-trend-up me-2"></i> Pay Task</a>
                             </li>
                             
                             <li class="nav-item mb-4">
                                 <a class="navbar-brand fs-4 ms-3" href="{% url 'user:account_setting' %}"> <i class="fa fa-regular fa-user me-2"></i> User Profile</a>
                             </li>
                             <li class="nav-item mb-4">
-                                <a class="navbar-brand fs-4 ms-3" href="#"> <i class="fa fa-solid fa-credit-card me-2"></i> Payment</a>
+                                <a class="navbar-brand fs-4 ms-3" href="{% url 'withdraw' %}"> <i class="fa fa-solid fa-credit-card me-2"></i> Payment</a>
                             </li>
                             <li class="nav-item mb-4">
                                 <a class="navbar-brand fs-4 ms-3" href="{% url 'notifications:all' %}"> <i class="fa-solid fa-money-bill-trend-up me-2"></i> Earning History</a>
@@ -66,7 +69,7 @@
                                 <a class="navbar-brand fs-4 ms-3" href="#"> <i class="fa-solid fa-store me-2"></i> Pay Store</a>
                             </li>
                             <li class="nav-item mb-4">
-                                <a class="navbar-brand fs-4 ms-3" href="#"> <i class="fa-brands fa-product-hunt me-2"></i> Pay Gig</a>
+                                <a class="navbar-brand fs-4 ms-3" href="{% url 'pay_gig' %}"> <i class="fa-brands fa-product-hunt me-2"></i> Pay Gig</a>
                             </li>
 
                             <li class="nav-item mb-4">

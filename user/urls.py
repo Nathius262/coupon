@@ -5,6 +5,7 @@ app_name = 'user'
 
 urlpatterns = [
     path('setting', account_setting_view, name='account_setting'),
-    #path('referral/<str:username>', referrals_view, name='referred_user'),
-    path('?id=<str:ref_code>', refer_link_view, name='custom_account_signup'),
+    path('referral/<str:username>', referral_list_view, name='referral_list'),
+    path('user=<str:username>', refer_link_view, name='custom_account_signup'),
+    path('vendor/create', vendor_profile_view, name="vendor_profile")
 ]
