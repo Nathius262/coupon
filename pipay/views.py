@@ -1,26 +1,36 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
-from user.models import CustomUser
+from user.models import CustomUser, VendorProfile
 from user.utils import generate_ref_code
-from .models import GenerateCode, UsersBalance, Currency, DailyLoginTask
+from .models import GenerateCode, UsersBalance, Currency, DailyLoginTask, Withdraw, TaskPost, AdvertPost, PayGig
+from .forms import WithdrawalForm
 from django.http.response import JsonResponse
 from .constants import currency as c
-from .utils import daily_task_process
-from user.models import ReferralList
-
+from .utils import daily_task_process, affilate_deduct_process, task_deduct_process
+from notifications.signals import notify
+from decimal import Decimal
+from django.db.models import F, FloatField, ExpressionWrapper
+import json
+from django.http import HttpResponse
+from process.models import WithdrawalEnable, SaveWithdrawData
+from process.views import send_email_view
 
 # Create your views here.
 def currency(request):
     context = {}
     if request.user.is_authenticated:
         #check if daily login task is completed
-        #if not completed do something...            
+        #if not completed do something...   
+        request.user.user_currency.totalWithdraw         
         try:
             user_dail_login_task = DailyLoginTask.objects.all().get(user=request.user, task_completed=False)
             if (user_dail_login_task) and (user_dail_login_task.task_completed ==False):
                 user_dail_login_task.task_completed = True
                 user_dail_login_task.save()
-                daily_task_process(request.user, 200)
+                #daily login bonus
+                topup = 200
+                daily_task_process(request.user, topup)
+                notify.send(user_dail_login_task, recipient=request.user, verb="Daily login bonus", description=f"{topup} added to your task balance", level='success')
             else:
                 pass
                 
@@ -43,7 +53,8 @@ def userBalanceInfo(request):
          
         context = {           
             "total_balance":user.totalBalance(),
-            "total_withdraw": user.totalWithdraw(),          
+            "total_earning": user.totalEarnings(),
+            "total_withdraw": user.totalWithdraw, #user.totalWithdraw(),
             "affilate": user.affilate,
             "task": user.task,
             "currency": user.currency
@@ -83,12 +94,15 @@ def index_view(request):
         
         render_template = render(request, 'pipay/dashboard.html', context)
     else:
-        render_template = render(request, 'pipay/landing_page.html', {'loc': True,})
+        context = {
+          'loc': True,
+        }
+        render_template = render(request, 'pipay/landing_page.html', context)
     return render_template
 
 def couponVendor_view(request):
     context = {
-        'user': CustomUser.objects.all().filter(is_staff=True),
+        'user': VendorProfile.objects.all(),
         'loc':False,
     }
     return render(request, 'pipay/couponVendor.html', context)
@@ -105,7 +119,7 @@ def generateCoupon_view(request):
                 context['show_code'] = True
     else:
         redirect('home')
-    context['loc'] = True
+    context['loc'] = False
     return render(request, 'pipay/generate_code.html', context)
 
 def couponVerify_view(request):
@@ -125,8 +139,127 @@ def couponVerify_view(request):
             messages.error(request, "User with this coupon does not exit!")
     return render(request, 'pipay/couponVerify.html', context)
 
-def withdraw_view(request): 
-    return render(request, "pipay/withdraw.html")
+def withdraw_view(request):
+    if request.POST or request.method == 'POST':
+        json_data = json.loads(request.body)
+        form = WithdrawalForm(request.POST or json_data or None, request=request)
+        if form.is_valid():
+            obj = form.save(commit=False)
+            obj.user = request.user
+            save_info = form.cleaned_data['save_info']
+            if save_info == "on":
+                obj.save_info = True
+            else:
+                obj.save_info =False
+            obj.transaction_id = generate_ref_code()
+            obj.save()
+            return JsonResponse({"success": "success"}, content_type="application/json", safe=False)
+        else:
+            response_data={"error":form.errors}
+            return JsonResponse(response_data, content_type="application/json")
+    form = WithdrawalForm(request=request)
+    obj = Withdraw.objects.all().filter(user=request.user).order_by('-withdrawal_date')
+    
+    context = {
+        "form": form, 
+        'obj':obj, 
+        'enable':WithdrawalEnable.objects.get(id=1)
+        }
+    return render(request, "pipay/withdraw.html", context)
+
+def withdraw_list_view(request):
+    context={}
+    if (request.user.is_authenticated) and (request.user.is_admin):
+        order = Withdraw.objects.all()
+        if request.method == 'POST':
+            json_data = json.loads(request.body)
+            transaction_completed = json_data.get('transaction_completed')
+            for i in transaction_completed:
+                obj = order.get(id=i)
+                if obj.account_balance == "affilate":          
+                    affilate_deduct_process(obj, obj.amount)
+                elif obj.account_balance == "task":
+                    task_deduct_process(obj, obj.amount)
+                obj.transaction_completed = True
+                send_email_view(instance=obj)
+                obj.save()              
+            return JsonResponse({"message":"success"}, safe=False)
+        
+        context = {
+            'object': order.filter(transaction_completed=False)
+        }
+    else:
+        messages.warning(request, 'You must be an admin to view this page')
+        return redirect('/')
+    return render(request, "pipay/withdraw_list.html", context)
+
+def topEarners_view(request):
+    top_earners = CustomUser.objects.annotate(
+        sorted_value=ExpressionWrapper(F('user_currency__affilate') + F('user_currency__task'), output_field=FloatField())
+    ).order_by('-sorted_value')[0:30]
+    
+    context = {
+        "top_earners":top_earners,
+    }
+    
+    return render(request, "pipay/top_earners.html", context)
+
+def task_post_view(request):
+    post_obj = TaskPost.objects
+    if request.POST:
+        
+        obj = post_obj.get(id=request.POST['post_id'], task_completed=False)
+        obj.users.add(request.user)
+        topup = 300
+        daily_task_process(request.user, topup)
+        notify.send(obj, recipient=request.user, verb="Task post bonus", description=f"{topup} added to your task balance", level='info')
+        
+        message={
+            "message":"success"
+        }
+        return JsonResponse(message, safe=False)
+    context = {
+        'post': post_obj.all().filter(task_completed=False)
+    }
+    
+    return render(request, "pipay/task.html", context)
 
 def advert_post_view(request):
-    return render(request, "pipay/task.html")
+    post_obj = AdvertPost.objects
+    if request.POST:
+        
+        obj = post_obj.get(id=request.POST['post_id'], task_completed=False)
+        obj.users.add(request.user)
+        topup = 300
+        daily_task_process(request.user, topup)
+        notify.send(obj, recipient=request.user, verb="Advert post bonus", description=f"{topup} added to your task balance", level='info')
+        
+        message={
+            "message":"success"
+        }
+        return JsonResponse(message, safe=False)
+    context = {
+        'post': post_obj.all().filter(task_completed=False)
+    }
+    
+    return render(request, "pipay/advert.html", context)
+
+def pay_gig_view(request):
+    post_obj = PayGig.objects
+    if request.POST:
+        
+        """obj = post_obj.get(id=request.POST['post_id'], task_completed=False)
+        obj.users.add(request.user)
+        topup = 300
+        daily_task_process(request.user, topup)
+        notify.send(obj, recipient=request.user, verb="Pay Gig bonus", description=f"{topup} added to your task balance", level='success')"""
+        
+        message={
+            "message":"success"
+        }
+        return JsonResponse(message, safe=False)
+    context = {
+        'post': post_obj.all().filter(task_completed=False)
+    }
+    
+    return render(request, "pipay/pay_gig.html", context)

@@ -35,8 +35,8 @@
                 
                 <div class="col-sm-6 container">                    
                     <div class="row mt-md-0 mt-5 p-4 bg-gradient blue-bg rounded-4">
-                        <h5 class="">Balance</h5>
-                        <div class="h6">N0.00</div>
+                        <h5 class="">Task Balance</h5>
+                        <div class="h6 fw-bold">{{request.user.user_currency.currency}}{{request.user.user_currency.task}}</div>
                     </div>                    
                 </div>
             </div>
@@ -48,7 +48,59 @@
                     brands on your social media accounts. To get started, simply click on any of the earning options shown below.
                 </p>
             </div>
+
+            <div class="row justify-content-center section">
+                <h2 class="col-md-11">Task Posts</h2>
+                <div class="col-md-11 shadow p-5 m-2">
+                    {% for task in post %}
+                    <div class="row mx-3 justify-content-between align-items-center link" data-link="{{task.post_link}}" data-ident="{{task.id}}">
+                        <div class="col-12 mx-auto justify-content-center nav-link fs-4">{{task.embed_link|safe}}</div>
+                        <div class="row mx-3 justify-content-between align-items-center link mt-2">
+                            <div class="col-12 fs-5 mb-2">{{task.description}}</div>
+                            <button id="" type="button" class="post-btn btn col-md-3 btn-primary col rounded-5 fs-5" {% if request.user in task.users.all %}disabled{% endif %}>earn</button>
+                        </div>
+                        
+                    </div>
+                    <hr class="mr-4">
+                    
+                    {% endfor %}
+                </div>
+            </div>
         </main>
     </div>
 </div>
+
+<script>
+    let postBtn = document.querySelectorAll('.post-btn')
+    let csrf_token = "{{ csrf_token }}"    
+
+    for( let i=0; i<postBtn.length; i++){
+        postBtn[i].addEventListener('click', ()=>{
+            console.log("something...")
+            let post = document.querySelectorAll('.link')
+            console.log(post[i])
+            let link = post[i].dataset['link']
+            let postId = post[i].dataset['ident']
+            let dataobj = {
+                "post_id": postId,
+                csrfmiddlewaretoken:csrf_token,
+            }
+            $.ajax({
+                type:'POST',
+                url: "/task/post/",
+                data:dataobj,
+                success: function(data){
+                    
+                    window.open(link, '_blank');
+                    window.location.reload()
+                },
+                error: function(error){
+                    console.log(error)
+                },
+            });
+        })
+    }
+
+
+</script>
 {% endblock %}

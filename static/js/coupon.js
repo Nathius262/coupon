@@ -7,9 +7,15 @@ window.addEventListener("DOMContentLoaded", ()=>{
     screenSwitcher(false)
 })
 
-function copyText() {
+function copyText(input) {
     // Get the text field
-    var copyText = document.getElementById("myInput");
+    var copyText;
+    if (input===true){
+        copyText= document.getElementById("myInput");
+    }else{
+        copyText= document.getElementById("vendorInput");
+    }
+    
 
     // Select the text field
     copyText.select();
@@ -66,12 +72,12 @@ function screenSwitcher(changeMode){
 //console.log(modeBtn.firstChild)
 function darkMode(){
     bodyEl.classList.add("body-dark")
-    modeBtn.firstElementChild.classList.replace("fa-moon-o", "fa-sun-o")
+    modeBtn.firstElementChild.classList.replace( "fa-sun", "fa-moon")
 }
 
 function lightMode(){
     bodyEl.classList.remove("body-dark")
-    modeBtn.firstElementChild.classList.replace("fa-sun-o", "fa-moon-o")
+    modeBtn.firstElementChild.classList.replace("fa-moon", "fa-sun")
 }
 
 let dropdown = $('.dropdownMenuButton')
@@ -146,6 +152,7 @@ function toggleShowBalance(boolean){
         taskEl.innerText = "****"
         affilateEl.innerText = "****"
         withdrawalEl.innerText = "****"
+        totalEarnEl.innerHTML = "****"
     }else{
         $.ajax({
             method:"get",
@@ -156,7 +163,7 @@ function toggleShowBalance(boolean){
                 taskEl.innerText = `${currency} ${data.task}`
                 affilateEl.innerText = `${currency} ${data.affilate}`
                 withdrawalEl.innerText = `${currency} ${data.total_withdraw}`
-                //totalEarnEl.innerText = data.
+                totalEarnEl.innerText = `${currency} ${data.total_earning}`
                 
             },
             error: function(err){
@@ -165,6 +172,7 @@ function toggleShowBalance(boolean){
         })
     }
 }
+
 
 
 ///////////////////////////
@@ -178,3 +186,76 @@ function toggleShowBalance(boolean){
 let footerDate = document.querySelector("#footer-date")
 let date = new Date
 footerDate.innerText = date.getFullYear()
+
+
+let y_top_objectEl = document.querySelectorAll('.scroll-y-top-el')
+let y_down_objectEl = document.querySelectorAll('.scroll-down-top-el')
+let x_top_objectEl = document.querySelectorAll('.scroll-x-top-el')
+let x_down_objectEl = document.querySelectorAll('.scroll-x-down-el')
+
+objectEl(y_top_objectEl, 'Y', '+')
+objectEl(y_down_objectEl, 'Y', '-')
+objectEl(x_top_objectEl, 'X', '+')
+objectEl(x_down_objectEl, 'X', '-')
+
+function objectEl(elementClass, axis, sign){
+    for (let element of elementClass){
+        let observer = new IntersectionObserver(entries => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting){
+                    element.style.transform = `translate${axis}(0)`
+                }else{
+                    element.style.transform = `translate${axis}(${sign}50%)`
+                }
+            })
+        })
+        
+        observer.observe(element)
+    }
+    
+}
+
+
+function test(url, option){
+    fetch(url, option)
+    .then(response  =>{
+        return response.text()
+    })
+    .then(data => {
+        let json_response = JSON.parse(data);
+
+        if (json_response.success){
+            
+            pagedone.style.display = 'block'
+            setTimeout(function(){
+                pagedone.style.display = 'none'
+                window.location.reload()
+            }, 4000)
+        }
+        else if (json_response.error){
+            var jsonObject = json_response;
+
+            // Access the 'error' object
+            var errorObject = jsonObject.error;
+            let errorEl = document.querySelector('#error')
+
+
+            // Iterate through the properties of the 'error' object
+            for (var key in errorObject) {
+                if (errorObject.hasOwnProperty(key)) {
+                    var errorMessages = errorObject[key];
+
+                    // Log or process the error messages
+                    for (var i = 0; i < errorMessages.length; i++) {
+                        
+                        errorEl.innerText =`${key}:  ${errorMessages[i]}`
+                    }
+                }
+            }
+        }
+      
+    })
+    .catch(error =>{
+      console.log(error)
+    })
+}

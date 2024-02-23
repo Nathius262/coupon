@@ -1,0 +1,94 @@
+{%load static%}
+
+<nav class="navbar navbar-dark sticky-top">
+    <a id="header-logo" class="navbar-brand col-md-3 col-lg-2 me-0 px-2 fs-4" href="{% url 'index' %}">
+        <img src="{% static 'img/logo.png' %}" alt="logo" width="150">
+    </a>
+
+    {% if request.user.is_authenticated %}
+
+    <div class="nav-item mb-1 d-md-none d-grid align-items-center mx-auto ms-5 ">
+        <div class="dropdown me-5">
+            <button class="dropdownMenuButton btn btn-outline-secondary dropdown-toggle m-0  px-2 mt-2" type="" id="dropdownMenuButton" aria-expanded="false">
+                {{user_currency}}
+            </button>
+            <ul id="dropdown-menu-ul" class="dropdown-menu dropdown-menu-ul">
+                {% for currency in currency %}
+                {% if not user_currency in currency%}
+                <li class="dropdown-item currency" data-csrftoken="{{csrf_token}}">{{currency}}</li>
+                {%endif%}
+                {% endfor %}
+            </ul>
+        
+        </div>
+    </div>
+    {% endif %}
+    
+    <div class="nav-item d-none d-md-grid align-items-center mx-auto">
+        <button class="btn btn-dark me-5" id="mode-btn">
+            <i class="fa-solid fa-sun"></i>
+        </button>
+        
+    </div>
+
+    <button type="button" class="navbar-toggler nav_toggle_btn mx-auto px-2 d-flex collapsed mt-3 mb-1 ms-5" data-bs-toggle="modal" data-bs-target="#nav-menu">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div id="" class="collapse navbar-collapse me-5">
+        <div class="nav_head ms-auto">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                {% if request.user.is_admin %}
+                <li class="nav-item mb-4">
+                    <a class="navbar-brand fs-6 ms-3" href="/admin/">Admin</a>
+                </li>
+                {% endif %}
+                <li class="nav-item mb-4">
+                    <a class="navbar-brand fs-6 ms-3" href="{% url 'index' %}">{% if request.user.is_authenticated %} Dashboard{%else%} Home{% endif %}</a>
+                </li>
+
+                {% if request.user.is_authenticated %}
+                
+                <li class="nav-item mb-1 d-grid align-items-center">
+                    <div class="dropdown">
+                        <button class="dropdownMenuButton btn btn-outline-secondary dropdown-toggle m-0" type="button" id="dropdownMenuButton" aria-expanded="false">
+                            {{user_currency}}
+                        </button>
+                        <ul id="dropdown-menu-ul" class="dropdown-menu dropdown-menu-ul">
+                            {% for currency in currency %}
+                            {% if not user_currency in currency%}
+                            <li class="dropdown-item currency" data-csrftoken="{{csrf_token}}">{{currency}}</li>
+                            {%endif%}
+                            {% endfor %}
+                        </ul> 
+                        
+
+                    
+                    </div>
+                </li>                
+            
+                <li class="nav-item mb-1">
+                    <a class="navbar-brand fs-6 ms-3" href="{% url 'user:account_setting' %}">Account Settings</a>
+                </li>
+                <li class="nav-item mb-1">
+                    <a class="navbar-brand fs-6 ms-3" href="{% url 'account_logout' %}">Logout</a>
+                </li>
+
+                <li class="nav-item mb-1">
+                    <div style="width: 40px;" class="ms-3 me-5 d-none d-lg-block border rounded-5">
+                        <img width="100%" class="rounded-5" src="{{request.user.picture_url}}" alt="{{reqest.user}} profile image">
+                    </div>
+                </li>
+                {% else %}
+                <li class="nav-item mb-1">
+                    <a class="navbar-brand fs-6 ms-3" href="{% url 'account_login' %}">Login</a>
+                </li>
+                <li class="nav-item mb-1">
+                    <a class="navbar-brand fs-6 ms-3" href="{% url 'account_signup' %}">Sign up</a>
+                </li>
+
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+</nav>

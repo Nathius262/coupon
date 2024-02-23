@@ -6,112 +6,146 @@
 {% block content %}   
 
 <style>
-    /* CUSTOMIZE THE CAROUSEL
--------------------------------------------------- */
-
-/* Carousel base class */
-.carousel {
-    margin-bottom: 4rem;
-  }
-  /* Since positioning the image, we need to help out the caption */
-  .carousel-caption {
-    bottom: 3rem;
-    z-index: 10;
-  }
-  
-  /* Declare heights because of positioning of img element */
-  .carousel-item {
-    height: 32rem;
-  }
-  .carousel-item > img {
-    position: absolute;
-    top: 0;
-    left: 0;
-    min-width: 100%;
-    height: 32rem;
-  }
   
 </style>
     
-<div class="container-fluid">
+<div class="container-fluid" style="overflow-x: hidden;">
     <div class="row">
 
         <main class="ms-sm-auto px-md-4">
-            <div class="container-lg d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3">
-                <div class="row featurette mt-5 align-items-center">
+            <div class="section container-lg d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3">
+                <div class="row featurette mt-5 align-items-center scroll-y-top-el">
     
-                    <div class="col-md-7">
-                        <div class="h4 fw-bold blue-color text-center">RELIABILITY AND COMMITMENT</div>
-                        <p class="lead fs-6">PiPay is designed for a simple, effortless and convenient customer experience. With its vast national network of banks, merchants, and service providers, Pipay will change how people engage with their favorite brands and how businesses reach out to their customers.</p>
-                        <p class="lead fs-6">We invite businesses to see how Pipay can take their business into the future. Embracing state-of-the-art technology, strict cash handling policies, internationally acclaimed partners and a solid infrastructure, Pi Pay is set to change the face of commerce in Cambodia.</p>                        
+                    <div class="col-md-6">
+                        <div class="fs-1 fw-bold blue-color text-start observe-el"><strong>PAY GIGS</strong></div>
+                        <strong class="fs-2 fw-bold blue-color text-start">Get access to over 100 online jobs everyday.</strong>
+                        <p class="fw-3">Pipay gives all its users access to loads of high paying online jobs; ranging from interpreting jobs, data analysis, defi and web3 jobs and many more!!</p>
+                        
                     </div>
 
-                    <div class="col mt-lg-0 mt-sm-5">
+                    <div class="col mt-lg-0 mt-sm-5 order-lg-first">
                         <div class="h-100 shadow"> <!--style="background-image: url('{% static 'img/dashboard_desktop.png' %}'); background-size:cover; width:100%; height:100%;"-->
                             <div class="">
-                                <img style="width: 100%;" src="{% static 'img/p1.JPG' %}" alt="">
+                                <img style="width: 100%;" src="{% static 'img/pay_gig.jpg' %}" alt="pipaytech anticipation">
                             </div>
                         </div>
                     </div>                    
                 </div>
             </div>
 
-            <section style="margin-top: 100px;">
-                <div id="myCarousel" class="carousel slide container-fluid" data-bs-ride="carousel">
-                    <div class="carousel-indicators">
-                        <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="0" class="active" aria-label="Slide 1" aria-current="true"></button>
-                        <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="1" aria-label="Slide 2" class=""></button>
-                        <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="2" aria-label="Slide 3" class=""></button>
-                    </div>
-                    <div class="carousel-inner">
-                        <div class="carousel-item active">
-                            <img class="container bd-placeholder-img" src="{% static 'img/p2.JPG' %}" aria-hidden="true" focusable="false">
-                        </div>
-                        <div class="carousel-item active">
-                            <img class="container bd-placeholder-img" src="{% static 'img/p1.JPG' %}" aria-hidden="true" focusable="false">
-                        </div>
-                        <div class="carousel-item">
-                            <svg class="bd-placeholder-img" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" preserveAspectRatio="xMidYMid slice" focusable="false"><rect width="100%" height="100%" fill="#777"></rect></svg>
-                    
-                            <div class="container">
-                            <div class="carousel-caption text-end">
-                                <h1>One more for good measure.</h1>
-                                <p>Some representative placeholder content for the third slide of this carousel.</p>
-                                <p><a class="btn btn-lg btn-primary" href="#">Browse gallery</a></p>
-                            </div>
-                            </div>
-                        </div>
-                    </div>
-                    <button class="carousel-control-prev" type="button" data-bs-target="#myCarousel" data-bs-slide="prev">
-                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                        <span class="visually-hidden">Previous</span>
-                    </button>
-                    <button class="carousel-control-next" type="button" data-bs-target="#myCarousel" data-bs-slide="next">
-                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                        <span class="visually-hidden">Next</span>
-                    </button>
-                </div>
-            </section>
-
-        
-            <div class="container-lg d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3">
-                <div class="row featurette mt-5">
+            <div class="section container-lg d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3">
+                <div class="row featurette mt-5 align-items-center">
     
-                    <div class="col">
-                        <div class="h4 fw-bold blue-color text-center">AFFILATE MARKETING</div>
-                        <p class="lead fs-6">We invite businesses to see how Pipay can take their business into the future. Embracing state-of-the-art technology, strict cash handling policies, internationally acclaimed partners and a solid infrastructure, Pi Pay is set to change the face of commerce in Cambodia.</p>                        
+                    <div class="col-12 scroll-x-top-el">
+                        <div class="fs-1 fw-bold blue-color text-center">Empowerment</div>                        
+                        <p class="fs-3 text-center">We believe in empowering individuals by providing them with the tools and opportunities to earn a sustainable income through affiliate marketing.</p>
+                    </div>
+                    <div class="col-12 scroll-x-top-el">
+                        <div class="fs-1 fw-bold blue-color text-center">Innovation</div>                        
+                        <p class="fs-3 text-center"> We constantly strive to push boundaries, innovate, and evolve to meet the ever-changing needs of our users and the affiliate marketing industry.</p>
+                    </div>
+                    
+                </div>
+            </div>
+
+            {% include 'snippets/carousel.html' %}
+
+            <div class="section container-lg d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3">
+                <div class="row featurette mt-5 align-items-center">
+                    <div class="col-12  scroll-x-top-el">
+                        <div class="fs-1 fw-bold blue-color text-center">Collaboration</div>                        
+                        <p class="fs-3 text-center">We foster a culture of collaboration, encouraging our users to work together and support each other's success, amplifying their earning potential.</p>
+                    </div>
+                    <div class="col-12  scroll-x-down-el">
+                        <div class="fs-1 fw-bold blue-color text-center">Integrity</div>                        
+                        <p class="fs-3 text-center">We prioritize transparency, trust, and ethical practices in all our interactions, ensuring the highest standards of integrity within our platform.</p>
+                    </div>    
+                    <div class="col-12  scroll-y-top-el">
+                        <div class="fs-1 fw-bold blue-color text-center">User-centricity</div>                        
+                        <p class="fs-3 text-center">Our users are at the heart of everything we do. We are committed to delivering a seamless and user-friendly experience, continuously seeking their feedback and improving our platform based on their needs.</p>
                     </div>                   
                 </div>
             </div>
+
+            <div class="section container-lg d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3">
+                <div class="row featurette mt-5 align-items-center">
+    
+                    <div class="col-md-6 scroll-y-top-el">
+                        <div class="fs-1 fw-bold blue-color text-start"><strong>PAY STREAM</strong></div>
+                        <p class="fs-3 text-start">
+                            Have been streaming songs on Sportify, audiomack and the likes without getting paid??
+                            With PIPAY'S pay-per-stream you get paid for streaming your favourite songs across different music platforms!!<strong> AMAZING RIGHT????</strong>
+                        </p>
+                        
+                    </div>
+
+                    <div class="col mt-lg-0 mt-sm-5 order-lg-last">
+                        <div class="h-100 shadow"> <!--style="background-image: url('{% static 'img/dashboard_desktop.png' %}'); background-size:cover; width:100%; height:100%;"-->
+                            <div class="">
+                                <img style="width: 100%;" src="{% static 'img/pay_stream.jpg' %}" alt="pipaytech anticipation">
+                            </div>
+                        </div>
+                    </div>                    
+                </div>
+            </div>
+
+            <div class="section container-lg d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3">
+                <div class="row featurette mt-5 align-items-center">
+    
+                    <div class="col-md-6 scroll-y-top-el">
+                        <div class="fs-1 fw-bold blue-color text-start"><strong>PAY STORE</strong></div>
+                        <p class="fs-3 text-start">
+                            Advertise your business to thousands of customers and reach the right audience with pipay
+                        </p>
+                        
+                    </div>
+
+                    <div class="col mt-lg-0 mt-sm-5 order-lg-first">
+                        <div class="h-100 shadow"> <!--style="background-image: url('{% static 'img/dashboard_desktop.png' %}'); background-size:cover; width:100%; height:100%;"-->
+                            <div class="">
+                                <img style="width: 100%;" src="{% static 'img/pay_store.jpg' %}" alt="pipaytech anticipation">
+                            </div>
+                        </div>
+                    </div>                    
+                </div>
+            </div>
+
+            <div class="section container-lg d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3">
+                <div class="row featurette mt-5 align-items-center">
+                    <div class="col-12 scroll-x-down-el">
+                        <div class="fs-1 fw-bold blue-color text-center">User Growth</div>                        
+                        <p class="fs-3 text-center">Attract a diverse and engaged user base, expanding our reach and empowering more individuals to earn through affiliate marketing.</p>
+                    </div>
+                    <div class="col-12 scroll-x-down-el">
+                        <div class="fs-1 fw-bold blue-color text-center">Monetization Channels</div>                        
+                        <p class="fs-3 text-center">Establish a wide range of monetization channels, including referrals and real-time tasks, to provide users with multiple avenues to generate income.</p>
+                    </div>    
+                    <div class="col-12 scroll-x-top-el">
+                        <div class="fs-1 fw-bold blue-color text-center">Seamless User Experience</div>                        
+                        <p class="fs-3 text-center">Create an intuitive, user-friendly platform that offers a seamless experience for both beginners and experienced marketers, allowing them to easily navigate and maximize their earning potential.</p>
+                    </div>
+                    <div class="col-12 scroll-x-top-el">
+                        <div class="fs-1 fw-bold blue-color text-center">Trust and Security</div>                        
+                        <p class="fs-3 text-center">Implement robust security measures to protect user data and ensure a safe environment for all participants, building trust and credibility within the affiliate marketing community.</p>
+                    </div>
+                    <div class="col-12 scroll-x-top-el">
+                        <div class="fs-1 fw-bold blue-color text-center">Continuous Innovation</div>                        
+                        <p class="fs-3 text-center">Stay ahead of industry trends and technologies, regularly introducing new features, tools, and resources to enhance the earning potential and success of our users.</p>
+                    </div>                   
+                </div>
+            </div>
+
+        
+            {% include 'snippets/affilate_ads.html' %}
            
-            <div class="container-lg d-flex justify-content-center flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3">
+            <div class="section container-lg d-flex justify-content-center flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3">
                 <div class="featurette mt-5">
     
                     <div class="h4 fw-bold blue-color text-center">CONNET WITH US</div>
                     <div class="d-flex justify-content-between">
-                        <div class="connet-bg rounded-3 bg-gradient"><i class="fa fa-facebook fa-2x align-self-center"></i></div>
-                        <div class="connet-bg rounded-3 bg-gradient"><i class="fa fa-instagram fa-2x align-self-center"></i></div>
-                        <div class="connet-bg rounded-3 bg-gradient"><i class="fa fa-twitter fa-2x align-self-center"></i></div>
+                        <a target="blank" href="https://www.facebook.com/profile.php?id=100094182004170" class="connet-bg rounded-3 bg-gradient"><i class="fa-brands fa-facebook fa-2x align-self-center"></i></a>
+                        <a target="blank" href="https://instagram.com/pipaytechnologies?igshid=OGQ5ZDc2ODk2ZA==" class="connet-bg rounded-3 bg-gradient"><i class="fa-brands fa-instagram fa-2x align-self-center"></i></a>
+                        <a target="blank" href="https://twitter.com/pipaytech66566" class="connet-bg rounded-3 bg-gradient"><i class="fa-brands fa-twitter fa-2x align-self-center"></i></a>
                     </div>                  
                 </div>
             </div>
